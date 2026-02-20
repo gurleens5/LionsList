@@ -6,4 +6,4 @@
 | Andrei Lopez        | M      | 219031707  | and25@my.yorku.ca   | Email             | @haicord        |
 | Justin Valle Amaya  | M      | 220668364  | jv6ix@my.yorku.ca   | Email             | @just.in3431    |
 
-**Discord Server Invite:** https://discord.gg/YourServerLink](https://discord.gg/cvD6DbHbdG
+**Discord Server Invite:** https://discord.gg/cvD6DbHbdG
