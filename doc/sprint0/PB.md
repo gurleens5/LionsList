@@ -2,7 +2,7 @@
 
 ---
 
-## User Story 01
+## User Story #1
 As a student, I want to register using my YorkU email so that only verified York students can access the marketplace.
 
 **Criteria of Satisfaction**
@@ -14,7 +14,7 @@ As a student, I want to register using my YorkU email so that only verified York
 
 ---
 
-## User Story 02
+## User Story #2
 As a student with a registered account, I want to log in so that I can access marketplace features.
 
 **Criteria of Satisfaction**
@@ -24,7 +24,7 @@ As a student with a registered account, I want to log in so that I can access ma
 
 ---
 
-## User Story 03
+## User Story #3
 As a student with a registered account, I want to log out to securely end my session on the marketplace.
 
 **Criteria of Satisfaction**
@@ -34,7 +34,7 @@ As a student with a registered account, I want to log out to securely end my ses
 
 ---
 
-## User Story 04
+## User Story #4
 As a student, I want to create a unique username during registration so that I can be identified on the marketplace without exposing my email or personal information.
 
 **Criteria of Satisfaction**
@@ -45,7 +45,7 @@ As a student, I want to create a unique username during registration so that I c
 
 ---
 
-## User Story 05
+## User Story #5
 As a student, I want to filter listings by category so that I can find the academic resources I seek.
 
 **Criteria of Satisfaction**
@@ -55,7 +55,7 @@ As a student, I want to filter listings by category so that I can find the acade
 
 ---
 
-## User Story 06
+## User Story #6
 As a student, I want to search listings by keywords in the title so that I can quickly find specific available items.
 
 **Criteria of Satisfaction**
@@ -65,7 +65,7 @@ As a student, I want to search listings by keywords in the title so that I can q
 
 ---
 
-## User Story 07
+## User Story #7
 As a student, I want to view detailed information about a listing so that I can evaluate it before making an offer.
 
 **Criteria of Satisfaction**
@@ -75,7 +75,7 @@ As a student, I want to view detailed information about a listing so that I can 
 
 ---
 
-## User Story 08
+## User Story #8
 As a seller, I want to create a listing so that I can sell an academic resource.
 
 **Criteria of Satisfaction**
@@ -86,7 +86,7 @@ As a seller, I want to create a listing so that I can sell an academic resource.
 
 ---
 
-## User Story 09
+## User Story #9
 As a seller, I want to view all listings I have created so that I can manage and track their status.
 
 **Criteria of Satisfaction**
@@ -97,7 +97,7 @@ As a seller, I want to view all listings I have created so that I can manage and
 
 ---
 
-## User Story 10
+## User Story #10
 As a seller, I want to edit my existing listings so that I can update price or description.
 
 **Criteria of Satisfaction**
@@ -107,7 +107,7 @@ As a seller, I want to edit my existing listings so that I can update price or d
 
 ---
 
-## User Story 11
+## User Story #11
 As a seller, I want to delete my listing if I no longer wish to sell the academic resource.
 
 **Criteria of Satisfaction**
@@ -117,7 +117,7 @@ As a seller, I want to delete my listing if I no longer wish to sell the academi
 
 ---
 
-## User Story 12
+## User Story #12
 As a buyer, I want to make an offer on a listing so that I can negotiate the price.
 
 **Criteria of Satisfaction**
@@ -128,7 +128,7 @@ As a buyer, I want to make an offer on a listing so that I can negotiate the pri
 
 ---
 
-## User Story 13
+## User Story #13
 As a buyer, I want to cancel my pending offer if I am no longer interested.
 
 **Criteria of Satisfaction**
@@ -138,7 +138,7 @@ As a buyer, I want to cancel my pending offer if I am no longer interested.
 
 ---
 
-## User Story 14
+## User Story #14
 As a seller, I want to reject unwanted offers on my listings.
 
 **Criteria of Satisfaction**
@@ -148,7 +148,7 @@ As a seller, I want to reject unwanted offers on my listings.
 
 ---
 
-## User Story 15
+## User Story #15
 As a seller, I want to accept an offer so that I can reserve the item for the buyer.
 
 **Criteria of Satisfaction**
@@ -158,7 +158,7 @@ As a seller, I want to accept an offer so that I can reserve the item for the bu
 
 ---
 
-## User Story 16
+## User Story #16
 As a seller, after accepting an offer, I want to mark a reserved listing as sold once the transaction is completed.
 
 **Criteria of Satisfaction**
@@ -168,7 +168,7 @@ As a seller, after accepting an offer, I want to mark a reserved listing as sold
 
 ---
 
-## User Story 17
+## User Story #17
 As a buyer, I want to rate a seller after a completed transaction so that future users can assess the seller’s reputation.
 
 **Criteria of Satisfaction**
@@ -178,7 +178,7 @@ As a buyer, I want to rate a seller after a completed transaction so that future
 
 ---
 
-## User Story 18
+## User Story #18
 As a seller, I want to rate a buyer after a completed transaction so that future sellers can assess the buyer’s reputation.
 
 **Criteria of Satisfaction**
@@ -188,7 +188,7 @@ As a seller, I want to rate a buyer after a completed transaction so that future
 
 ---
 
-## User Story 19
+## User Story #19
 As a user, I want to view a user’s profile by username and see their previous ratings as a buyer and seller so that I can assess their reputation.
 
 **Criteria of Satisfaction**
@@ -198,7 +198,7 @@ As a user, I want to view a user’s profile by username and see their previous 
 
 ---
 
-## User Story 20
+## User Story #20
 As a buyer, I want to send a message to a seller from a listing page so that I can ask questions before making or accepting an offer.
 
 **Criteria of Satisfaction**
@@ -210,7 +210,7 @@ As a buyer, I want to send a message to a seller from a listing page so that I c
 
 ---
 
-## User Story 21
+## User Story #21
 As a user, I want to view my message conversations so that I can communicate with buyers or sellers about listings.
 
 **Criteria of Satisfaction**
