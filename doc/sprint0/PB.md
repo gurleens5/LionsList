@@ -158,7 +158,7 @@ As a seller, I want to accept an offer made on my listing
 ---
 
 ## User Story #16
-As a seller, I want to view all offers I have sent so that I can manage and track their status
+As a buyer, I want to view all offers I have sent so that I can manage and track their status
 
 **Criteria of Satisfaction**
 - Only logged-in users can access the “Sent Offers” page  
