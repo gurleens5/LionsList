@@ -50,7 +50,7 @@ As a student, I want to filter listings by category so that I can find the acade
 
 **Criteria of Satisfaction**
 - User can filter listings by category (Textbook, Notes, Lab Kit, Stationery, Study Guide)
-- User can filter listings by course title and department
+- User can filter listings by course title 
 - Applying filters updates displayed results accordingly
 
 ---
@@ -70,7 +70,7 @@ As a student, I want to view detailed information about a listing so that I can 
 
 **Criteria of Satisfaction**
 - Detail page shows title, description, price, category, and course code (if provided)
-- Listing status and seller username are clearly displayed
+- Listing details and seller username are clearly displayed
 - Only listings with status "Available" can be acted on by buyers
 
 ---
@@ -92,7 +92,6 @@ As a seller, I want to view all listings I have created so that I can manage and
 **Criteria of Satisfaction**
 - Only logged-in users can access the “My Listings” page  
 - Page displays all listings created by the logged-in user  
-- Listings are grouped or visually distinguishable by status, with active "Available" listings being shown first  
 - Clicking a listing redirects to its detail page  
 
 ---
@@ -139,7 +138,7 @@ As a buyer, I want to cancel my pending offer if I am no longer interested.
 ---
 
 ## User Story #14
-As a seller, I want to reject unwanted offers on my listings.
+As a seller, I want to reject unwanted offers on my listings
 
 **Criteria of Satisfaction**
 - Offer status changes from "Pending" to "Rejected"
@@ -149,22 +148,21 @@ As a seller, I want to reject unwanted offers on my listings.
 ---
 
 ## User Story #15
-As a seller, I want to accept an offer so that I can reserve the item for the buyer.
+As a seller, I want to accept an offer made on my listing
 
 **Criteria of Satisfaction**
 - Offer status changes from "Pending" to "Accepted"
-- Listing status changes from "Available" to "Reserved"
+- Listing status changes from "Available" to "Sold"
 - All other pending offers on the listing change to "Rejected"
 
 ---
 
 ## User Story #16
-As a seller, after accepting an offer, I want to mark a reserved listing as sold once the transaction is completed.
+As a seller, I want to view all offers I have sent so that I can manage and track their status
 
 **Criteria of Satisfaction**
-- Listing status changes to "Sold"
-- Listing no longer appears among available listings
-- Seller can no longer modify the listing after it is marked as "Sold"
+- Only logged-in users can access the “Sent Offers” page  
+- Page displays all offers sent by the logged-in user  
 
 ---
 
@@ -216,6 +214,6 @@ As a user, I want to view my message conversations so that I can communicate wit
 **Criteria of Satisfaction**
 - User can view a list of conversation threads
 - Each thread shows the other participant’s username and the associated listing
-- Messages display sender, content, and timestamp
+- Messages display sender, content, and last timestamp
 - Only participants in the conversation can view the messages
 - New messages appear in the correct conversation thread
