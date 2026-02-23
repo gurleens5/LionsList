@@ -11,7 +11,6 @@
 
 	LionsList represents more than just an alternative to the YorkU bookstore for Bella. She wants to feel secure in knowing that the seller is also a verified YorkU student, and that the listing will help reduce her financial stress. She feels that a system like LionsList is a safety net during an already stressful academic transition. 
 
----
 
 # Jimmy Kane (The Upper-Year Student)
 
