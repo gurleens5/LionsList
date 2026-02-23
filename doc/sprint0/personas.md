@@ -15,7 +15,6 @@
 # Jimmy Kane (The Upper-Year Student)
 
 -
-
 	Jimmy Patel is a 22 year-old Mathematics student at York University who is completing his final semester before graduation. His apartment bookshelf is organized with advanced textbooks from throughout his previous academic years. He tends to be very detail-oriented and studies by adding annotations and sticky notes in his textbooks when studying for exams. He treats his textbooks with care since they were carefully purchased in his second and third year. Jimmy now plans to move into a full-time position after graduation where he is determined to sell the textbooks he no longer needs.
 
 	Jimmy has had past experiences with trying to sell his textbooks online, through platforms like Kijiji and Facebook Marketplace. The experiences often left him frustrated since buyers frequently offered significantly less than the listed price, agreed to meet but changed their minds at the last minute, and had difficulty understanding if the textbook was for their course. Since Jimmy values clear communication and smooth processes, he was very disappointed and had stopped posting his items online. 
