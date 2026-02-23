@@ -1,13 +1,6 @@
-## Bella Khan (The Overwhelmed First-Year Student)**
+# Bella Khan (The Overwhelmed First-Year Student)**
 
-
-
-
-
-
-
-
-
+---
 
 
 	Bella Khan is a 19 year-old first year student majoring in Biology at York University. She lives in Calumet resilience where it is her first time living away from home, and although she is getting used to the independence, she usually feels overwhelmed by the increased level of responsibility that comes with it. She has a busy schedule with classes and extracurriculars but still manages to contact her parents every evening, usually when reviewing her lecture slides for the next day. Bella is academinally driven individual who is looking forward to pursuing medical school in the future, which makes her especially alert of her current grades as she is in her initial stages.
@@ -20,17 +13,11 @@
 
 	LionsList represents more than just an alternative to the YorkU bookstore for Bella. She wants to feel secure in knowing that the seller is also a verified YorkU student, and that the listing will help reduce her financial stress. She feels that a system like LionsList is a safety net during an already stressful academic transition. 
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## **Jimmy Kane (The Upper-Year Student)**
-
+# **Jimmy Kane (The Upper-Year Student)**
 
 
-
-
-
-
-
+---
 
 
 
