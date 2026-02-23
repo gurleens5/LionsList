@@ -1,5 +1,7 @@
 # Bella Khan (The Overwhelmed First-Year Student)
 
+<img width="249" height="168" alt="Screenshot 2026-02-23 at 2 47 24 AM" src="https://github.com/user-attachments/assets/fee133ea-0853-465c-afd8-f57eb8d157b0" />
+
 -
 	Bella Khan is a 19 year-old first year student majoring in Biology at York University. She lives in Calumet resilience where it is her first time living away from home, and although she is getting used to the independence, she usually feels overwhelmed by the increased level of responsibility that comes with it. She has a busy schedule with classes and extracurriculars but still manages to contact her parents every evening, usually when reviewing her lecture slides for the next day. Bella is academinally driven individual who is looking forward to pursuing medical school in the future, which makes her especially alert of her current grades as she is in her initial stages.
 
@@ -19,7 +21,8 @@
 
 	Jimmy has had past experiences with trying to sell his textbooks online, through platforms like Kijiji and Facebook Marketplace. The experiences often left him frustrated since buyers frequently offered significantly less than the listed price, agreed to meet but changed their minds at the last minute, and had difficulty understanding if the textbook was for their course. Since Jimmy values clear communication and smooth processes, he was very disappointed and had stopped posting his items online. 
 
-	Jimmy’s typical weekday starts with him spending his mornings reviewing notes or working through his assignments at Scott library before attending lectures. He frequently uses programming tools and solves mathematical problems due to his coursework. In the afternoons, he works his part-time job as a teaching assistant for a course he has previously taken. He spends the majority of his time on technology, whether it’s on his laptop or phone. Due to his passions and knowledge, Jimmy expects the digital platforms he uses to feel logical, smooth and reliable. If a system feels unorganized, Jimmy would lose his patience in continuing to use it. 
+	Jimmy’s typical weekday starts with him spending his mornings reviewing notes or working through his assignments at Scott library befor![Uploading Screenshot 2026-02-23 at 2.47.01 AM.png…]()
+e attending lectures. He frequently uses programming tools and solves mathematical problems due to his coursework. In the afternoons, he works his part-time job as a teaching assistant for a course he has previously taken. He spends the majority of his time on technology, whether it’s on his laptop or phone. Due to his passions and knowledge, Jimmy expects the digital platforms he uses to feel logical, smooth and reliable. If a system feels unorganized, Jimmy would lose his patience in continuing to use it. 
 
  	Jimmy decides to start using LionsList since it provides him with what he is looking for, a focused academic marketplace limited to YorkU students. He feels at ease knowing that there is a structured process where courses are tied to their supplies needed. He has started to post a listing quickly, connect it with students who need the material, and complete the exchange smoothly. Jimmy has been successfully making his sales and his textbooks on the shelf have decreased. He feels that LionsList has been trustworthy and beyond efficient where selling his textbooks felt less like a hassle, and more like a knowledge transfer. 
 
