@@ -7,9 +7,11 @@ dotenv.config();
 
 const app = express();
 
-app.use("/", testRoutes);
-
 connectDB();
+
+app.use(express.json())
+
+app.use("/", testRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log('listening on port', process.env.PORT);

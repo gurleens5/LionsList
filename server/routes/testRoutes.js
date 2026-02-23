@@ -1,8 +1,9 @@
 import express from "express"
-import { testMsg } from "../controllers/testController.js";
+import { getTestObjects, createTestObject } from "../controllers/testController.js";
 
 const router = express.Router();
 
-router.get("/", testMsg);
+router.get("/", getTestObjects);
+router.post("/", createTestObject);
 
 export default router
