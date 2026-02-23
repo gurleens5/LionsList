@@ -1,7 +1,5 @@
 # Bella Khan (The Overwhelmed First-Year Student)
 
-<img width="249" height="168" alt="Screenshot 2026-02-23 at 2 47 24 AM" src="https://github.com/user-attachments/assets/fee133ea-0853-465c-afd8-f57eb8d157b0" />
-
 -
 	Bella Khan is a 19 year-old first year student majoring in Biology at York University. She lives in Calumet resilience where it is her first time living away from home, and although she is getting used to the independence, she usually feels overwhelmed by the increased level of responsibility that comes with it. She has a busy schedule with classes and extracurriculars but still manages to contact her parents every evening, usually when reviewing her lecture slides for the next day. Bella is academinally driven individual who is looking forward to pursuing medical school in the future, which makes her especially alert of her current grades as she is in her initial stages.
 
