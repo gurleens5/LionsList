@@ -1,6 +1,6 @@
 # Bella Khan (The Overwhelmed First-Year Student)
 
-
+-
 	Bella Khan is a 19 year-old first year student majoring in Biology at York University. She lives in Calumet resilience where it is her first time living away from home, and although she is getting used to the independence, she usually feels overwhelmed by the increased level of responsibility that comes with it. She has a busy schedule with classes and extracurriculars but still manages to contact her parents every evening, usually when reviewing her lecture slides for the next day. Bella is academinally driven individual who is looking forward to pursuing medical school in the future, which makes her especially alert of her current grades as she is in her initial stages.
 
 	Bella recently has been noticing how quickly her academic expenses have been piling up. Her courses have requirements for purchases to be made, this includes a lab coat, safety goggles, and required textbooks. She feels worried since she has begun using her savings which is decreasing faster than expected. When she enrolled late in a mathematics course, she was surprised that a required textbook was costing her over $150 at the campus bookstore. Bella hesitated before purchasing the textbook. She thought about delaying the purchase and finding a cheaper option elsewhere. 
@@ -15,6 +15,7 @@
 
 # Jimmy Kane (The Upper-Year Student)
 
+-
 
 	Jimmy Patel is a 22 year-old Mathematics student at York University who is completing his final semester before graduation. His apartment bookshelf is organized with advanced textbooks from throughout his previous academic years. He tends to be very detail-oriented and studies by adding annotations and sticky notes in his textbooks when studying for exams. He treats his textbooks with care since they were carefully purchased in his second and third year. Jimmy now plans to move into a full-time position after graduation where he is determined to sell the textbooks he no longer needs.
 
