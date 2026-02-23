@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router';
-import axios from "axios";
+import api from "../lib/axios";
 
 const TestHomePage = () => {
   //return <div>TestHomePage</div>
@@ -10,7 +10,7 @@ const TestHomePage = () => {
         title: "Object",
         content: "check timestamp",
       };
-      const res = await axios.post("http://localhost:4000/", newObject);
+      const res = await api.post("/", newObject);
       console.log("Created object:", res.data);
 
     } catch (error) {

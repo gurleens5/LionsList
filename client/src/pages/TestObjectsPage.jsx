@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import axios from "axios";
+import api from "../lib/axios";
 
 const TestObjectsPage = () => {
   const [objects, setObjects] = useState([]);
@@ -8,7 +8,7 @@ const TestObjectsPage = () => {
   useEffect(() => {
     const fetchObjects = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/testobjects");
+        const res = await api.get("/testobjects");
         console.log(res.data);
         setObjects(res.data);
       } catch (error) {
