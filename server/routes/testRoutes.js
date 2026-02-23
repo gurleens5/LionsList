@@ -3,7 +3,7 @@ import { getTestObjects, createTestObject } from "../controllers/testController.
 
 const router = express.Router();
 
-router.get("/", getTestObjects);
+router.get("/testobjects", getTestObjects);
 router.post("/", createTestObject);
 
 export default router
