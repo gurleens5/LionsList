@@ -57,7 +57,7 @@ npm run dev
 3. Application is Running!
 
 ## Contribution
-To contribute please follow the following:
+To contribute please do the following:
 
 Branching:
 - `main` is for stable, release-ready code
