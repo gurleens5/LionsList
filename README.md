@@ -32,7 +32,7 @@ git clone https://github.com/EECS3311W26/project-lionslist.git
 ```bash
 npm install
 ```
-3. Go into the client directory,y then run the following command to install frontend dependencies
+3. Go into the client directory, then run the following command to install frontend dependencies
 ```bash
 npm install
 ```
@@ -41,7 +41,7 @@ npm install
 PORT=
 MONGO_URI=
 ```
-5. Go to ``client/src/lib/axios.js`` to change the baseURL. This is your backend URL which is currently set to ``http://localhost:4000``.
+5. Go to ``client/src/lib/axios.js`` to change the baseURL. This is your backend URL, which is currently set to ``http://localhost:4000``.
  
 ## How to Run
 Make sure that the Installation is done before going through the following instructions. 
