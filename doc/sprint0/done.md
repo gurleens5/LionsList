@@ -12,7 +12,6 @@ No feature causes incorrect or broken workflow in the system
 
 The feature integrates correctly with the other ones
 
-
 Status changes happen properly when actions occur
 No functionality is working incorrectly/broken
 
