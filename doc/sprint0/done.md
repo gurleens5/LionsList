@@ -50,6 +50,3 @@ Code has no errors
 The feature builds successfully
 
 Changes have been reviewed by at least one team member
-
-
-# This Definition of Done has been agreed upon by all team members 
