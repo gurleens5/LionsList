@@ -24,7 +24,7 @@ function SignIn({ setPage, setUser }) {
             localStorage.setItem("token", res.data.token);
             console.log(res.data);
             setUser(res.data);
-            navigate("/");
+            setPage("listings");
         } catch (err) {
             setError(err.response?.data?.message || "Login Failed")
         }

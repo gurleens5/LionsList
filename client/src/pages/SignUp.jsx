@@ -24,7 +24,7 @@ function SignUp({ setPage, setUser }) {
             localStorage.setItem("token", res.data.token);
             console.log(res.data);
             setUser(res.data);
-            navigate("/");
+            setPage("listings");
         } catch (err) {
             //console.log(err);
             setError(err.response?.data?.message || "Registration Failed")
