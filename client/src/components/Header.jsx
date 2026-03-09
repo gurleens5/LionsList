@@ -7,7 +7,7 @@ function Header({ setPage }) {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setPage("home");
+    setPage("signin");   // redirect to login page
   };
 
   return (
@@ -42,7 +42,10 @@ function Header({ setPage }) {
 
       {/* Right side */}
       <div style={{ display: "flex", alignItems: "center", gap: "18px", fontFamily: "Georgia, sans-serif" }}>
-        <div onClick={() => setPage("listings")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>
+        <div
+          onClick={() => setPage("listings")}
+          style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}
+        >
           Browse
         </div>
 
