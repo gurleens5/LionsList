@@ -3,6 +3,8 @@ import { FaUserCircle } from "react-icons/fa";
 
 function Header({ setPage }) {
 
+  const token = localStorage.getItem("token");
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setPage("home");
@@ -25,30 +27,72 @@ function Header({ setPage }) {
       }}
     >
       {/* LionsList - Left Side */}
-      <div onClick={() => setPage("home")} style={{ fontSize: "1.5rem", fontWeight: 600, cursor: "pointer", fontFamily: "Georgia, sans-serif" }}>
+      <div
+        onClick={() => setPage("home")}
+        style={{
+          fontSize: "1.5rem",
+          fontWeight: 600,
+          cursor: "pointer",
+          fontFamily: "Georgia, sans-serif",
+        }}
+      >
         <span style={{ color: "#cc0000" }}>Lions</span>
         <span style={{ color: "#fff", marginLeft: "1px" }}>List</span>
       </div>
 
       {/* Right side */}
       <div style={{ display: "flex", alignItems: "center", gap: "18px", fontFamily: "Georgia, sans-serif" }}>
-        <div onClick={() => setPage("listings")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Browse</div>
-        <div style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Sell</div>
+        <div onClick={() => setPage("listings")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>
+          Browse
+        </div>
+
+        <div style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>
+          Sell
+        </div>
 
         <FaUserCircle style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }} />
 
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.8rem",
-          background: "#cc0000",
-          borderRadius: "20px",
-          padding: "0.4rem 1.2rem",
-        }}>
-          <span onClick={() => setPage("signin")} style={{ color: "#111", fontSize: "0.9rem", fontWeight: "600", cursor: "pointer" }}>Sign In</span>
-          <span style={{ color: "#111" }}>|</span>
-          <span onClick={() => setPage("signup")} style={{ color: "#111", fontSize: "0.9rem", fontWeight: "600", cursor: "pointer" }}>Sign Up</span>
-        </div>
+        {!token ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.8rem",
+              background: "#cc0000",
+              borderRadius: "20px",
+              padding: "0.4rem 1.2rem",
+            }}
+          >
+            <span
+              onClick={() => setPage("signin")}
+              style={{ color: "#111", fontSize: "0.9rem", fontWeight: "600", cursor: "pointer" }}
+            >
+              Sign In
+            </span>
+
+            <span style={{ color: "#111" }}>|</span>
+
+            <span
+              onClick={() => setPage("signup")}
+              style={{ color: "#111", fontSize: "0.9rem", fontWeight: "600", cursor: "pointer" }}
+            >
+              Sign Up
+            </span>
+          </div>
+        ) : (
+          <div
+            onClick={handleLogout}
+            style={{
+              background: "#cc0000",
+              borderRadius: "20px",
+              padding: "0.4rem 1.2rem",
+              cursor: "pointer",
+              fontWeight: "600",
+            }}
+          >
+            Logout
+          </div>
+        )}
       </div>
     </header>
   );
