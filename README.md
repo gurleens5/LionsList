@@ -40,6 +40,7 @@ npm install
 ```bash
 PORT=
 MONGO_URI=
+JWT_SECRET=
 ```
 5. Go to ``client/src/lib/axios.js`` to change the baseURL. This is your backend URL, which is currently set to ``http://localhost:4000``.
  

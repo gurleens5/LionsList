@@ -8,10 +8,16 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: true,
-            minlength: 3,
+            minlength: [3, "Username must be at least 3 characters"],
+            maxlength: [30, "Username must be at most 30 characters"],
             lowercase: true,
             trim: true,
-            match: /^[a-z0-9]+$/
+            validate: [
+                {
+                    validator: (v) => validator.isAlphanumeric(v),
+                    message: "Username can only contain letters and numbers"
+                }
+            ]
         },
         email: {
             type: String,
@@ -49,12 +55,11 @@ const userSchema = new mongoose.Schema(
 );
 
 // Hashing Password
-userSchema.pre("save", async function(next) {
-    if (!this.isModified("password")) return next();
+userSchema.pre("save", async function() {
+    if (!this.isModified("password")) return;
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     this.password = await bcrypt.hash(this.password, salt);
-    next();
 })
 
 userSchema.methods.comparePassword = async function (enteredPassword) {
