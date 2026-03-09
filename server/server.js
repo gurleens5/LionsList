@@ -1,6 +1,6 @@
 import listingsRoutes from "./routes/listings.routes.js";
 import express from "express";
-import authRoutes from "./routes/auth.js";
+import authRoutes from "./routes/authRoutes.js";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import cors from "cors";
@@ -14,7 +14,7 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 app.use("/api/listings", listingsRoutes);
-app.use("/api/users", authRoutes);
+app.use("/api", authRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true });

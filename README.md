@@ -40,6 +40,7 @@ npm install
 ```bash
 PORT=
 MONGO_URI=
+JWT_SECRET=
 ```
 5. Go to ``client/src/lib/axios.js`` to change the baseURL. This is your backend URL, which is currently set to ``http://localhost:4000``.
  
@@ -50,7 +51,7 @@ Instructions:
 ```bash
 npm run dev
 ```
-2. Go into the client directory,y then run the following command to run the frontend. Use the link in the client terminal to view the frontend.
+2. Go into the client directory, then run the following command to run the frontend. Use the link in the client terminal to view the frontend.
 ```bash
 npm run dev
 ```
