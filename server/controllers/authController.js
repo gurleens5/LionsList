@@ -1,4 +1,5 @@
-import User from "../models/User"
+import User from "../models/User.js"
+import { generateToken } from "../utils/generateToken.js"
 
 export async function register (req, res)  {
     const username = req.body.username?.trim();
@@ -27,10 +28,12 @@ export async function register (req, res)  {
         }
 
         const user = await User.create({username, email, password});
+        const token = generateToken(user._id);
         res.status(201).json({
             id: user._id,
             usename: user.username,
-            email: user.email,        
+            email: user.email,
+            token,
         })
 
     } catch (err) {
@@ -58,10 +61,13 @@ export async function login (req, res) {
                 message: "Invalid Email or Password"
             });
         }
+
+        const token = generateToken(user._id);
         res.status(200).json({
             id: user._id,
             usename: user.username,
-            email: user.email,    
+            email: user.email,
+            token,    
         });
 
     } catch (err) {
@@ -71,5 +77,6 @@ export async function login (req, res) {
     }
 }
 
-
-export default router;
+export async function currentUser (req, res) {
+    res.status(200).json(req.user);
+}
