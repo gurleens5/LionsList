@@ -27,12 +27,16 @@ const listingSchema = new mongoose.Schema(
       default: "Available",
       trim: true,
     },
-    // US-07-4: reference seller so username can be shown on details page
+    courseCode: {
+      type: String,
+      required: false,
+      trim: true,
+    },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: false,
-    }
+    },
   },
   { timestamps: true }
 );
