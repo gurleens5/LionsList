@@ -18,15 +18,21 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const listing = await Listing.findById(req.params.id).populate("seller", "username");
+
         if (!listing) {
             return res.status(404).json({ message: "Listing not found" });
         }
+
         res.json({
         ...listing.toObject(),
         sellerUsername: listing.seller?.username || "Unknown",
     });
     } catch (error) {
-        res.status(400).json({ message: "Invalid listing ID" });
+        if (error && error.name === "CastError") {
+            return res.status(400).json({ message: "Invalid listing ID" });
+        }
+
+        res.status(500).json({ message: "Failed to fetch listing" });
     }
 });
 
