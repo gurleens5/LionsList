@@ -11,7 +11,16 @@ const userSchema = new mongoose.Schema(
             minlength: 3,
             lowercase: true,
             trim: true,
-            match: /^[a-z0-9]+$/
+            validate: [
+                {
+                    validator: (v) => validator.isAlphanumeric(v),
+                    message: "Username can only contain letters and numbers"
+                },
+                {
+                    validator: (v) => v.length >= 3 && v.length <= 30,
+                    message: "Username must be between 3 and 30 characters"
+                }
+            ]
         },
         email: {
             type: String,
