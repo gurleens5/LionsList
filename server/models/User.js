@@ -8,17 +8,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: true,
-            minlength: 3,
+            minlength: [3, "Username must be at least 3 characters"],
+            maxlength: [30, "Username must be at most 30 characters"],
             lowercase: true,
             trim: true,
             validate: [
                 {
                     validator: (v) => validator.isAlphanumeric(v),
                     message: "Username can only contain letters and numbers"
-                },
-                {
-                    validator: (v) => v.length >= 3 && v.length <= 30,
-                    message: "Username must be between 3 and 30 characters"
                 }
             ]
         },
