@@ -2,9 +2,9 @@ import User from "../models/User.js"
 import { generateToken } from "../utils/generateToken.js"
 
 export async function register (req, res)  {
-    const username = String(req.body.username || '').trim();
-    const email = String(req.body.email || '').trim().toLowerCase();
-    const password = String(req.body.password || '').trim();
+    const username = String(req.body?.username || '').trim();
+    const email = String(req.body?.email || '').trim().toLowerCase();
+    const password = String(req.body?.password || '').trim();
 
     try {
         if (!username || !email || !password) {
@@ -49,8 +49,8 @@ export async function register (req, res)  {
 }
 
 export async function login (req, res) {
-    const email = req.body.email?.trim().toLowerCase();
-    const password = req.body.password?.trim();
+    const email = String(req.body?.email || '').trim().toLowerCase();
+    const password = String(req.body?.password || '').trim();
 
     try {
         if (!email || !password) {
@@ -61,7 +61,7 @@ export async function login (req, res) {
 
         const user = await User.findOne({email});
 
-        if (!user || !(await user.matchPassword(password))) {
+        if (!user || !(await user.comparePassword(password))) {
             return res.status(401).json({
                 message: "Invalid Email or Password"
             });
@@ -70,7 +70,7 @@ export async function login (req, res) {
         const token = generateToken(user._id);
         res.status(200).json({
             id: user._id,
-            usename: user.username,
+            username: user.username,
             email: user.email,
             token,    
         });
