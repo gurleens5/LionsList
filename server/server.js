@@ -1,4 +1,4 @@
-// import testRoutes from "./routes/testRoutes.js";
+import listingsRoutes from "./routes/listings.routes.js";
 import express from "express";
 import authRoutes from "./routes/auth.js";
 import dotenv from "dotenv";
@@ -11,9 +11,14 @@ const app = express();
 
 connectDB();
 
-app.use(express.json())
+app.use(express.json());
 app.use(cors());
+app.use("/api/listings", listingsRoutes);
 app.use("/api/users", authRoutes);
+
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true });
+});
 
 app.listen(process.env.PORT, () => {
     console.log('listening on port', process.env.PORT);
