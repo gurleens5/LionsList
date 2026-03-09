@@ -27,6 +27,10 @@ const TestHomePage = () => {
       <Link to="/testobjects">
         <button>View Stored Objects</button>
       </Link>
+
+      <Link to="/listings">
+        <button>View Listings</button>
+      </Link>
     </div>
   );
 }
