@@ -50,7 +50,7 @@ Instructions:
 ```bash
 npm run dev
 ```
-2. Go into the client directory,y then run the following command to run the frontend. Use the link in the client terminal to view the frontend.
+2. Go into the client directory, then run the following command to run the frontend. Use the link in the client terminal to view the frontend.
 ```bash
 npm run dev
 ```
