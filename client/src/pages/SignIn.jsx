@@ -14,6 +14,7 @@ function SignIn({ setPage, setUser }) {
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
+        setError("");
     }
 
     const handleSubmit = async (e) => {
@@ -66,6 +67,12 @@ function SignIn({ setPage, setUser }) {
                         onChange={handleChange}
                         style={{ display: "block", width: "100%", padding: "0.8rem", margin: "0.4rem 0 1.2rem 0", borderRadius: "8px", border: "1px solid #ddd", boxSizing: "border-box", fontSize: "1rem", fontFamily: "Georgia, serif" }}/>
                     
+                    {error && (
+                        <p style={{ color: "#cc0000", marginBottom: "1rem" }}>
+                            {error}
+                        </p>
+                    )}
+
                     <button style={{ width: "100%", background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px", padding: "0.9rem", fontSize: "1rem", fontWeight: "700", cursor: "pointer", fontFamily: "Georgia, serif" }}>
                         Sign In
                     </button>
