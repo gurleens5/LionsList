@@ -66,7 +66,7 @@ function SignUp({ setPage, setUser }) {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="yourname@yorku.ca"
+                        placeholder="yourname@my.yorku.ca"
                         style={{ display: "block", width: "100%", padding: "0.8rem", margin: "0.4rem 0 1.2rem 0", borderRadius: "8px", border: "1px solid #ddd", boxSizing: "border-box", fontSize: "1rem", fontFamily: "Georgia, serif" }}/>
                     
                     <label>Password</label>
