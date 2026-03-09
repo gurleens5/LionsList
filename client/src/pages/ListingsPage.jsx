@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
 import api from "../lib/axios";
 
 //US-07-1: display all listings
-const ListingsPage = () => {
+const ListingsPage = ({ setPage, setSelectedId }) => {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
 
@@ -23,9 +22,7 @@ const ListingsPage = () => {
 
   return (
     <div>
-      <Link to="/">
-        <button>Back to Home</button>
-      </Link>
+      <button onClick={() => setPage("home")}>Back to Home</button>
 
       <h1>All Listings</h1>
 
@@ -39,9 +36,9 @@ const ListingsPage = () => {
           <p><strong>Category:</strong> {listing.category}</p>
           <p><strong>Price:</strong> ${listing.price}</p>
 
-          <Link to={`/listings/${listing._id}`}>
-            <button>View Details</button>
-          </Link>
+          <button onClick={() => { setSelectedId(listing._id); setPage("listing-details"); }}>
+            View Details
+          </button>
         </div>
       ))}
     </div>

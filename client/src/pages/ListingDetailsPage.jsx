@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
 import api from "../lib/axios";
 
 //US-07-1/2/3: display listing details and seller info
-const ListingDetailsPage = () => {
-  const { id } = useParams();
+const ListingDetailsPage = ({ id, setPage }) => {
   const [listing, setListing] = useState(null);
   const [error, setError] = useState("");
 
@@ -24,9 +22,7 @@ const ListingDetailsPage = () => {
 
   return (
     <div>
-      <Link to="/listings">
-        <button>Back to Listings</button>
-      </Link>
+      <button onClick={() => setPage("listings")}>Back to Listings</button>
 
       <h1>Listing Details</h1>
 
