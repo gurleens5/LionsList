@@ -27,6 +27,16 @@ const listingSchema = new mongoose.Schema(
       default: "Available",
       trim: true,
     },
+    sellerUsername: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    courseCode: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true }
 );
