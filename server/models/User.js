@@ -29,8 +29,8 @@ const userSchema = new mongoose.Schema(
                     message: "Invalid Email"
                 },
                 {
-                    validator: (v) => v.endsWith("@my.yorku.ca"),
-                    message: "Must be a @my.yorku.ca address"
+                    validator: (v) => (v.endsWith("@my.yorku.ca") || v.endsWith("@yorku.ca")),
+                    message: "Must be a valid YorkU email"
                 }
             ]
         },
