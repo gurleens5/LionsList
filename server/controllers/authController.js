@@ -20,13 +20,6 @@ export async function register (req, res)  {
             })
         }
 
-        const userExists = await User.findOne({username});
-        if (userExists) {
-            return res.status(400).json({
-                message: "Username in use"
-            })
-        }
-
         const user = await User.create({username, email, password});
         const token = generateToken(user._id);
         res.status(201).json({
