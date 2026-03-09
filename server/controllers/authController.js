@@ -2,9 +2,9 @@ import User from "../models/User.js"
 import { generateToken } from "../utils/generateToken.js"
 
 export async function register (req, res)  {
-    const username = req.body.username?.trim();
-    const email = req.body.email?.trim().toLowerCase();
-    const password = req.body.password?.trim();
+    const username = String(req.body.username || '').trim();
+    const email = String(req.body.email || '').trim().toLowerCase();
+    const password = String(req.body.password || '').trim();
 
     try {
         if (!username || !email || !password) {
@@ -31,12 +31,17 @@ export async function register (req, res)  {
         const token = generateToken(user._id);
         res.status(201).json({
             id: user._id,
-            usename: user.username,
+            username: user.username,
             email: user.email,
             token,
         })
 
     } catch (err) {
+        console.error(err);
+        if (err.name === "ValidationError") {
+            const messages = Object.values(err.errors).map(e => e.message);
+            return res.status(400).json({ message: messages.join(", ") });
+        }
         res.status(500).json({
             message: "Server error"
         })
