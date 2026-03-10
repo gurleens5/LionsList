@@ -49,7 +49,10 @@ function Header({ setPage }) {
           Browse
         </div>
 
-        <div style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>
+        <div
+          onClick={() => setPage("create-listing")}
+          style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}
+        >
           Sell
         </div>
 
