@@ -71,6 +71,10 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
                   <strong>Category:</strong> {listing.category}
                 </p>
 
+                <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                  <strong>Course Code:</strong> {listing.courseCode}
+                </p>
+
                 <p style={{ margin: "0.3rem 0" }}>
                   <strong>Price:</strong> ${listing.price}
                 </p>
