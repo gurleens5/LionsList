@@ -61,7 +61,7 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
                   {listing.title}
                 </h3>
 
-                <p style={{  color: "#444", marginBottom: "0.75rem", lineHeight: "1.6", minHeight: "72px" }}
+                <p style={{ color: "#444", marginBottom: "0.75rem", lineHeight: "1.6", minHeight: "72px" }}
                 >
                   {listing.description}
                 </p>
