@@ -4,6 +4,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ListingsPage from "./pages/ListingsPage";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
+import CreateListingPage from "./pages/CreateListingPage";
 import api from "./lib/axios";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
   return (
     <div>
       {page === "home" && <Home setPage={setPage} />}
+<<<<<<< HEAD
       {page === "signin" && <SignIn setPage={setPage} setUser={setUser}/>}
       {page === "signup" && <SignUp setPage={setPage} setUser={setUser}/>}
       {page === "listings" && (
@@ -49,6 +51,13 @@ function App() {
           listingId={selectedListingId}
         />
       )}
+=======
+      {page === "signin" && <SignIn setPage={setPage} setUser={setUser} />}
+      {page === "signup" && <SignUp setPage={setPage} setUser={setUser} />}
+      {page === "listings" && <ListingsPage setPage={setPage} setSelectedId={setSelectedId} />}
+      {page === "listing-details" && <ListingDetailsPage id={selectedId} setPage={setPage} />}
+      {page === "create-listing" && <CreateListingPage setPage={setPage} />}
+>>>>>>> origin/main
     </div>
   );
 }
