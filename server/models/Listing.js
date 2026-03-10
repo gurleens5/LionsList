@@ -32,6 +32,11 @@ const listingSchema = new mongoose.Schema(
       required: false,
       trim: true,
     },
+    imageUrl: {
+      type: String,
+      required: false,
+      trim: true,
+    },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
