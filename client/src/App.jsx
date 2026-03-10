@@ -8,30 +8,28 @@ import CreateListingPage from "./pages/CreateListingPage";
 import api from "./lib/axios";
 
 function App() {
-  const [page, setPage] = useState("home");
-  const [selectedListingId, setSelectedListingId] = useState(null);
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState('');
-  
-  console.log(user);
+    const [page, setPage] = useState("home");
+    const [selectedListingId, setSelectedListingId] = useState(null);
+    const [user, setUser] = useState(null);
+    const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const res = await api.get('/me', {
-            headers: {Authorization: `Bearer ${token}`}
-          })
-          setUser(res.data)
-        } catch (err) {
-          setError("Failed to fetch user data");
-          localStorage.removeItem("token");
-        }
-      }
-    };
-    fetchUser();
-  }, []);
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = localStorage.getItem("token");
+            if (token) {
+                try {
+                    const res = await api.get('/me', {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    setUser(res.data);
+                } catch (err) {
+                    setError("Failed to fetch user data");
+                    localStorage.removeItem("token");
+                }
+            }
+        };
+        fetchUser();
+    }, []);
 
   return (
     <div>
