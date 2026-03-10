@@ -36,28 +36,22 @@ function App() {
   return (
     <div>
       {page === "home" && <Home setPage={setPage} />}
-<<<<<<< HEAD
       {page === "signin" && <SignIn setPage={setPage} setUser={setUser}/>}
       {page === "signup" && <SignUp setPage={setPage} setUser={setUser}/>}
+      {page === "create-listing" && <CreateListingPage setPage={setPage} />}
       {page === "listings" && (
         <ListingsPage
           setPage={setPage}
           setSelectedListingId={setSelectedListingId}
         />
       )}
-      {page === "listingDetails" && (
+      {page === "listing-details" && (
         <ListingDetailsPage
           setPage={setPage}
           listingId={selectedListingId}
         />
+        
       )}
-=======
-      {page === "signin" && <SignIn setPage={setPage} setUser={setUser} />}
-      {page === "signup" && <SignUp setPage={setPage} setUser={setUser} />}
-      {page === "listings" && <ListingsPage setPage={setPage} setSelectedId={setSelectedId} />}
-      {page === "listing-details" && <ListingDetailsPage id={selectedId} setPage={setPage} />}
-      {page === "create-listing" && <CreateListingPage setPage={setPage} />}
->>>>>>> origin/main
     </div>
   );
 }

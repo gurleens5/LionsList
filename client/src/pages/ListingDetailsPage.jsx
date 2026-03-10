@@ -10,7 +10,7 @@ const ListingDetailsPage = ({ setPage, listingId }) => {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const res = await api.get(`/api/listings/${listingId}`);
+        const res = await api.get(`/listings/${listingId}`);
         setListing(res.data);
       } catch (err) {
         console.error("Error fetching listing details:", err);
