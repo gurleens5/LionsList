@@ -40,8 +40,8 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}
         >
           {listings.map((listing) => (
-            <div key={listing._id} style={{ width: "320px", background: "#fff", borderRadius: "14px", 
-              overflow: "hidden", border: "1px solid #ddd" }}
+            <div key={listing._id} style={{ width: "320px", minHeight: "470px", background: "#fff", borderRadius: "14px",
+              overflow: "hidden", border: "1px solid #ddd", display: "flex", flexDirection: "column" }}
             >
               <div style={{ height: "180px", background: "#d9d9d9", display: "flex", alignItems: "center",
                             justifyContent: "center", color: "#666", fontWeight: "600" }}
@@ -55,13 +55,14 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
                 )}
               </div>
 
-              <div style={{ padding: "1.25rem" }}>
-                <h3 style={{ marginTop: 0, marginBottom: "0.75rem", color: "#111", fontSize: "1.4rem" }}
+              <div style={{ padding: "1.25rem", display: "flex", flexDirection: "column", flex: 1 }}
+              >
+                <h3 style={{ marginTop: 0, marginBottom: "0.75rem", color: "#111", fontSize: "1.4rem", minHeight: "68px" }}
                 >
                   {listing.title}
                 </h3>
 
-                <p style={{ color: "#444", marginBottom: "0.75rem", lineHeight: "1.6", minHeight: "72px" }}
+                <p style={{ color: "#444", marginBottom: "0.75rem", lineHeight: "1.6", minHeight: "110px" }}
                 >
                   {listing.description}
                 </p>
@@ -70,14 +71,18 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
                   <strong>Category:</strong> {listing.category}
                 </p>
 
-                <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                <p style={{ margin: "0.3rem 0" }}>
                   <strong>Price:</strong> ${listing.price}
+                </p>
+
+                <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                  <strong>Status:</strong> {listing.status}
                 </p>
 
                 <button onClick={() => { setSelectedListingId(listing._id); setPage("listing-details"); }}
                         style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
                                  padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",
-                                 fontFamily: "Georgia, serif", width: "100%" }}
+                                 fontFamily: "Georgia, serif", width: "100%", marginTop: "auto" }}
                 >
                   View Details
                 </button>
