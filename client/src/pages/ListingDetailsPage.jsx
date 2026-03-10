@@ -56,6 +56,7 @@ const ListingDetailsPage = ({ setPage, listingId }) => {
               </p>
 
               <p><strong>Category:</strong> {listing.category}</p>
+              <p><strong>Course Code:</strong> {listing.courseCode}</p>
               <p><strong>Price:</strong> ${listing.price}</p>
               <p><strong>Status:</strong> {listing.status}</p>
               <p><strong>Seller:</strong> {listing.sellerUsername || "Unknown"}</p>
