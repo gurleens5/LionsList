@@ -7,15 +7,14 @@ const userSchema = new mongoose.Schema(
         username: {
             type: String,
             required: true,
-            unique: true,
             minlength: [3, "Username must be at least 3 characters"],
             maxlength: [30, "Username must be at most 30 characters"],
             lowercase: true,
             trim: true,
             validate: [
                 {
-                    validator: (v) => validator.isAlphanumeric(v),
-                    message: "Username can only contain letters and numbers"
+                    validator: (v) => validator.matches(v, /^[A-Za-z ]+$/),
+                    message: "Username can only contain letters"
                 }
             ]
         },
@@ -29,8 +28,8 @@ const userSchema = new mongoose.Schema(
                     message: "Invalid Email"
                 },
                 {
-                    validator: (v) => v.endsWith("@my.yorku.ca"),
-                    message: "Must be a @my.yorku.ca address"
+                    validator: (v) => (v.endsWith("@my.yorku.ca") || v.endsWith("@yorku.ca")),
+                    message: "Must be a valid YorkU email"
                 }
             ]
         },
