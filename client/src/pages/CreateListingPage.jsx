@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import React, { useState } from "react";
+import api from "../lib/axios";
 
 function CreateListingPage({ setPage }) {
     const [formData, setFormData] = useState({
@@ -12,12 +13,12 @@ function CreateListingPage({ setPage }) {
 
     const [error, setError] = useState("");
 
-    const handleChange = (e) => {
+    const updateListingField = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         setError("");
     };
 
-    const handleSubmit = (e) => {
+    const submitListingForm = async (e) => {
         e.preventDefault();
 
         const { title, description, category, price } = formData;
@@ -32,15 +33,27 @@ function CreateListingPage({ setPage }) {
             return;
         }
 
-        setError("");
-        console.log("Validated listing form data:", formData);
+        try {
+            setError("");
+
+            await api.post("/listings", {
+                title: formData.title.trim(),
+                description: formData.description.trim(),
+                category: formData.category.trim(),
+                courseCode: formData.courseCode.trim(),
+                price: Number(formData.price),
+            });
+
+            setPage("listings");
+        } catch (err) {
+            setError(err.response?.data?.message || err.message || "Failed to create listing.");
+        }
     };
 
     return (
         <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
             <Header setPage={setPage} />
 
-            {/* Back button */}
             <div style={{ padding: "5rem 1.5rem 0 1.5rem" }}>
                 <span onClick={() => setPage("home")} style={{ cursor: "pointer" }}>
                     ← Back to Home
@@ -62,13 +75,13 @@ function CreateListingPage({ setPage }) {
                         Add your item details to post it on the marketplace
                     </p>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={submitListingForm}>
                         <label>Title</label>
                         <input
                             type="text"
                             name="title"
                             value={formData.title}
-                            onChange={handleChange}
+                            onChange={updateListingField}
                             placeholder="EECS 3311 Textbook"
                             style={{
                                 display: "block",
@@ -87,7 +100,7 @@ function CreateListingPage({ setPage }) {
                         <textarea
                             name="description"
                             value={formData.description}
-                            onChange={handleChange}
+                            onChange={updateListingField}
                             placeholder="Describe the condition and details of your item"
                             style={{
                                 display: "block",
@@ -109,7 +122,7 @@ function CreateListingPage({ setPage }) {
                             type="text"
                             name="category"
                             value={formData.category}
-                            onChange={handleChange}
+                            onChange={updateListingField}
                             placeholder="Books"
                             style={{
                                 display: "block",
@@ -129,7 +142,7 @@ function CreateListingPage({ setPage }) {
                             type="text"
                             name="courseCode"
                             value={formData.courseCode}
-                            onChange={handleChange}
+                            onChange={updateListingField}
                             placeholder="EECS3311"
                             style={{
                                 display: "block",
@@ -149,7 +162,7 @@ function CreateListingPage({ setPage }) {
                             type="number"
                             name="price"
                             value={formData.price}
-                            onChange={handleChange}
+                            onChange={updateListingField}
                             placeholder="25"
                             style={{
                                 display: "block",
