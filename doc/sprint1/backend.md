@@ -45,17 +45,17 @@ Login
 - Request Body:
 ``` JSON
 {
-	“email”: “name@yorku.ca”,
-	“password”: “111123132312”
+	"email": "name@yorku.ca",
+	"password": "111123132312"
 }
 ```
 - Success Response:
 ``` JSON
 {
-	“_id”: “”
-	“username”: “name”,
-	“email”: “name@yorku.ca”,
-	“token”: “JWT_TOKEN”
+	"_id": ""
+	"username": "name",
+	"email": "name@yorku.ca",
+	"token": "JWT_TOKEN"
 }
 ```
 -  - HTTP Response: 200 OK
@@ -75,14 +75,14 @@ CurrentUser
 - Success Response:
 ``` JSON
 {
-	“_id”: “”
-	“username”: “name”,
-	“email”: name@yorku.ca“”,
-	“rating”: 0,
-	“ratingsCount”: 0,
-	“createdAt”: DATE_TIME
-	“updatedAt”: DATE_TIME
-	“__v”: 0
+	"_id": "",
+	"username": "name",
+	"email": "name@yorku.ca",
+	"rating": 0,
+	"ratingsCount": 0,
+	"createdAt": "DATE_TIME",
+	"updatedAt": "DATE_TIME",
+	"__v": 0
 }
 ```
 - - HTTP Response: 200 OK
@@ -228,4 +228,3 @@ Listing
 generateToken.js
 - Used to generate a JSON Web Token
 - Currently has an expiration of 30 days
-
