@@ -27,7 +27,12 @@ function Header({ setPage }) {
       {/* Right side */}
       <div style={{ display: "flex", alignItems: "center", gap: "18px", fontFamily: "Georgia, sans-serif" }}>
         <div onClick={() => setPage("listings")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer", fontFamily: "Georgia, sans-serif" }}>Browse</div>
-        <div style={{ color: "#fff", fontWeight: 500, cursor: "pointer", fontFamily: "Georgia, sans-serif" }}>Sell</div>
+        <div
+          onClick={() => setPage("create-listing")}
+          style={{ color: "#fff", fontWeight: 500, cursor: "pointer", fontFamily: "Georgia, sans-serif" }}
+        >
+          Sell
+        </div>
         
         <FaUserCircle style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }} />
         <div style={{
