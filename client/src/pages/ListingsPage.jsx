@@ -10,7 +10,7 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const res = await api.get("/api/listings");
+        const res = await api.get("/listings");
         setListings(res.data);
       } catch (error) {
         console.error("Error fetching listings:", error);
@@ -74,7 +74,7 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
                   <strong>Price:</strong> ${listing.price}
                 </p>
 
-                <button onClick={() => { setSelectedListingId(listing._id); setPage("listingDetails"); }}
+                <button onClick={() => { setSelectedListingId(listing._id); setPage("listing-details"); }}
                         style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
                                  padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",
                                  fontFamily: "Georgia, serif", width: "100%" }}

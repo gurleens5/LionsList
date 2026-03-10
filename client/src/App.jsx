@@ -31,16 +31,27 @@ function App() {
         fetchUser();
     }, []);
 
-    return (
-        <div>
-            {page === "home" && <Home setPage={setPage} />}
-            {page === "signin" && <SignIn setPage={setPage} setUser={setUser} />}
-            {page === "signup" && <SignUp setPage={setPage} setUser={setUser} />}
-            {page === "listings" && <ListingsPage setPage={setPage} setSelectedListingId={setSelectedListingId} />}
-            {page === "listingDetails" && <ListingDetailsPage setPage={setPage} listingId={selectedListingId} />}
-            {page === "create-listing" && <CreateListingPage setPage={setPage} />}
-        </div>
-    );
+  return (
+    <div>
+      {page === "home" && <Home setPage={setPage} />}
+      {page === "signin" && <SignIn setPage={setPage} setUser={setUser}/>}
+      {page === "signup" && <SignUp setPage={setPage} setUser={setUser}/>}
+      {page === "create-listing" && <CreateListingPage setPage={setPage} />}
+      {page === "listings" && (
+        <ListingsPage
+          setPage={setPage}
+          setSelectedListingId={setSelectedListingId}
+        />
+      )}
+      {page === "listing-details" && (
+        <ListingDetailsPage
+          setPage={setPage}
+          listingId={selectedListingId}
+        />
+        
+      )}
+    </div>
+  );
 }
 
 export default App;
