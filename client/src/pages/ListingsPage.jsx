@@ -21,7 +21,7 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
     fetchListings();
   }, []);
 
-   return (
+  return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}
     >
       <Header setPage={setPage} />
