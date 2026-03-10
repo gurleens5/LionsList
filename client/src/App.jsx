@@ -9,7 +9,7 @@ import api from "./lib/axios";
 
 function App() {
   const [page, setPage] = useState("home");
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedListingId, setSelectedListingId] = useState(null);
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
   
@@ -36,11 +36,28 @@ function App() {
   return (
     <div>
       {page === "home" && <Home setPage={setPage} />}
+<<<<<<< HEAD
+      {page === "signin" && <SignIn setPage={setPage} setUser={setUser}/>}
+      {page === "signup" && <SignUp setPage={setPage} setUser={setUser}/>}
+      {page === "listings" && (
+        <ListingsPage
+          setPage={setPage}
+          setSelectedListingId={setSelectedListingId}
+        />
+      )}
+      {page === "listingDetails" && (
+        <ListingDetailsPage
+          setPage={setPage}
+          listingId={selectedListingId}
+        />
+      )}
+=======
       {page === "signin" && <SignIn setPage={setPage} setUser={setUser} />}
       {page === "signup" && <SignUp setPage={setPage} setUser={setUser} />}
       {page === "listings" && <ListingsPage setPage={setPage} setSelectedId={setSelectedId} />}
       {page === "listing-details" && <ListingDetailsPage id={selectedId} setPage={setPage} />}
       {page === "create-listing" && <CreateListingPage setPage={setPage} />}
+>>>>>>> origin/main
     </div>
   );
 }
