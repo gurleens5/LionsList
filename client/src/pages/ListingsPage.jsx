@@ -3,9 +3,14 @@ import api from "../lib/axios";
 import Header from "../components/Header";
 
 // US-07-1: display all listings
+// US-05-T1: design filter UI with a checklist format
 const ListingsPage = ({ setPage, setSelectedListingId }) => {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [courseCodeInput, setCourseCodeInput] = useState("");
+
+  const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -21,6 +26,25 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
     fetchListings();
   }, []);
 
+  const handleCategoryChange = (category) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((item) => item !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
+
+  const filteredListings = listings.filter((listing) => {
+    const matchesCategory =
+      selectedCategories.length === 0 || selectedCategories.includes(listing.category);
+
+    const matchesCourseCode =
+      courseCodeInput.trim() === "" ||
+      (listing.courseCode && listing.courseCode.toLowerCase().includes(courseCodeInput.toLowerCase()));
+
+    return matchesCategory && matchesCourseCode;
+  });
+
   return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}
     >
@@ -35,64 +59,121 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
         </h1>
 
         {error && <p style={{ color: "#cc0000" }}>{error}</p>}
-        {listings.length === 0 && !error && <p>No listings found.</p>}
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}
+        <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}
         >
-          {listings.map((listing) => (
-            <div key={listing._id} style={{ width: "320px", minHeight: "470px", background: "#fff", borderRadius: "14px",
-              overflow: "hidden", border: "1px solid #ddd", display: "flex", flexDirection: "column" }}
+          <div style={{ width: "250px", background: "#fff", borderRadius: "14px", border: "1px solid #ddd",
+                        padding: "1.25rem", flexShrink: 0 }}
+          >
+            <h2 style={{ marginTop: 0, marginBottom: "1rem", fontSize: "1.4rem", color: "#111" }}
             >
-              <div style={{ height: "180px", background: "#d9d9d9", display: "flex", alignItems: "center",
-                            justifyContent: "center", color: "#666", fontWeight: "600" }}
+              Filters
+            </h2>
+
+            <div style={{ marginBottom: "1.5rem" }}>
+              <h3 style={{ marginTop: 0, marginBottom: "0.75rem", fontSize: "1.1rem", color: "#111" }}
               >
-                {listing.imageUrl ? (
-                  <img src={listing.imageUrl} alt={listing.title}
-                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                Category
+              </h3>
+
+              {categoryOptions.map((category) => (
+                <label key={category} style={{ display: "flex", alignItems: "center", gap: "0.5rem",
+                                               marginBottom: "0.6rem", color: "#222", cursor: "pointer" }}
+                >
+                  <input type="checkbox" checked={selectedCategories.includes(category)}
+                         onChange={() => handleCategoryChange(category)}
                   />
-                ) : (
-                  "No Image"
-                )}
-              </div>
-
-              <div style={{ padding: "1.25rem", display: "flex", flexDirection: "column", flex: 1 }}
-              >
-                <h3 style={{ marginTop: 0, marginBottom: "0.75rem", color: "#111", fontSize: "1.4rem", minHeight: "68px" }}
-                >
-                  {listing.title}
-                </h3>
-
-                <p style={{ color: "#444", marginBottom: "0.75rem", lineHeight: "1.6", minHeight: "110px" }}
-                >
-                  {listing.description}
-                </p>
-
-                <p style={{ margin: "0.3rem 0" }}>
-                  <strong>Category:</strong> {listing.category}
-                </p>
-
-                <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                  <strong>Course Code:</strong> {listing.courseCode}
-                </p>
-
-                <p style={{ margin: "0.3rem 0" }}>
-                  <strong>Price:</strong> ${listing.price}
-                </p>
-
-                <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                  <strong>Status:</strong> {listing.status}
-                </p>
-
-                <button onClick={() => { setSelectedListingId(listing._id); setPage("listing-details"); }}
-                        style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
-                                 padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",
-                                 fontFamily: "Georgia, serif", width: "100%", marginTop: "auto" }}
-                >
-                  View Details
-                </button>
-              </div>
+                  {category}
+                </label>
+              ))}
             </div>
-          ))}
+
+            <div style={{ marginBottom: "1.5rem" }}>
+              <h3 style={{ marginTop: 0, marginBottom: "0.75rem", fontSize: "1.1rem", color: "#111" }}
+              >
+                Course Code
+              </h3>
+
+              <input
+                type="text"
+                placeholder="Enter course code"
+                value={courseCodeInput}
+                onChange={(e) => setCourseCodeInput(e.target.value)}
+                style={{ width: "100%", padding: "0.75rem", borderRadius: "8px", border: "1px solid #ccc",
+                         fontFamily: "Georgia, sans-serif", fontSize: "1rem", boxSizing: "border-box" }}
+              />
+            </div>
+
+            <button onClick={() => { setSelectedCategories([]); setCourseCodeInput(""); }}
+                    style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
+                             padding: "0.75rem 1rem", fontWeight: "700", cursor: "pointer",
+                             fontFamily: "Georgia, serif", width: "100%" }}
+            >
+              Clear Filters
+            </button>
+          </div>
+
+          <div style={{ flex: 1 }}>
+            {filteredListings.length === 0 && !error && <p>No listings found.</p>}
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}
+            >
+              {filteredListings.map((listing) => (
+                <div key={listing._id} style={{ width: "320px", minHeight: "470px", background: "#fff", borderRadius: "14px",
+                  overflow: "hidden", border: "1px solid #ddd", display: "flex", flexDirection: "column" }}
+                >
+                  <div style={{ height: "180px", background: "#d9d9d9", display: "flex", alignItems: "center",
+                                justifyContent: "center", color: "#666", fontWeight: "600" }}
+                  >
+                    {listing.imageUrl ? (
+                      <img src={listing.imageUrl} alt={listing.title}
+                           style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                    ) : (
+                      "No Image"
+                    )}
+                  </div>
+
+                  <div style={{ padding: "1.25rem", display: "flex", flexDirection: "column", flex: 1 }}
+                  >
+                    <h3 style={{ marginTop: 0, marginBottom: "0.75rem", color: "#111", fontSize: "1.4rem", minHeight: "68px" }}
+                    >
+                      {listing.title}
+                    </h3>
+
+                    <p style={{ color: "#444", marginBottom: "0.75rem", lineHeight: "1.6", minHeight: "110px" }}
+                    >
+                      {listing.description}
+                    </p>
+
+                    <p style={{ margin: "0.3rem 0" }}>
+                      <strong>Category:</strong> {listing.category}
+                    </p>
+
+                    <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                      <strong>Course Code:</strong> {listing.courseCode}
+                    </p>
+
+                    <p style={{ margin: "0.3rem 0" }}>
+                      <strong>Price:</strong> ${listing.price}
+                    </p>
+
+                    <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                      <strong>Status:</strong> {listing.status}
+                    </p>
+
+                    <button onClick={() => { setSelectedListingId(listing._id); setPage("listing-details"); }}
+                            style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
+                                     padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",
+                                     fontFamily: "Georgia, serif", width: "100%", marginTop: "auto" }}
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
