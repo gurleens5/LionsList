@@ -24,7 +24,7 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
         }
 
         if (courseTitleInput.trim() !== "") {
-          params.courseTitle = courseTitleInput;
+          params.courseTitle = courseTitleInput.trim();
         }
 
         const res = await api.get("/listings", { params });

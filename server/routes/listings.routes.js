@@ -33,7 +33,8 @@ router.get("/", async (req, res) => {
     }
 
     if (courseTitle && courseTitle.trim() !== "") {
-      query.title = { $regex: courseTitle.trim(), $options: "i" };
+      const formattedCourseTitle = courseTitle.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      query.title = { $regex: formattedCourseTitle, $options: "i" };
     }
 
     const listings = await Listing.find(query).sort({ createdAt: -1 }).limit(50);
