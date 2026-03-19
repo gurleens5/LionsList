@@ -49,6 +49,11 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
     }
   };
 
+  const handleResetFilters = () => {
+    setSelectedCategories([]);
+    setCourseTitleInput("");
+  };
+
   return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}
     >
@@ -109,6 +114,15 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
                          fontFamily: "Georgia, sans-serif", fontSize: "1rem", boxSizing: "border-box" }}
               />
             </div>
+
+            <button
+              onClick={handleResetFilters}
+              style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
+                       padding: "0.75rem 1rem", fontWeight: "700", cursor: "pointer",
+                       fontFamily: "Georgia, serif", width: "100%" }}
+            >
+              Clear Filters
+            </button>
           </div>
 
           <div style={{ flex: 1 }}>
