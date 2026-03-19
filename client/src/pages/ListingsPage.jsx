@@ -3,7 +3,6 @@ import api from "../lib/axios";
 import Header from "../components/Header";
 
 // US-07-1: display all listings
-// US-05-T3: update presented listings when filters are applied
 const ListingsPage = ({ setPage, setSelectedListingId }) => {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
@@ -85,8 +84,10 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
                 <label key={category} style={{ display: "flex", alignItems: "center", gap: "0.5rem",
                                                marginBottom: "0.6rem", color: "#222", cursor: "pointer" }}
                 >
-                  <input type="checkbox" checked={selectedCategories.includes(category)}
-                         onChange={() => handleCategoryChange(category)}
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(category)}
+                    onChange={() => handleCategoryChange(category)}
                   />
                   {category}
                 </label>
