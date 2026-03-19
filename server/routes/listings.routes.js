@@ -3,16 +3,33 @@ import Listing from "../models/Listing.js";
 
 const router = express.Router();
 
+const normalizeCategory = (category) => {
+  const value = String(category || "").trim().toLowerCase();
+
+  if (value === "textbook" || value === "textbooks") return "Textbooks";
+  if (value === "note" || value === "notes") return "Notes";
+  if (value === "lab kit" || value === "labkit") return "Lab Kit";
+  if (value === "stationery") return "Stationery";
+  if (value === "study guide" || value === "studyguide") return "Study Guide";
+
+  return String(category || "").trim();
+};
+
 // get all listings or filtered listings
 router.get("/", async (req, res) => {
   try {
     const { categories, courseTitle } = req.query;
-
     const query = {};
 
     if (categories) {
-      const categoryList = categories.split(",").map((item) => item.trim());
-      query.category = { $in: categoryList };
+      const categoryList = categories
+        .split(",")
+        .map((item) => normalizeCategory(item))
+        .filter(Boolean);
+
+      if (categoryList.length > 0) {
+        query.category = { $in: categoryList };
+      }
     }
 
     if (courseTitle && courseTitle.trim() !== "") {
@@ -32,7 +49,7 @@ router.post("/", async (req, res) => {
   try {
     const title = String(req.body?.title || "").trim();
     const description = String(req.body?.description || "").trim();
-    const category = String(req.body?.category || "").trim();
+    const category = normalizeCategory(req.body?.category);
     const courseCode = String(req.body?.courseCode || "").trim();
     const imageUrl = String(req.body?.imageUrl || "").trim();
     const price = Number(req.body?.price);
