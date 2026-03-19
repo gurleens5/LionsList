@@ -3,20 +3,31 @@ import api from "../lib/axios";
 import Header from "../components/Header";
 
 // US-07-1: display all listings
-// US-05-T1: design filter UI with a checklist format
+// US-05-T2: fetch listings according to the selected categories and/or course title
 const ListingsPage = ({ setPage, setSelectedListingId }) => {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [courseCodeInput, setCourseCodeInput] = useState("");
+  const [courseTitleInput, setCourseTitleInput] = useState("");
 
   const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
 
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const res = await api.get("/listings");
+        const params = {};
+
+        if (selectedCategories.length > 0) {
+          params.categories = selectedCategories.join(",");
+        }
+
+        if (courseTitleInput.trim() !== "") {
+          params.courseTitle = courseTitleInput;
+        }
+
+        const res = await api.get("/listings", { params });
         setListings(res.data);
+        setError("");
       } catch (error) {
         console.error("Error fetching listings:", error);
         setError("Failed to load listings.");
@@ -24,7 +35,7 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
     };
 
     fetchListings();
-  }, []);
+  }, [selectedCategories, courseTitleInput]);
 
   const handleCategoryChange = (category) => {
     if (selectedCategories.includes(category)) {
@@ -33,17 +44,6 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
       setSelectedCategories([...selectedCategories, category]);
     }
   };
-
-  const filteredListings = listings.filter((listing) => {
-    const matchesCategory =
-      selectedCategories.length === 0 || selectedCategories.includes(listing.category);
-
-    const matchesCourseCode =
-      courseCodeInput.trim() === "" ||
-      (listing.courseCode && listing.courseCode.toLowerCase().includes(courseCodeInput.toLowerCase()));
-
-    return matchesCategory && matchesCourseCode;
-  });
 
   return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}
@@ -91,34 +91,26 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
             <div style={{ marginBottom: "1.5rem" }}>
               <h3 style={{ marginTop: 0, marginBottom: "0.75rem", fontSize: "1.1rem", color: "#111" }}
               >
-                Course Code
+                Course Title
               </h3>
 
               <input
                 type="text"
-                placeholder="Enter course code"
-                value={courseCodeInput}
-                onChange={(e) => setCourseCodeInput(e.target.value)}
+                placeholder="Enter course title"
+                value={courseTitleInput}
+                onChange={(e) => setCourseTitleInput(e.target.value)}
                 style={{ width: "100%", padding: "0.75rem", borderRadius: "8px", border: "1px solid #ccc",
                          fontFamily: "Georgia, sans-serif", fontSize: "1rem", boxSizing: "border-box" }}
               />
             </div>
-
-            <button onClick={() => { setSelectedCategories([]); setCourseCodeInput(""); }}
-                    style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
-                             padding: "0.75rem 1rem", fontWeight: "700", cursor: "pointer",
-                             fontFamily: "Georgia, serif", width: "100%" }}
-            >
-              Clear Filters
-            </button>
           </div>
 
           <div style={{ flex: 1 }}>
-            {filteredListings.length === 0 && !error && <p>No listings found.</p>}
+            {listings.length === 0 && !error && <p>No listings found.</p>}
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}
             >
-              {filteredListings.map((listing) => (
+              {listings.map((listing) => (
                 <div key={listing._id} style={{ width: "320px", minHeight: "470px", background: "#fff", borderRadius: "14px",
                   overflow: "hidden", border: "1px solid #ddd", display: "flex", flexDirection: "column" }}
                 >

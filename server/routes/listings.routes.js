@@ -3,12 +3,26 @@ import Listing from "../models/Listing.js";
 
 const router = express.Router();
 
-// get all listings
+// get all listings or filtered listings
 router.get("/", async (req, res) => {
   try {
-    const listings = await Listing.find().sort({ createdAt: -1 }).limit(50);
+    const { categories, courseTitle } = req.query;
+
+    const query = {};
+
+    if (categories) {
+      const categoryList = categories.split(",").map((item) => item.trim());
+      query.category = { $in: categoryList };
+    }
+
+    if (courseTitle && courseTitle.trim() !== "") {
+      query.title = { $regex: courseTitle.trim(), $options: "i" };
+    }
+
+    const listings = await Listing.find(query).sort({ createdAt: -1 }).limit(50);
     res.json(listings);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Failed to fetch listings" });
   }
 });
