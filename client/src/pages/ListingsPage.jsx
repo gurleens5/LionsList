@@ -3,10 +3,11 @@ import api from "../lib/axios";
 import Header from "../components/Header";
 
 // US-07-1: display all listings
-// US-05-T2: fetch listings according to the selected categories and/or course title
+// US-05-T3: update presented listings when filters are applied
 const ListingsPage = ({ setPage, setSelectedListingId }) => {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [courseTitleInput, setCourseTitleInput] = useState("");
 
@@ -15,6 +16,8 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
+        setLoading(true);
+
         const params = {};
 
         if (selectedCategories.length > 0) {
@@ -31,6 +34,8 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
       } catch (error) {
         console.error("Error fetching listings:", error);
         setError("Failed to load listings.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -106,11 +111,12 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
           </div>
 
           <div style={{ flex: 1 }}>
-            {listings.length === 0 && !error && <p>No listings found.</p>}
+            {loading && <p>Loading listings...</p>}
+            {listings.length === 0 && !error && !loading && <p>No listings found.</p>}
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}
             >
-              {listings.map((listing) => (
+              {!loading && listings.map((listing) => (
                 <div key={listing._id} style={{ width: "320px", minHeight: "470px", background: "#fff", borderRadius: "14px",
                   overflow: "hidden", border: "1px solid #ddd", display: "flex", flexDirection: "column" }}
                 >
