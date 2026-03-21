@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import ListingsPage from "./pages/ListingsPage";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
 import CreateListingPage from "./pages/CreateListingPage";
+import MyListingsPage from "./pages/MyListingsPage";
 import api from "./lib/axios";
 
 function App() {
@@ -49,6 +50,17 @@ function App() {
           listingId={selectedListingId}
         />
         
+      )}
+
+      {page === "my-listings" && (
+        user ? (
+          <MyListingsPage
+            setPage={setPage}
+            setSelectedListingId={setSelectedListingId}
+          />
+        ) : (
+          setPage("signin")
+        )
       )}
     </div>
   );
