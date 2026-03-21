@@ -37,6 +37,14 @@ function CreateListingPage({ setPage }) {
     try {
       setError("");
 
+      const token = localStorage.getItem("token");
+
+      const userRes = await api.get("/me", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      const userId = userRes.data?._id;
+
       await api.post("/listings", {
         title: formData.title.trim(),
         description: formData.description.trim(),
@@ -44,6 +52,7 @@ function CreateListingPage({ setPage }) {
         courseCode: formData.courseCode.trim(),
         imageUrl: formData.imageUrl.trim(),
         price: Number(formData.price),
+        seller: userId
       });
 
       setPage("listings");
@@ -56,7 +65,7 @@ function CreateListingPage({ setPage }) {
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
       <Header setPage={setPage} />
 
-      <div style={{ display: "flex", justifyContent: "center", padding: "7rem" }}>
+      <div style={{ display: "flex", justifyContent: "center", padding: "7rem", paddingTop: "150px" }}>
         <div
           style={{
             background: "#fff",
