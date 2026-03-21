@@ -57,6 +57,13 @@ function Header({ setPage }) {
         </div>
 
         <div
+          onClick={() => setPage("sent-offers")}
+          style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}
+        >
+          Sent Offers
+        </div>
+
+        <div
           onClick={() => setPage("my-listings")}
           style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}
         >
