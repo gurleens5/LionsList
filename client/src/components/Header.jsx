@@ -57,10 +57,10 @@ function Header({ setPage }) {
         </div>
 
         <div
-          onClick={() => setPage("sent-offers")}
+          onClick={() => setPage("my-listings")}
           style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}
         >
-          Sent Offers
+          My Listings
         </div>
 
         <FaUserCircle style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }} />
