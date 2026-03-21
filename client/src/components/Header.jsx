@@ -56,6 +56,13 @@ function Header({ setPage }) {
           Sell
         </div>
 
+        <div
+          onClick={() => setPage("my-listings")}
+          style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}
+        >
+          My Listings
+        </div>
+
         <FaUserCircle style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }} />
 
         {!token ? (
