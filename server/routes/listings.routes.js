@@ -97,7 +97,7 @@ router.get("/my", protect, async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch user listings" });
   }
-});
+});    
 
 // fetch listing by id
 router.get("/:id", async (req, res) => {
