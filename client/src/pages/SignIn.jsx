@@ -36,13 +36,8 @@ function SignIn({ setPage, setUser }) {
             {/* Header */}
             <Header setPage={setPage} />
 
-            {/* Back button */}
-            <div style={{ padding: "5rem 1.5rem 0 1.5rem" }}>
-                <span onClick={() => setPage("home")} style={{ cursor: "pointer" }}>← Back to Home</span>
-            </div>
-
             {/* Sign In Box */}
-            <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
+            <div style={{ display: "flex", justifyContent: "center", padding: "2rem", paddingTop: "150px" }}>
                 <div style={{ background: "#fff", borderRadius: "12px", padding: "3rem 2.5rem", width: "100%", maxWidth: "420px" }}>
 
                     <h2 style={{ margin: "0 0 0.3rem 0" }}>Sign In</h2>
