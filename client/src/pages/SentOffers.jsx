@@ -15,4 +15,4 @@ function SentOffers({ setPage }) {
   );
 }
 
-export default SentOffers;
+export default SentOffers; 

@@ -6,6 +6,7 @@ import ListingsPage from "./pages/ListingsPage";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
 import CreateListingPage from "./pages/CreateListingPage";
 import MyListingsPage from "./pages/MyListingsPage";
+import SentOffers from "./pages/SentOffers";
 import api from "./lib/axios";
 
 function App() {
