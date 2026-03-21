@@ -4,6 +4,7 @@ import authRoutes from "./routes/authRoutes.js";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import cors from "cors";
+import offersRoutes from "./routes/offers.routes.js";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/listings", listingsRoutes);
 app.use("/api", authRoutes);
+app.use("/api/offers", offersRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true });
