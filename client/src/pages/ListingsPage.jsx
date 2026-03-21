@@ -17,7 +17,7 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
       try {
         setLoading(true);
 
-        const params = {};
+        const params = {status: "Available"};
 
         if (selectedCategories.length > 0) {
           params.categories = selectedCategories.join(",");

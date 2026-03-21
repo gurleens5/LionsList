@@ -18,9 +18,13 @@ const normalizeCategory = (category) => {
 // get all listings or filtered listings
 router.get("/", async (req, res) => {
   try {
-    const { categories, courseTitle } = req.query;
+    const { categories, courseTitle, status } = req.query;
     const query = {};
 
+    if (status && status.trim() !== "") {
+      query.status = status.trim();
+    }
+    
     if (categories) {
       const categoryList = categories
         .split(",")
