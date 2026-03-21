@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 
-function Home({ setPage }) {
+function Home({ setPage, setHomeSearch }) {
+
+  const [input, setInput] = useState("");
+
+
+  const handleSearch = () => {
+    const trimmedInput = input.trim();
+    if (!trimmedInput)
+      return;
+
+    setHomeSearch(trimmedInput);
+    setPage("listings");
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter")
+      handleSearch();
+  };
+
   return (
     <div style={{ fontFamily: "Georgia, sans-serif" }}>
       <Header setPage={setPage} />
@@ -56,6 +74,9 @@ function Home({ setPage }) {
         <div style={{ display: "flex", width: "100%", maxWidth: "600px" }}>
           <input
             placeholder="Search for textbooks, notes, lab kits..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
             style={{
               flex: 1, padding: "0.9rem 1.5rem", fontSize: "1rem",
               border: "none", borderRadius: "8px 0 0 8px",
@@ -63,11 +84,14 @@ function Home({ setPage }) {
               fontFamily: "serif",
             }}
           />
-          <button style={{
-            background: "#cc0000", color: "#fff", border: "none",
-            borderRadius: "0 8px 8px 0", padding: "0.9rem 1.8rem",
-            fontSize: "1rem", fontWeight: "700", cursor: "pointer", fontFamily: "Georgia, serif",
-          }}>Search</button>
+          <button
+            onClick={handleSearch}
+            style={{
+              background: "#cc0000", color: "#fff", border: "none",
+              borderRadius: "0 8px 8px 0", padding: "0.9rem 1.8rem",
+              fontSize: "1rem", fontWeight: "700", cursor: "pointer", fontFamily: "Georgia, serif",
+            }}
+          >Search</button>
         </div>
       </div>
 

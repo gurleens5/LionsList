@@ -14,6 +14,7 @@ function App() {
     const [selectedListingId, setSelectedListingId] = useState(null);
     const [user, setUser] = useState(null);
     const [error, setError] = useState('');
+    const [homeSearch, setHomeSearch] = useState("");
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -35,15 +36,16 @@ function App() {
 
   return (
     <div>
-      {page === "home" && <Home setPage={setPage} />}
+      {page === "home" && <Home setPage={setPage} setHomeSearch={setHomeSearch} />}
       {page === "signin" && <SignIn setPage={setPage} setUser={setUser}/>}
       {page === "signup" && <SignUp setPage={setPage} setUser={setUser}/>}
-      {page === "create-listing" && <CreateListingPage setPage={setPage} />}
+      {page === "create-listing" && (user ? <MyListingsPage setPage={setPage} /> : setPage("signin"))}
       {page === "sent-offers" && (user ? <SentOffers setPage={setPage} /> : setPage("signin"))}
       {page === "listings" && (
         <ListingsPage
           setPage={setPage}
           setSelectedListingId={setSelectedListingId}
+          homeSearch={homeSearch}
         />
       )}
       {page === "listing-details" && (
