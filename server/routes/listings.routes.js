@@ -1,5 +1,6 @@
 import express from "express";
 import Listing from "../models/Listing.js";
+import { protect } from "../middleware/auth.js";
 const router = express.Router();
 
 const normalizeCategory = (category) => {
@@ -85,11 +86,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/my", async (req, res) => {
+// get listings for current user
+router.get("/my", protect, async (req, res) => {
   try {
-    const userId = req.user?._id || req.query.userId;
-
-    const listings = await Listing.find({ seller: userId })
+    const listings = await Listing.find({ seller: req.user._id })
       .sort({ status: 1, createdAt: -1 });
 
     res.json(listings);
@@ -97,7 +97,7 @@ router.get("/my", async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch user listings" });
   }
-});
+});    
 
 // fetch listing by id
 router.get("/:id", async (req, res) => {
