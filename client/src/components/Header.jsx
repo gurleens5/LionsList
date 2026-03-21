@@ -27,10 +27,10 @@ function Header({ setPage }) {
       {/* Big screen nav */}
       <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: "18px", fontFamily: "Georgia, sans-serif" }}>
         <div onClick={() => setPage("listings")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Browse</div>
-        <div onClick={() => setPage("create-listing")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Sell</div>
-        <div onClick={() => setPage("sent-offers")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Sent Offers</div>
-        <div onClick={() => setPage("my-listings")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>My Listings</div>
-        
+        <div onClick={() => token ? setPage("create-listing") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Sell</div>
+        <div onClick={() => token ? setPage("sent-offers") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Sent Offers</div>
+        <div onClick={() => token ? setPage("my-listings") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>My Listings</div>
+                
         <FaUserCircle style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }} />
         {!token ? (
           <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", background: "#cc0000", borderRadius: "20px", padding: "0.4rem 1.2rem" }}>
@@ -52,9 +52,9 @@ function Header({ setPage }) {
       {menuOpen && (
         <div style={{ position: "fixed", top: "70px", left: 0, right: 0, bottom: 0, background: "#000", display: "flex", flexDirection: "column", gap: "2rem", padding: "2.5rem 1.5rem", fontFamily: "Georgia, sans-serif", zIndex: 99 }}>
           <div onClick={() => go("listings")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Browse</div>
-          <div onClick={() => go("create-listing")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Sell</div>
-          <div onClick={() => go("sent-offers")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Sent Offers</div>
-          <div onClick={() => go("my-listings")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>My Listings</div>
+          <div onClick={() => token ? go("create-listing") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Sell</div>
+          <div onClick={() => token ? go("sent-offers") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Sent Offers</div>
+          <div onClick={() => token ? go("my-listings") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>My Listings</div>
           {!token ? (
             <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
               <span onClick={() => go("signin")} style={{ color: "#cc0000", fontWeight: "600", fontSize: "1.3rem", cursor: "pointer" }}>Sign In</span>
