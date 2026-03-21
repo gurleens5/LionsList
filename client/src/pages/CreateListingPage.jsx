@@ -56,13 +56,7 @@ function CreateListingPage({ setPage }) {
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
       <Header setPage={setPage} />
 
-      <div style={{ padding: "5rem 1.5rem 0 1.5rem" }}>
-        <span onClick={() => setPage("home")} style={{ cursor: "pointer" }}>
-          ← Back to Home
-        </span>
-      </div>
-
-      <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
+      <div style={{ display: "flex", justifyContent: "center", padding: "7rem" }}>
         <div
           style={{
             background: "#fff",

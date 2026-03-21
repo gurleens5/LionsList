@@ -71,6 +71,24 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
 
         {error && <p style={{ color: "#cc0000" }}>{error}</p>}
 
+      <div style={{ display: "flex", width: "100%", maxWidth: "600px", marginBottom: "1.5rem" }}>
+          <input
+            placeholder="Search for textbooks, notes, lab kits..."
+            style={{
+              flex: 1, padding: "0.9rem 1.5rem", fontSize: "1rem",
+              border: "none", borderRadius: "8px 0 0 8px",
+              background: "#ffffff", color: "#111", outline: "none",
+              fontFamily: "serif",
+            }}
+          />
+
+          <button style={{
+            background: "#cc0000", color: "#fff", border: "none",
+            borderRadius: "0 8px 8px 0", padding: "0.9rem 1.8rem",
+            fontSize: "1rem", fontWeight: "700", cursor: "pointer", fontFamily: "Georgia, serif",
+          }}>Search</button>
+        </div>
+
         <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}
         >
           <div style={{ width: "250px", background: "#fff", borderRadius: "14px", border: "1px solid #ddd",
