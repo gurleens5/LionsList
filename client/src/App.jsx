@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import ListingsPage from "./pages/ListingsPage";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
 import CreateListingPage from "./pages/CreateListingPage";
+import SentOffers from "./pages/SentOffers";
 import api from "./lib/axios";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
       {page === "signin" && <SignIn setPage={setPage} setUser={setUser}/>}
       {page === "signup" && <SignUp setPage={setPage} setUser={setUser}/>}
       {page === "create-listing" && <CreateListingPage setPage={setPage} />}
+      {page === "sent-offers" && <SentOffers setPage={setPage} />}
       {page === "listings" && (
         <ListingsPage
           setPage={setPage}
