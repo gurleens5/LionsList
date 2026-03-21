@@ -204,7 +204,19 @@ const ListingsPage = ({ setPage, setSelectedListingId }) => {
                       </p>
 
                       <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                        <strong>Status:</strong> {listing.status}
+                        <strong>Status:</strong>{" "}
+                        <span
+                          style={{
+                            backgroundColor: listing.status === "Available" ? "#d4edda" : "#eee",
+                            color: listing.status === "Available" ? "#155724" : "#555",
+                            padding: "0.2rem 0.6rem",
+                            borderRadius: "6px",
+                            fontWeight: "700",
+                            fontSize: "0.85rem"
+                          }}
+                        >
+                          {listing.status}
+                        </span>
                       </p>
 
                       <button onClick={() => { setSelectedListingId(listing._id); setPage("listing-details"); }}
