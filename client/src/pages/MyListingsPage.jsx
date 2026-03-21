@@ -58,7 +58,6 @@ const MyListingsPage = ({ setPage, setSelectedListingId }) => {
         </h1>
 
         {error && <p style={{ color: "#cc0000" }}>{error}</p>}
-
         {loading && <p>Loading listings...</p>}
 
         {noListings && (
@@ -69,61 +68,67 @@ const MyListingsPage = ({ setPage, setSelectedListingId }) => {
 
         {!noListings && (
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
-            {listings.map((listing) => (
-              <div
-                key={listing._id}
-                style={{
-                  width: "320px",
-                  background: "#fff",
-                  borderRadius: "14px",
-                  border: "1px solid #ddd",
-                  padding: "1.25rem",
-                }}
-              >
-                <h3 style={{ marginBottom: "0.5rem" }}>
-                  {listing.title}
-                </h3>
-
-                <p>
-                  <strong>Status:</strong>{" "}
-                  <span
-                    style={{
-                      backgroundColor: listing.status === "Available" ? "#d4edda" : "#eee",
-                      color: listing.status === "Available" ? "#155724" : "#555",
-                      padding: "0.2rem 0.6rem",
-                      borderRadius: "6px",
-                      fontWeight: "700",
-                      fontSize: "0.85rem"
-                    }}
-                  >
-                    {listing.status}
-                  </span>
-                </p>
-
-                <p>
-                  <strong>Price:</strong> ${listing.price}
-                </p>
-
-                <button
-                  onClick={() => {
-                    setSelectedListingId(listing._id);
-                    setPage("listing-details");
-                  }}
+            {[...listings]
+              .sort((a, b) => {
+                if (a.status === "Available" && b.status !== "Available") return -1;
+                if (a.status !== "Available" && b.status === "Available") return 1;
+                return 0;
+              })
+              .map((listing) => (
+                <div
+                  key={listing._id}
                   style={{
-                    marginTop: "1rem",
-                    background: "#cc0000",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "0.6rem 1rem",
-                    cursor: "pointer",
-                    fontWeight: "700",
+                    width: "320px",
+                    background: "#fff",
+                    borderRadius: "14px",
+                    border: "1px solid #ddd",
+                    padding: "1.25rem",
                   }}
                 >
-                  View Details
-                </button>
-              </div>
-            ))}
+                  <h3 style={{ marginBottom: "0.5rem" }}>
+                    {listing.title}
+                  </h3>
+
+                  <p>
+                    <strong>Status:</strong>{" "}
+                    <span
+                      style={{
+                        backgroundColor: listing.status === "Available" ? "#d4edda" : "#eee",
+                        color: listing.status === "Available" ? "#155724" : "#555",
+                        padding: "0.2rem 0.6rem",
+                        borderRadius: "6px",
+                        fontWeight: "700",
+                        fontSize: "0.85rem"
+                      }}
+                    >
+                      {listing.status}
+                    </span>
+                  </p>
+
+                  <p>
+                    <strong>Price:</strong> ${listing.price}
+                  </p>
+
+                  <button
+                    onClick={() => {
+                      setSelectedListingId(listing._id);
+                      setPage("listing-details");
+                    }}
+                    style={{
+                      marginTop: "1rem",
+                      background: "#cc0000",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "8px",
+                      padding: "0.6rem 1rem",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                    }}
+                  >
+                    View Details
+                  </button>
+                </div>
+              ))}
           </div>
         )}
       </div>
