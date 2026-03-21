@@ -85,19 +85,19 @@ const MyListingsPage = ({ setPage, setSelectedListingId }) => {
                 </h3>
 
                 <p>
-                    <strong>Status:</strong>{" "}
-                    <span
-                        style={{
-                        backgroundColor: listing.status === "Available" ? "#d4edda" : "#eee",
-                        color: listing.status === "Available" ? "#155724" : "#555",
-                        padding: "0.2rem 0.6rem",
-                        borderRadius: "6px",
-                        fontWeight: "700",
-                        fontSize: "0.85rem"
-                        }}
-                    >
-                        {listing.status}
-                    </span>
+                  <strong>Status:</strong>{" "}
+                  <span
+                    style={{
+                      backgroundColor: listing.status === "Available" ? "#d4edda" : "#eee",
+                      color: listing.status === "Available" ? "#155724" : "#555",
+                      padding: "0.2rem 0.6rem",
+                      borderRadius: "6px",
+                      fontWeight: "700",
+                      fontSize: "0.85rem"
+                    }}
+                  >
+                    {listing.status}
+                  </span>
                 </p>
 
                 <p>
