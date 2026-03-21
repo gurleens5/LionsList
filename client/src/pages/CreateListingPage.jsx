@@ -37,6 +37,14 @@ function CreateListingPage({ setPage }) {
     try {
       setError("");
 
+      const token = localStorage.getItem("token");
+
+      const userRes = await api.get("/me", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      const userId = userRes.data?._id;
+
       await api.post("/listings", {
         title: formData.title.trim(),
         description: formData.description.trim(),
@@ -44,6 +52,7 @@ function CreateListingPage({ setPage }) {
         courseCode: formData.courseCode.trim(),
         imageUrl: formData.imageUrl.trim(),
         price: Number(formData.price),
+        seller: userId
       });
 
       setPage("listings");
