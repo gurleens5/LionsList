@@ -1,36 +1,37 @@
 import express from "express";
 import Listing from "../models/Listing.js";
-
 const router = express.Router();
 
 const normalizeCategory = (category) => {
   const value = String(category || "").trim().toLowerCase();
-
   if (value === "textbook" || value === "textbooks") return "Textbooks";
   if (value === "note" || value === "notes") return "Notes";
   if (value === "lab kit" || value === "labkit") return "Lab Kit";
   if (value === "stationery") return "Stationery";
   if (value === "study guide" || value === "studyguide") return "Study Guide";
-
   return String(category || "").trim();
 };
 
 // get all listings or filtered listings
 router.get("/", async (req, res) => {
   try {
-    const { categories, courseTitle, status } = req.query;
+    const { categories, courseTitle, status, keyword } = req.query;
     const query = {};
 
     if (status && status.trim() !== "") {
       query.status = status.trim();
     }
-    
+
+    if (keyword && keyword.trim() !== "") {
+      const escapedKeyword = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      query.title = { $regex: escapedKeyword, $options: "i" };
+    }
+
     if (categories) {
       const categoryList = categories
         .split(",")
         .map((item) => normalizeCategory(item))
         .filter(Boolean);
-
       if (categoryList.length > 0) {
         query.category = { $in: categoryList };
       }
@@ -77,7 +78,6 @@ router.post("/", async (req, res) => {
       price,
       seller,
     });
-
     res.status(201).json(listing);
   } catch (error) {
     console.error(error);
@@ -89,11 +89,9 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id).populate("seller", "username");
-
     if (!listing) {
       return res.status(404).json({ message: "Listing not found" });
     }
-
     res.json({
       ...listing.toObject(),
       sellerUsername: listing.seller?.username || "Unknown",
@@ -102,7 +100,6 @@ router.get("/:id", async (req, res) => {
     if (error && error.name === "CastError") {
       return res.status(400).json({ message: "Invalid listing ID" });
     }
-
     res.status(500).json({ message: "Failed to fetch listing" });
   }
 });
