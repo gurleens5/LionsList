@@ -107,7 +107,8 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
   };
 
   const handleDelete = async () => {
-   
+    const confirmed = window.confirm("Are you sure you want to delete this listing?");
+    if (!confirmed) return;
   };
 
   return (
