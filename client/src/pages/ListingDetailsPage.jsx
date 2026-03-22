@@ -51,10 +51,10 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
       }
     };
 
-    if (listingId && isSeller) {
+    if (listingId && isSeller && token) {
       fetchOffers();
     }
-  }, [listingId, isSeller]);
+  }, [listingId, isSeller, token]);
 
   const handleOfferSubmit = async (e) => {
     e.preventDefault();
