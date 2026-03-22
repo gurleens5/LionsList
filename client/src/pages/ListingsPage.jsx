@@ -3,14 +3,13 @@ import api from "../lib/axios";
 import Header from "../components/Header";
 
 // US-07-1: display all listings
-const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
+const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "", selectedCategories, 
+  setSelectedCategories, courseTitleInput, setCourseTitleInput, searchQuery, setSearchQuery, searchInput, 
+  setSearchInput, }) => {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [courseTitleInput, setCourseTitleInput] = useState("");
-  const [searchInput, setSearchInput] = useState(homeSearch);
-  const [searchQuery, setSearchQuery] = useState(homeSearch);
+  
 
   const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
 

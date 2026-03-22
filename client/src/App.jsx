@@ -15,6 +15,10 @@ function App() {
     const [user, setUser] = useState(null);
     const [error, setError] = useState('');
     const [homeSearch, setHomeSearch] = useState("");
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [courseTitleInput, setCourseTitleInput] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchInput, setSearchInput] = useState("");
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -46,6 +50,14 @@ function App() {
           setPage={setPage}
           setSelectedListingId={setSelectedListingId}
           homeSearch={homeSearch}
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
+          courseTitleInput={courseTitleInput}
+          setCourseTitleInput={setCourseTitleInput}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
         />
       )}
       {page === "listing-details" && (
