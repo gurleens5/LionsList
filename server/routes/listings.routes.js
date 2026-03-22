@@ -24,9 +24,13 @@ router.get("/", async (req, res) => {
     }
 
     if (keyword && keyword.trim() !== "") {
-      const escapedKeyword = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      query.title = { $regex: escapedKeyword, $options: "i" };
-    }
+      const escaped = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      query.$or = [
+    { title: { $regex: escaped, $options: "i" } },
+    { courseCode: { $regex: escaped, $options: "i" } },
+    { description: { $regex: escaped, $options: "i" } },
+  ];
+}
 
     if (categories) {
       const categoryList = categories
@@ -39,8 +43,8 @@ router.get("/", async (req, res) => {
     }
 
     if (courseTitle && courseTitle.trim() !== "") {
-      const formattedCourseTitle = courseTitle.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      query.title = { $regex: formattedCourseTitle, $options: "i" };
+      const escaped = courseTitle.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      query.courseCode = { $regex: escaped, $options: "i" };
     }
 
     const listings = await Listing.find(query).sort({ createdAt: -1 }).limit(50);

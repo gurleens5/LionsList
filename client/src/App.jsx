@@ -60,6 +60,7 @@ function App() {
           setSearchQuery={setSearchQuery}
           searchInput={searchInput}
           setSearchInput={setSearchInput}
+          setHomeSearch={setHomeSearch}
         />
       )}
       {page === "listing-details" && (

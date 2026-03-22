@@ -3,7 +3,7 @@ import api from "../lib/axios";
 import Header from "../components/Header";
 
 // US-07-1: display all listings
-const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSearch = "", selectedCategories, 
+const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSearch = "", setHomeSearch, selectedCategories, 
   setSelectedCategories, courseTitleInput, setCourseTitleInput, searchQuery, setSearchQuery, searchInput, 
   setSearchInput, }) => {
   const [listings, setListings] = useState([]);
@@ -12,6 +12,14 @@ const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSear
   
 
   const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
+
+  useEffect(() => {
+  if (homeSearch) {
+    setSearchInput(homeSearch);
+    setSearchQuery(homeSearch);
+    setHomeSearch("");
+  }
+}, [homeSearch]);
 
   useEffect(() => {
     const fetchListings = async () => {
