@@ -63,6 +63,7 @@ const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSear
   };
 
   const handleSearch = () => {
+    handleResetFilters();
     setSearchQuery(searchInput);
   };
 
