@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import React, { useState, useEffect } from "react";
 import api from "../lib/axios";
 
-function EditListingPage({ setPage, listingId, previousPage }) {
+function EditListingPage({ setPage, listingId }) {
 
   const [formData, setFormData] = useState({
     title: "",
@@ -55,6 +55,7 @@ function EditListingPage({ setPage, listingId, previousPage }) {
       }
     );
 
+    // Fetches the edited listing which refreshes the listing
     setPage("listing-details", listingId);
 
   } catch (err) {
