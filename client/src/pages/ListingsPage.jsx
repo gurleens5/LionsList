@@ -3,7 +3,7 @@ import api from "../lib/axios";
 import Header from "../components/Header";
 
 // US-07-1: display all listings
-const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "", selectedCategories, 
+const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSearch = "", selectedCategories, 
   setSelectedCategories, courseTitleInput, setCourseTitleInput, searchQuery, setSearchQuery, searchInput, 
   setSearchInput, }) => {
   const [listings, setListings] = useState([]);
@@ -218,7 +218,11 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "", selected
                         </span>
                       </p>
 
-                      <button onClick={() => { setSelectedListingId(listing._id); setPage("listing-details"); }}
+                      <button onClick={() => { 
+                        setPreviousPage("listings");
+                        setSelectedListingId(listing._id); 
+                        setPage("listing-details"); 
+                      }}
                               style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
                                        padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",
                                        fontFamily: "Georgia, serif", width: "100%", marginTop: "auto" }}>

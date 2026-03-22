@@ -12,6 +12,7 @@ import api from "./lib/axios";
 function App() {
     const [page, setPage] = useState("home");
     const [selectedListingId, setSelectedListingId] = useState(null);
+    const [previousPage, setPreviousPage] = useState("listings");
     const [user, setUser] = useState(null);
     const [error, setError] = useState('');
     const [homeSearch, setHomeSearch] = useState("");
@@ -49,6 +50,7 @@ function App() {
         <ListingsPage
           setPage={setPage}
           setSelectedListingId={setSelectedListingId}
+          setPreviousPage={setPreviousPage}
           homeSearch={homeSearch}
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
@@ -64,6 +66,7 @@ function App() {
         <ListingDetailsPage
           setPage={setPage}
           listingId={selectedListingId}
+          previousPage={previousPage}
           user={user}
         />
         
@@ -74,6 +77,7 @@ function App() {
           <MyListingsPage
             setPage={setPage}
             setSelectedListingId={setSelectedListingId}
+            setPreviousPage={setPreviousPage}
           />
         ) : (
           setPage("signin")

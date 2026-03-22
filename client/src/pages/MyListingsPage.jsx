@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../lib/axios";
 import Header from "../components/Header";
 
-const MyListingsPage = ({ setPage, setSelectedListingId }) => {
+const MyListingsPage = ({ setPage, setSelectedListingId, setPreviousPage }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -154,6 +154,7 @@ const MyListingsPage = ({ setPage, setSelectedListingId }) => {
 
                     <button
                       onClick={() => {
+                        setPreviousPage("my-listings");
                         setSelectedListingId(listing._id);
                         setPage("listing-details");
                       }}
