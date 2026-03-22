@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import api from "../lib/axios";
 import Header from "../components/Header";
 
-// US-07-2, US-07-3, US-07-4: display listing details and seller info
 const ListingDetailsPage = ({ setPage, listingId }) => {
   const [listing, setListing] = useState(null);
   const [error, setError] = useState("");
+
+  const isLoggedIn = !!localStorage.getItem("token");
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -30,13 +31,27 @@ const ListingDetailsPage = ({ setPage, listingId }) => {
       <div style={{ height: "70px" }} />
 
       <div style={{ padding: "2rem", display: "flex", justifyContent: "center" }}>
-        <div style={{ background: "#fff", borderRadius: "14px", padding: "2rem", width: "100%", maxWidth: "750px",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
+        <div 
+          style={{ 
+            background: "#fff",
+            borderRadius: "14px",
+            padding: "2rem",
+            width: "100%",
+            maxWidth: "750px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.08)" 
+          }}
         >
           <button
             onClick={() => setPage("listings")}
-            style={{ background: "transparent", border: "none", color: "#cc0000", fontWeight: "700", cursor: "pointer",
-                    marginBottom: "1rem", padding: 0, fontFamily: "Georgia, serif",
+            style={{ 
+              background: "transparent",
+              border: "none",
+              color: "#cc0000",
+              fontWeight: "700",
+              cursor: "pointer",
+              marginBottom: "1rem",
+              padding: 0,
+              fontFamily: "Georgia, serif",
             }}
           >
             ← Back to Listings
@@ -61,9 +76,39 @@ const ListingDetailsPage = ({ setPage, listingId }) => {
               <p><strong>Status:</strong> {listing.status}</p>
               <p><strong>Seller:</strong> {listing.sellerUsername || "Unknown"}</p>
 
-              <small style={{ color: "#666" }}>
-                Created: {new Date(listing.createdAt).toLocaleString()}
-              </small>
+              <div 
+                style={{ 
+                  marginTop: "2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "1rem",
+                  flexWrap: "wrap",
+                }}
+              >
+                {isLoggedIn && (
+                  <button
+                    type="button"
+                    style={{ 
+                      background: "#cc0000",
+                      color: "#fff",
+                      border: "none",
+                      padding: "0.5rem 1rem",
+                      borderRadius: "8px",
+                      cursor: "pointer", 
+                      fontWeight: "700",
+                      fontFamily: "Georgia, serif",
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                    }}
+                  >
+                    Make Offer
+                  </button>
+                )}
+
+                <small style={{ color: "#666" }}>
+                  Created: {new Date(listing.createdAt).toLocaleString()}
+                </small>
+              </div>
             </div>
           )}
         </div>
