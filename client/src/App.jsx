@@ -39,22 +39,33 @@ function App() {
         fetchUser();
     }, []);
 
+
+  const handleSetPage = (newPage, fromPage) => {
+  if (newPage === "listings" && fromPage !== "listing-details") {
+    setSelectedCategories([]);
+    setCourseTitleInput("");
+    setSearchQuery("");
+    setSearchInput("");
+  }
+  setPage(newPage);
+};
+
   return (
     <div>
-      {page === "home" && <Home setPage={setPage} setHomeSearch={setHomeSearch} />}
-      {page === "signin" && <SignIn setPage={setPage} setUser={setUser}/>}
-      {page === "signup" && <SignUp setPage={setPage} setUser={setUser}/>}
+      {page === "home" && <Home setPage={handleSetPage} setHomeSearch={setHomeSearch} />}
+      {page === "signin" && <SignIn setPage={handleSetPage} setUser={setUser}/>}
+      {page === "signup" && <SignUp setPage={handleSetPage} setUser={setUser}/>}
       {page === "create-listing" && (
         user ? (
-          <CreateListingPage setPage={setPage} />
+          <CreateListingPage setPage={handleSetPage} />
         ) : (
-          setPage("signin")
+          handleSetPage("signin")
         )
       )}
-      {page === "sent-offers" && (user ? <SentOffers setPage={setPage} /> : setPage("signin"))}
+      {page === "sent-offers" && (user ? <SentOffers setPage={handleSetPage} /> : handleSetPage("signin"))}
       {page === "listings" && (
         <ListingsPage
-          setPage={setPage}
+          setPage={handleSetPage}
           setSelectedListingId={setSelectedListingId}
           setPreviousPage={setPreviousPage}
           homeSearch={homeSearch}
@@ -71,7 +82,7 @@ function App() {
       )}
       {page === "listing-details" && (
         <ListingDetailsPage
-          setPage={setPage}
+          setPage={handleSetPage}
           listingId={selectedListingId}
           previousPage={previousPage}
           user={user}
@@ -82,12 +93,12 @@ function App() {
       {page === "my-listings" && (
         user ? (
           <MyListingsPage
-            setPage={setPage}
+            setPage={handleSetPage}
             setSelectedListingId={setSelectedListingId}
             setPreviousPage={setPreviousPage}
           />
         ) : (
-          setPage("signin")
+          handleSetPage("signin")
         )
       )}
     </div>

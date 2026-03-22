@@ -66,7 +66,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
           }}
         >
           <button
-            onClick={() => setPage(previousPage || "listings")}
+            onClick={() => setPage(previousPage || "listings", "listing-details")}
             style={{ 
               background: "transparent",
               border: "none",
