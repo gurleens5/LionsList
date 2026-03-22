@@ -87,6 +87,24 @@ router.get("/listing/:listingId", protect, async (req, res) => {
     }
 });
 
+//buyer views own sent offers
+router.get("/sent", protect, async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "User not authorized" });
+    }
+
+    const offers = await Offer.find({ buyer: req.user._id })
+      .populate("listing")
+      .sort({ createdAt: -1 });
+
+    res.json(offers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch sent offers" });
+  }
+});
+
 //buyer cancels their own pending offer
 router.patch("/:offerId/cancel", protect, async (req, res) => {
     try {
