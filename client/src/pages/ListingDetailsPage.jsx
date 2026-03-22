@@ -240,6 +240,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                       border: "1px solid #ccc",
                       width: "200px",
                       maxWidth: "100%",
+                      fontFamily: "Georgia, serif",
                     }}
                   />
 
