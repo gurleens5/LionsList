@@ -106,6 +106,10 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
     }
   };
 
+  const handleDelete = async () => {
+   
+  };
+
   return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
       <Header setPage={setPage} />
@@ -217,6 +221,23 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                 <small style={{ color: "#666" }}>
                   Created: {new Date(listing.createdAt).toLocaleString()}
                 </small>
+
+                <button
+                  onClick={handleDelete}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    color: "#cc0000",
+                    cursor: "pointer",
+                    fontWeight: "700",
+                    textDecoration: "underline",
+                    fontFamily: "Georgia, serif",
+                    marginLeft: "10px"
+                  }}
+                >
+                  Delete
+                </button>
+
               </div>
               {isLoggedIn && !isSeller && showOfferForm && (
                 <form onSubmit={handleOfferSubmit} style={{ marginTop: "1rem" }}>
