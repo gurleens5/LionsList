@@ -1,6 +1,7 @@
 import express from "express";
 import Listing from "../models/Listing.js";
 import { protect } from "../middleware/auth.js";
+import { updateListing } from "../controllers/listingController.js";
 const router = express.Router();
 
 const normalizeCategory = (category) => {
@@ -121,5 +122,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch listing" });
   }
 });
+
+router.put("/:id", protect, updateListing);
 
 export default router;

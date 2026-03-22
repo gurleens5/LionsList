@@ -40,7 +40,7 @@ function EditListingPage({ setPage, listingId, previousPage }) {
 
     const token = localStorage.getItem("token");
 
-    await api.put(
+    /*await api.put(
       `/listings/${listingId}`,
       {
         title: formData.title.trim(),
@@ -53,7 +53,7 @@ function EditListingPage({ setPage, listingId, previousPage }) {
       {
         headers: { Authorization: `Bearer ${token}` }
       }
-    );
+    );*/
 
     setPage("listing-details", listingId);
 
