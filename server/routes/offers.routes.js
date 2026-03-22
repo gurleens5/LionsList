@@ -19,6 +19,10 @@ router.post("/", protect, async (req, res) => {
             return res.status(400).json({ message: "Listing ID is required" });
         }
 
+        if (!Number.isFinite(amount) || amount < 0.01) {
+            return res.status(400).json({ message: "Amount must be at least 0.01" });
+        }
+
         const listing = await Listing.findById(listingId);
 
         if (!listing) {
@@ -53,4 +57,4 @@ router.post("/", protect, async (req, res) => {
     }
 });
 
-export default router;  
+export default router;
