@@ -5,7 +5,7 @@ import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
-//link each offer to the buyer and the listing
+//save offer to database
 router.post("/", protect, async (req, res) => {
     try {
         const listingId = String(req.body?.listingId || "").trim();
@@ -36,15 +36,21 @@ router.post("/", protect, async (req, res) => {
             seller: listing.seller,
         });
 
-        res.status(200).json(offer);
+        const savedOffer = await offer.save();
+
+        res.status(201).json(savedOffer);
     } catch (error) {
         if (error && error.name === "CastError") {
             return res.status(400).json({ message: "Invalid listing ID" });
         }
 
+        if (error && error.name === "ValidationError") {
+            return res.status(400).json({ message: "Offer validation failed", errors: error.errors });
+        }
+
         console.error(error);
-        res.status(500).json({ message: "Failed to link offer to buyer and listing" });
+        res.status(500).json({ message: "Failed to save offer" });
     }
 });
 
-export default router;
+export default router;  
