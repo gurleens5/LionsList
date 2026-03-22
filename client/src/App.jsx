@@ -44,7 +44,13 @@ function App() {
       {page === "home" && <Home setPage={setPage} setHomeSearch={setHomeSearch} />}
       {page === "signin" && <SignIn setPage={setPage} setUser={setUser}/>}
       {page === "signup" && <SignUp setPage={setPage} setUser={setUser}/>}
-      {page === "create-listing" && (user ? <MyListingsPage setPage={setPage} /> : setPage("signin"))}
+      {page === "create-listing" && (
+        user ? (
+          <CreateListingPage setPage={setPage} />
+        ) : (
+          setPage("signin")
+        )
+      )}
       {page === "sent-offers" && (user ? <SentOffers setPage={setPage} /> : setPage("signin"))}
       {page === "listings" && (
         <ListingsPage
