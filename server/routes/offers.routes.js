@@ -57,4 +57,34 @@ router.post("/", protect, async (req, res) => {
     }
 });
 
-export default router;
+//seller view for offers on their listings
+router.get("/listing/:listingId", protect, async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: "User not authorized" });
+        }
+
+        const listing = await Listing.findById(req.params.listingId);
+
+        if (!listing) {
+            return res.status(404).json({ message: "Listing not found" });
+        }
+
+        if (!listing.seller || listing.seller.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: "Not authorized to view offers for this listing" });
+        }
+
+        const offers = await Offer.find({ listing: listing._id }).populate("buyer", "username").sort({ createdAt: -1 });
+
+        res.json(offers);
+    } catch (error) {
+        if (error && error.name === "CastError") {
+            return res.status(400).json({ message: "Invalid listing ID" });
+        }
+
+        console.error(error);
+        res.status(500).json({ message: "Failed to fetch offers" });
+    }
+});
+
+export default router;  

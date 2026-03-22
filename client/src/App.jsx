@@ -64,6 +64,7 @@ function App() {
         <ListingDetailsPage
           setPage={setPage}
           listingId={selectedListingId}
+          user={user}
         />
         
       )}

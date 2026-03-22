@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import api from "../lib/axios";
 import Header from "../components/Header";
 
-const ListingDetailsPage = ({ setPage, listingId }) => {
+const ListingDetailsPage = ({ setPage, listingId, user }) => {
   const [listing, setListing] = useState(null);
   const [error, setError] = useState("");
+  const [offers, setOffers] = useState([]);
+  const [offersError, setOffersError] = useState("");
 
-  const isLoggedIn = !!localStorage.getItem("token");
+  const isLoggedIn =  !!localStorage.getItem("token");
+  const isSeller   =  !!user && !!listing?.seller?._id && 
+                        String(user._id) === String(listing.seller._id);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -23,6 +27,26 @@ const ListingDetailsPage = ({ setPage, listingId }) => {
       fetchListing();
     }
   }, [listingId]);
+
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await api.get(`/offers/listing/${listingId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setOffers(res.data);
+        setOffersError("");
+      } catch (err) {
+        console.error("Error fetching offers:", err);
+        setOffersError("Failed to load offers for this listing.");
+      }
+    };
+
+    if (listingId && isSeller) {
+      fetchOffers();
+    }
+  }, [listingId, isSeller]);
 
   return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
@@ -86,7 +110,7 @@ const ListingDetailsPage = ({ setPage, listingId }) => {
                   flexWrap: "wrap",
                 }}
               >
-                {isLoggedIn && (
+                {isLoggedIn && !isSeller && (
                   <button
                     type="button"
                     style={{ 
@@ -109,6 +133,42 @@ const ListingDetailsPage = ({ setPage, listingId }) => {
                   Created: {new Date(listing.createdAt).toLocaleString()}
                 </small>
               </div>
+
+              {isSeller && (
+                <div 
+                  style={{ 
+                    marginTop: "2rem",
+                    paddingTop: "1.5rem",
+                    borderTop: "1px solid #ddd"
+                  }}
+                >
+                  <h2 style={{ marginTop: 0, marginBottom: "1rem", color: "#111" }}>
+                    Offers Received
+                  </h2>
+
+                  {offersError && <p style={{ color: "#cc0000" }}>{offersError}</p>}
+
+                  {!offersError && offers.length === 0 && (
+                    <p style={{ color: "#444" }}>No offers received yet.</p>
+                  )}
+
+                  {offers.map((offer) => (
+                    <div 
+                      key={offer._id}
+                      style={{ 
+                        background: "#f8f8f8",
+                        borderRadius: "10px",
+                        padding: "1rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <p><strong>Buyer:</strong> {offer.buyer?.username || "Unknown"}</p>
+                      <p><strong>Offer Amount:</strong> ${offer.amount.toFixed(2)}</p>
+                      <p><strong>Status:</strong> {offer.status}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
