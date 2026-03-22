@@ -87,4 +87,39 @@ router.get("/listing/:listingId", protect, async (req, res) => {
     }
 });
 
+//buyer cancels their own pending offer
+router.patch("/:offerId/cancel", protect, async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: "User not authorized" });
+        }
+
+        const offer = await Offer.findById(req.params.offerId);
+
+        if (!offer) {
+            return res.status(404).json({ message: "Offer not found" });
+        }
+
+        if (!offer.buyer || offer.buyer.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: "Not authorized to cancel this offer" });
+        }
+
+        if (offer.status !== "Pending") {
+            return res.status(400).json({ message: "Only pending offers can be cancelled" });
+        }
+
+        offer.status = "Cancelled";
+        const updatedOffer = await offer.save();
+
+        res.json(updatedOffer);
+    } catch (error) {
+        if (error && error.name === "CastError") {
+            return res.status(400).json({ message: "Invalid offer ID" });
+        }
+        
+        console.error(error);
+        res.status(500).json({ message: "Failed to cancel offer" });
+    }
+});
+
 export default router;  
