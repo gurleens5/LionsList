@@ -25,20 +25,26 @@ function App() {
     useEffect(() => {
         const fetchUser = async () => {
             const token = localStorage.getItem("token");
-            if (token) {
-                try {
-                    const res = await api.get('/me', {
-                        headers: { Authorization: `Bearer ${token}` }
-                    });
-                    setUser(res.data);
-                } catch (err) {
-                    setError("Failed to fetch user data");
-                    localStorage.removeItem("token");
-                }
+            if(!token) {
+              setUser(null);
+              setError("");
+              return;
+            }
+            
+            try {
+                const res = await api.get('/me', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setUser(res.data);
+                setError("");
+            } catch (err) {
+                setError("Failed to fetch user data");
+                localStorage.removeItem("token");
+                setUser(null);
             }
         };
         fetchUser();
-    }, []);
+    }, [page]);
 
 
   const handleSetPage = (newPage, fromPage) => {
