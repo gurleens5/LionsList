@@ -19,6 +19,10 @@ router.post("/", protect, async (req, res) => {
             return res.status(400).json({ message: "Listing ID is required" });
         }
 
+        if (!Number.isFinite(amount) || amount <= 0) {
+            return res.status(400).json({ message: "Amount must be a positive number" });
+        }
+
         const listing = await Listing.findById(listingId);
 
         if (!listing) {
@@ -53,4 +57,4 @@ router.post("/", protect, async (req, res) => {
     }
 });
 
-export default router;  
+export default router;
