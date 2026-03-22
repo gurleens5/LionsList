@@ -8,6 +8,7 @@ import CreateListingPage from "./pages/CreateListingPage";
 import MyListingsPage from "./pages/MyListingsPage";
 import SentOffers from "./pages/SentOffers";
 import api from "./lib/axios";
+import EditListingPage from "./pages/EditListingPage";
 
 function App() {
     const [page, setPage] = useState("home");
@@ -100,6 +101,15 @@ function App() {
         ) : (
           handleSetPage("signin")
         )
+      )}
+
+      {page === "edit-listing" && (
+        <EditListingPage
+          setPage={handleSetPage}
+          listingId={selectedListingId}
+          previousPage={previousPage}
+          user={user}
+        />
       )}
     </div>
   );
