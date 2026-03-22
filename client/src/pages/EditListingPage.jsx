@@ -55,6 +55,7 @@ function EditListingPage({ setPage, listingId, previousPage }) {
       }
     );
 
+    // fetches the edited listing which refreshes the listing
     setPage("listing-details", listingId);
 
   } catch (err) {
