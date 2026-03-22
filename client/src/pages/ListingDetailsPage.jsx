@@ -57,6 +57,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
       <div style={{ padding: "2rem", display: "flex", justifyContent: "center" }}>
         <div 
           style={{ 
+            position: "relative",
             background: "#fff",
             borderRadius: "14px",
             padding: "2rem",
@@ -80,6 +81,27 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
           >
             ← Back to Listings
           </button>
+
+           {isSeller && (
+            <button
+              onClick={() => setPage("edit-listing", listing._id)}
+              style={{
+                position: "absolute",
+                right: 30,
+                top: 35,
+                background: "none",
+                border: "none",
+                color: "#cc0000",
+                textDecoration: "underline",
+                cursor: "pointer",
+                fontWeight: "600",
+                fontFamily: "Georgia, serif",
+                padding: 0
+              }}
+            >
+              Edit
+            </button>
+          )}
 
           {error && <p style={{ color: "#cc0000" }}>{error}</p>}
           {!error && !listing && <p>Loading...</p>}
