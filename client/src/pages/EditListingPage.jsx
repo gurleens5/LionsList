@@ -20,6 +20,48 @@ function EditListingPage({ setPage, listingId, previousPage }) {
     setError("");
   };
 
+  const submitEditForm = async (e) => {
+  e.preventDefault();
+
+  const { title, description, category, price } = formData;
+
+  if (!title.trim() || !description.trim() || !category.trim() || !price) {
+    setError("Please fill all required fields.");
+    return;
+  }
+
+  if (Number(price) <= 0) {
+    setError("Price must be a positive number.");
+    return;
+  }
+
+  try {
+    setError("");
+
+    const token = localStorage.getItem("token");
+
+    await api.put(
+      `/listings/${listingId}`,
+      {
+        title: formData.title.trim(),
+        description: formData.description.trim(),
+        category: formData.category.trim(),
+        courseCode: formData.courseCode.trim(),
+        imageUrl: formData.imageUrl.trim(),
+        price: Number(formData.price),
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+
+    setPage("listing-details", listingId);
+
+  } catch (err) {
+    setError(err.response?.data?.message || "Failed to update listing.");
+  }
+};
+
   // Fetch existing listing data
   useEffect(() => {
     const fetchListing = async () => {
@@ -64,10 +106,10 @@ function EditListingPage({ setPage, listingId, previousPage }) {
         >
           <h2 style={{ margin: "0 0 0.3rem 0" }}>Edit Listing</h2>
           <p style={{ color: "#888", margin: "0 0 2rem 0" }}>
-            Update the details of your listing
+            Click "Save Changes" when done
           </p>
 
-          <form>
+          <form onSubmit={submitEditForm}>
             <label>Title</label>
             <input
               type="text"
@@ -190,7 +232,7 @@ function EditListingPage({ setPage, listingId, previousPage }) {
             )}
 
             <button
-              type="button"
+              type="submit"
               style={{
                 width: "100%",
                 background: "#cc0000",
