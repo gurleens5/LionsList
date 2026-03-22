@@ -110,7 +110,7 @@ const ListingDetailsPage = ({ setPage, listingId, user }) => {
                   flexWrap: "wrap",
                 }}
               >
-                {isLoggedIn && (
+                {isLoggedIn && !isSeller && (
                   <button
                     type="button"
                     style={{ 
