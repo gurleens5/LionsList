@@ -1,8 +1,6 @@
 import Listing from "../models/Listing.js";
 import { protect } from "../middleware/auth.js";
 
-import Listing from "../models/Listing.js";
-
 export const updateListing = async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
