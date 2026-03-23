@@ -48,8 +48,8 @@ return (
 
             <div style={{ height: "180px", background: "#d9d9d9", display: "flex", alignItems: "center",
               justifyContent: "center", color: "#666", fontWeight: "600" , position: "relative"}}>
-              {offer.listing.imageUrl ? (
-                <img src={offer.listing.imageUrl} alt={offer.listing.title}
+              {offer.listing?.imageUrl ? (
+                <img src={offer.listing?.imageUrl} alt={offer.listing?.title || "Deleted Listing"}
                   style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               ) : (
                 "No Image"
@@ -67,25 +67,25 @@ return (
 
             <div style={{ padding: "1.25rem", display: "flex", flexDirection: "column", flex: 1 }}>
               <h3 style={{ marginTop: 0, marginBottom: "0.75rem", color: "#111", fontSize: "1.4rem", minHeight: "68px" }}>
-                {offer.listing.title}
+                {offer.listing?.title || "Deleted Listing"}
               </h3>
 
               <p style={{ color: "#444", marginBottom: "0.75rem", lineHeight: "1.6", minHeight: "110px" }}>
-                {offer.listing.description}
+                {offer.listing?.description}
               </p>
 
               <p style={{ margin: "0.3rem 0" }}>
-                <strong>Category:</strong> {offer.listing.category}
+                <strong>Category:</strong> {offer.listing?.category}
               </p>
 
-              {offer.listing.courseCode && (
+              {offer.listing?.courseCode && (
                 <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                  <strong>Course Code:</strong> {offer.listing.courseCode}
+                  <strong>Course Code:</strong> {offer.listing?.courseCode}
                 </p>
               )}
 
               <p style={{ margin: "0.3rem 0" }}>
-                <strong>Listed Price:</strong> ${offer.listing.price}
+                <strong>Listed Price:</strong> ${offer.listing?.price}
               </p>
 
               <p style={{ margin: "0.3rem 0" }}>
@@ -95,14 +95,14 @@ return (
               <p style={{ margin: "0.3rem 0 1rem 0" }}>
                 <strong>Status:</strong>{" "}
                 <span style={{
-                  backgroundColor: offer.listing.status === "Available" ? "#d4edda" : "#eee",
-                  color: offer.listing.status === "Available" ? "#155724" : "#555",
+                  backgroundColor: offer.listing?.status === "Available" ? "#d4edda" : "#eee",
+                  color: offer.listing?.status === "Available" ? "#155724" : "#555",
                   padding: "0.2rem 0.6rem",
                   borderRadius: "6px",
                   fontWeight: "700",
                   fontSize: "0.85rem"
                 }}>
-                  {offer.listing.status}
+                  {offer.listing?.status}
                 </span>
               </p>
 
