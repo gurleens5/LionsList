@@ -229,8 +229,7 @@ const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSear
 
                       <button onClick={() => { 
                         setPreviousPage("listings");
-                        setSelectedListingId(listing._id); 
-                        setPage("listing-details"); 
+                        setPage("listing-details", listing._id); 
                       }}
                               style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
                                        padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",

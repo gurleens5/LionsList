@@ -105,6 +105,21 @@ router.get("/sent", protect, async (req, res) => {
   }
 });
 
+// get some offer 
+router.get("/:offerId", protect, async (req, res) => {
+  try {
+    const offer = await Offer.findById(req.params.offerId).populate("listing");
+    if (!offer) return res.status(404).json({ message: "Offer not found" });
+    if (offer.buyer.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+    res.json(offer);
+  } catch (error) {
+    if (error.name === "CastError") return res.status(400).json({ message: "Invalid offer ID" });
+    res.status(500).json({ message: "Failed to fetch offer" });
+  }
+});
+
 //buyer cancels their own pending offer
 router.patch("/:offerId/cancel", protect, async (req, res) => {
     try {
