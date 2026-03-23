@@ -70,6 +70,8 @@ return (
                 {offer.listing?.title || "Deleted Listing"}
               </h3>
 
+              {offer.listing && (
+                <>
               <p style={{ color: "#444", marginBottom: "0.75rem", lineHeight: "1.6", minHeight: "110px" }}>
                 {offer.listing?.description}
               </p>
@@ -105,7 +107,11 @@ return (
                   {offer.listing?.status}
                 </span>
               </p>
+            </>
+          )}
+        
 
+              {offer.listing && (
               <button
                 onClick={() => {
                   setPage("sent-offers-details", offer._id)
@@ -115,6 +121,7 @@ return (
                   fontFamily: "Georgia, serif", width: "100%", marginTop: "auto" }}>
                 View Details
               </button>
+              )}
             </div>
           </div>
         ))}
