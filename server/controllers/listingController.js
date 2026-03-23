@@ -51,6 +51,7 @@ export const deleteListing = async (req, res) => {
       return res.status(403).json({ message: "Not authorized to delete this listing" });
     }
 
+    // Deletes listing from DB.
     await listing.deleteOne();
 
     res.json({ message: "Listing deleted successfully" });
