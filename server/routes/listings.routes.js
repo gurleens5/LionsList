@@ -1,5 +1,7 @@
 import express from "express";
 import Listing from "../models/Listing.js";
+import { protect } from "../middleware/auth.js";
+import { updateListing, deleteListing } from "../controllers/listingController.js";
 
 const router = express.Router();
 
@@ -92,13 +94,28 @@ router.post("/", async (req, res) => {
   }
 });
 
+// get listings for current user
+router.get("/my", protect, async (req, res) => {
+  try {
+    const listings = await Listing.find({ seller: req.user._id })
+      .sort({ status: 1, createdAt: -1 });
+
+    res.json(listings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch user listings" });
+  }
+});
+
 // fetch listing by id
 router.get("/:id", async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id).populate("seller", "username");
+
     if (!listing) {
       return res.status(404).json({ message: "Listing not found" });
     }
+
     res.json({
       ...listing.toObject(),
       sellerUsername: listing.seller?.username || "Unknown",
@@ -110,5 +127,8 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch listing" });
   }
 });
+
+router.put("/:id", protect, updateListing);
+router.delete("/:id", protect, deleteListing);
 
 export default router;
