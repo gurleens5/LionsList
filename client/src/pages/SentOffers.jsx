@@ -78,9 +78,11 @@ return (
                 <strong>Category:</strong> {offer.listing.category}
               </p>
 
-              <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                <strong>Course Code:</strong> {offer.listing.courseCode}
-              </p>
+              {offer.listing.courseCode && (
+                <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                  <strong>Course Code:</strong> {offer.listing.courseCode}
+                </p>
+              )}
 
               <p style={{ margin: "0.3rem 0" }}>
                 <strong>Listed Price:</strong> ${offer.listing.price}

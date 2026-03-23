@@ -127,9 +127,11 @@ const MyListingsPage = ({ setPage, setSelectedListingId, setPreviousPage }) => {
                       <strong>Category:</strong> {listing.category}
                     </p>
 
-                    <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                      <strong>Course Code:</strong> {listing.courseCode}
-                    </p>
+                    {listing.courseCode && (
+                      <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                        <strong>Course Code:</strong> {listing.courseCode}
+                      </p>
+                    )}
 
                     <p style={{ margin: "0.3rem 0" }}>
                       <strong>Price:</strong> ${listing.price}
@@ -153,7 +155,7 @@ const MyListingsPage = ({ setPage, setSelectedListingId, setPreviousPage }) => {
                     </p>
 
                     <button
-                      onClick={() => {setPage("listing-details", listing._id)}}
+                      onClick={() => {setPreviousPage("my-listings"); setPage("listing-details", listing._id)}}
                       style={{
                         background: "#cc0000",
                         color: "#fff",

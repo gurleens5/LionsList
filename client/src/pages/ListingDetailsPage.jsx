@@ -130,7 +130,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
           }}
         >
           <button
-            onClick={() => setPage(previousPage || "listings", "listing-details")}
+            onClick={() => setPage(previousPage || "listings")}
             style={{ 
               background: "transparent",
               border: "none",
@@ -142,7 +142,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
               fontFamily: "Georgia, serif",
             }}
           >
-            ← Back to Listings
+            ← Back to {previousPage === "my-listings" ? "My Listings" : "Listings"}
           </button>
 
            {isSeller && (
@@ -180,7 +180,8 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
               </p>
 
               <p><strong>Category:</strong> {listing.category}</p>
-              <p><strong>Course Code:</strong> {listing.courseCode}</p>
+              {listing.courseCode && (
+              <p><strong>Course Code:</strong> {listing.courseCode}</p>)}
               <p><strong>Price:</strong> ${listing.price}</p>
               <p><strong>Status:</strong> {listing.status}</p>
               <p><strong>Seller:</strong> {listing.sellerUsername || "Unknown"}</p>
