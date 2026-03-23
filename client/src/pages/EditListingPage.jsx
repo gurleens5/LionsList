@@ -16,54 +16,71 @@ function EditListingPage({ setPage, listingId }) {
 
   const [error, setError] = useState("");
 
+  const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
+
   const updateListingField = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "price") {
+      if (value === "" || /^\d*\.?\d{0,2}$/.test(value)) {
+        setFormData({ ...formData, [name]: value });
+        setError("");
+      }
+      return;
+    }
+
+    setFormData({ ...formData, [name]: value });
     setError("");
   };
 
   const submitEditForm = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const { title, description, category, price } = formData;
+    const { title, description, category, price } = formData;
 
-  if (!title.trim() || !description.trim() || !category.trim() || !price) {
-    setError("Please fill all required fields.");
-    return;
-  }
+    if (!title.trim() || !description.trim() || !category.trim() || !price) {
+      setError("Please fill all required fields.");
+      return;
+    }
 
-  if (Number(price) <= 0) {
-    setError("Price must be a positive number.");
-    return;
-  }
+    if (!/^\d+(\.\d{1,2})?$/.test(String(price).trim())) {
+      setError("Price can have at most 2 decimal places.");
+      return;
+    }
 
-  try {
-    setError("");
+    if (Number(price) <= 0) {
+      setError("Price must be a positive number.");
+      return;
+    }
 
-    const token = localStorage.getItem("token");
+    try {
+      setError("");
 
-    await api.put(
-      `/listings/${listingId}`,
-      {
-        title: formData.title.trim(),
-        description: formData.description.trim(),
-        category: formData.category.trim(),
-        courseCode: formData.courseCode.trim(),
-        imageUrl: formData.imageUrl.trim(),
-        price: Number(formData.price),
-        status: formData.status,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` }
-      }
-    );
+      const token = localStorage.getItem("token");
+
+      await api.put(
+        `/listings/${listingId}`,
+        {
+          title: formData.title.trim(),
+          description: formData.description.trim(),
+          category: formData.category.trim(),
+          courseCode: formData.courseCode.trim(),
+          imageUrl: formData.imageUrl.trim(),
+          price: Number(formData.price),
+          status: formData.status,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
 
     // Refetches the current listing which refreshes the listing
-    setPage("listing-details", listingId);
+      setPage("listing-details", listingId);
 
-  } catch (err) {
-    setError(err.response?.data?.message || "Failed to update listing.");
-  }
-};
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to update listing.");
+    }
+  };
 
   // Fetch existing listing data
   useEffect(() => {
@@ -78,7 +95,7 @@ function EditListingPage({ setPage, listingId }) {
           category: listing.category || "",
           courseCode: listing.courseCode || "",
           imageUrl: listing.imageUrl || "",
-          price: listing.price || "",
+          price: listing.price !== undefined ? String(listing.price) : "",
           status: listing.status || "Available",
         });
 
@@ -120,6 +137,7 @@ function EditListingPage({ setPage, listingId }) {
               name="title"
               value={formData.title}
               onChange={updateListingField}
+              placeholder="Enter item title"
               style={{
                 display: "block",
                 width: "100%",
@@ -138,6 +156,7 @@ function EditListingPage({ setPage, listingId }) {
               name="description"
               value={formData.description}
               onChange={updateListingField}
+              placeholder="Enter item description"
               style={{
                 display: "block",
                 width: "100%",
@@ -154,8 +173,7 @@ function EditListingPage({ setPage, listingId }) {
             />
 
             <label>Category</label>
-            <input
-              type="text"
+            <select
               name="category"
               value={formData.category}
               onChange={updateListingField}
@@ -169,8 +187,16 @@ function EditListingPage({ setPage, listingId }) {
                 boxSizing: "border-box",
                 fontSize: "1rem",
                 fontFamily: "Georgia, serif",
+                background: "#fff",
               }}
-            />
+            >
+              <option value="">Select category</option>
+              {categoryOptions.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
 
             <label>Course Code</label>
             <input
@@ -178,6 +204,7 @@ function EditListingPage({ setPage, listingId }) {
               name="courseCode"
               value={formData.courseCode}
               onChange={updateListingField}
+              placeholder="Enter course code"
               style={{
                 display: "block",
                 width: "100%",
@@ -197,6 +224,7 @@ function EditListingPage({ setPage, listingId }) {
               name="imageUrl"
               value={formData.imageUrl}
               onChange={updateListingField}
+              placeholder="Enter image URL"
               style={{
                 display: "block",
                 width: "100%",
@@ -212,10 +240,12 @@ function EditListingPage({ setPage, listingId }) {
 
             <label>Price</label>
             <input
-              type="number"
+              type="text"
               name="price"
               value={formData.price}
               onChange={updateListingField}
+              placeholder="Enter price"
+              inputMode="decimal"
               style={{
                 display: "block",
                 width: "100%",
