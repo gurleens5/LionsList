@@ -204,7 +204,23 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                 <p><strong>Course Code:</strong> {listing.courseCode}</p>
               )}
               <p><strong>Price:</strong> ${listing.price}</p>
-              <p><strong>Status:</strong> {listing.status}</p>
+              <p>
+              <strong>Status:</strong>{" "}
+              <span
+              style={{
+                backgroundColor:
+                  listing.status === "Available" ? "#d4edda" : "#f8d7da",
+                color:
+                  listing.status === "Available" ? "#155724" : "#721c24",
+                padding: "0.2rem 0.6rem",
+                borderRadius: "6px",
+                fontWeight: "700",
+                fontSize: "0.85rem"
+              }}
+            >
+              {listing.status}
+            </span>
+            </p>
               <p><strong>Seller:</strong> {listing.sellerUsername || "Unknown"}</p>
 
               <div 

@@ -198,7 +198,21 @@ const ListingsPage = ({
                       </p>
 
                       <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                        <strong>Status:</strong> {listing.status}
+                        <strong>Status:</strong>{" "}
+                        <span
+                          style={{
+                            backgroundColor:
+                              listing.status === "Available" ? "#d4edda" : "#f8d7da",
+                            color:
+                              listing.status === "Available" ? "#155724" : "#721c24",
+                            padding: "0.2rem 0.6rem",
+                            borderRadius: "6px",
+                            fontWeight: "700",
+                            fontSize: "0.85rem"
+                          }}
+                        >
+                          {listing.status}
+                        </span>
                       </p>
 
                       <button
