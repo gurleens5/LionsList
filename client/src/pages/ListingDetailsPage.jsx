@@ -117,7 +117,11 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    setPage("listings");
+    if (previousPage === "my-listings") {
+      setPage("my-listings");
+    } else {
+      setPage("listings");
+    }
 
     } catch (err) {
       console.error("Delete failed: ", err);
