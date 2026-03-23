@@ -18,7 +18,17 @@ function CreateListingPage({ setPage }) {
   const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
 
   const updateListingField = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "price") {
+      if (value === "" || /^\d*\.?\d{0,2}$/.test(value)) {
+        setFormData({ ...formData, [name]: value });
+        setError("");
+      }
+      return;
+    }
+
+    setFormData({ ...formData, [name]: value });
     setError("");
   };
 
@@ -29,6 +39,11 @@ function CreateListingPage({ setPage }) {
 
     if (!title.trim() || !description.trim() || !category.trim() || !price) {
       setError("Please fill all required fields.");
+      return;
+    }
+
+    if (!/^\d+(\.\d{1,2})?$/.test(price.trim())) {
+      setError("Price can have at most 2 decimal places.");
       return;
     }
 
@@ -194,11 +209,12 @@ function CreateListingPage({ setPage }) {
 
             <label>Price</label>
             <input
-              type="number"
+              type="text"
               name="price"
               value={formData.price}
               onChange={updateListingField}
               placeholder="Enter price"
+              inputMode="decimal"
               style={{
                 display: "block",
                 width: "100%",
