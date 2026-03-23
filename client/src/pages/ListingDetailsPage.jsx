@@ -261,21 +261,23 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                   Created: {new Date(listing.createdAt).toLocaleString()}
                 </small>
 
-                <button
-                  onClick={handleDelete}
-                  style={{
-                    background: "transparent",
-                    border: "none",
-                    color: "#cc0000",
-                    cursor: "pointer",
-                    fontWeight: "700",
-                    textDecoration: "underline",
-                    fontFamily: "Georgia, serif",
-                    marginLeft: "10px"
-                  }}
-                >
-                  Delete
-                </button>
+                {isSeller && (
+                  <button
+                    onClick={handleDelete}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: "#cc0000",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      textDecoration: "underline",
+                      fontFamily: "Georgia, serif",
+                      marginLeft: "10px"
+                    }}
+                  >
+                    Delete
+                  </button>
+                )}
 
               </div>
 
