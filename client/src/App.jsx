@@ -9,6 +9,7 @@ import MyListingsPage from "./pages/MyListingsPage";
 import SentOffers from "./pages/SentOffers";
 import api from "./lib/axios";
 import EditListingPage from "./pages/EditListingPage";
+import SentOffersDetails from "./pages/SentOffersDetails";
 
 function App() {
     const [page, setPage] = useState("home");
@@ -47,12 +48,15 @@ function App() {
     }, [page]);
 
 
-  const handleSetPage = (newPage, fromPage) => {
-  if (newPage === "listings" && fromPage !== "listing-details") {
+  const handleSetPage = (newPage, idOrFrom) => {
+  if (newPage === "listings" && idOrFrom !== "listing-details") {
     setSelectedCategories([]);
     setCourseTitleInput("");
     setSearchQuery("");
     setSearchInput("");
+  }
+  if (newPage === "sent-offers-details" || newPage === "listing-details" || newPage === "edit-listing") {
+    setSelectedListingId(idOrFrom);
   }
   setPage(newPage);
 };
@@ -117,6 +121,15 @@ function App() {
           user={user}
         />
       )}
+
+      {page === "sent-offers-details" && (
+        <SentOffersDetails
+          setPage={handleSetPage}
+          offerId={selectedListingId}
+          user={user}
+        />
+      )}
+
     </div>
   );
 }
