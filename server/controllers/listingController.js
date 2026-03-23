@@ -52,6 +52,7 @@ export const deleteListing = async (req, res) => {
     }
 
     // Deletes listing from DB.
+    // Listing deletion automatically removes it from browse and "My Listings"
     await listing.deleteOne();
 
     res.json({ message: "Listing deleted successfully" });
