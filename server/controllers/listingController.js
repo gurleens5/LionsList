@@ -9,7 +9,7 @@ export const updateListing = async (req, res) => {
       return res.status(404).json({ message: "Listing not found" });
     }
 
-    // ensure only the seller can edit
+    // ensure only the seller can edit, restricts editing to listing owner
     if (listing.seller.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Not authorized to edit this listing" });
     }
@@ -46,7 +46,7 @@ export const deleteListing = async (req, res) => {
       return res.status(404).json({ message: "Listing not found" });
     }
 
-    // ensure only the seller can delete
+    // ensure only the seller can delete, restricts deletion to listing owner
     if (listing.seller.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Not authorized to delete this listing" });
     }
