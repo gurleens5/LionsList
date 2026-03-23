@@ -38,6 +38,10 @@ return (
       </h1>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}>
+        {offers.length === 0 && (
+          <p style={{ color: "#626161", fontSize: "1.1rem" }}>You haven't made any offers yet.</p>
+        )}
+
         {offers.map((offer) => (
           <div key={offer._id} style={{ width: "320px", minHeight: "470px", background: "#fff", borderRadius: "14px",
             overflow: "hidden", border: "1px solid #ddd", display: "flex", flexDirection: "column" }}>
