@@ -36,7 +36,7 @@ export const updateListing = async (req, res) => {
 
     res.status(500).json({ message: "Failed to update listing" });
   }
-};
+}
 
 export const deleteListing = async (req, res) => {
   try {
@@ -64,4 +64,4 @@ export const deleteListing = async (req, res) => {
 
     res.status(500).json({ message: "Failed to delete listing" });
   }
-};
+}
