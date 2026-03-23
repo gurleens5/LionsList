@@ -49,21 +49,29 @@ function App() {
 
 
   const handleSetPage = (newPage, idOrFrom) => {
-  if (newPage === "listings" && idOrFrom !== "listing-details") {
-    setSelectedCategories([]);
-    setCourseTitleInput("");
-    setSearchQuery("");
-    setSearchInput("");
-  }
-  if (newPage === "sent-offers-details" || newPage === "listing-details" || newPage === "edit-listing") {
-    setSelectedListingId(idOrFrom);
-  }
-  setPage(newPage);
-};
+    if (newPage === "listings" && idOrFrom !== "listing-details" && idOrFrom !== "homepage-category") {
+      setSelectedCategories([]);
+      setCourseTitleInput("");
+      setSearchQuery("");
+      setSearchInput("");
+    }
+    if (newPage === "sent-offers-details" || newPage === "listing-details" || newPage === "edit-listing") {
+      setSelectedListingId(idOrFrom);
+    }
+    setPage(newPage);
+  };
 
   return (
     <div>
-      {page === "home" && <Home setPage={handleSetPage} setHomeSearch={setHomeSearch} />}
+      {page === "home" && (
+        <Home
+          setPage={handleSetPage}
+          setHomeSearch={setHomeSearch}
+          setSelectedCategories={setSelectedCategories}
+          setCourseTitleInput={setCourseTitleInput}
+        />
+      )}
+
       {page === "signin" && <SignIn setPage={handleSetPage} setUser={setUser}/>}
       {page === "signup" && <SignUp setPage={handleSetPage} setUser={setUser}/>}
       {page === "create-listing" && (

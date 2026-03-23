@@ -10,9 +10,12 @@ function CreateListingPage({ setPage }) {
     courseCode: "",
     imageUrl: "",
     price: "",
+    status: "Available",
   });
 
   const [error, setError] = useState("");
+
+  const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
 
   const updateListingField = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,6 +55,7 @@ function CreateListingPage({ setPage }) {
         courseCode: formData.courseCode.trim(),
         imageUrl: formData.imageUrl.trim(),
         price: Number(formData.price),
+        status: "Available",
         seller: userId
       });
 
@@ -87,7 +91,7 @@ function CreateListingPage({ setPage }) {
               name="title"
               value={formData.title}
               onChange={updateListingField}
-              placeholder="EECS 3311 Textbook"
+              placeholder="Enter item title"
               style={{
                 display: "block",
                 width: "100%",
@@ -106,7 +110,7 @@ function CreateListingPage({ setPage }) {
               name="description"
               value={formData.description}
               onChange={updateListingField}
-              placeholder="Describe the condition and details of your item"
+              placeholder="Enter item description"
               style={{
                 display: "block",
                 width: "100%",
@@ -123,12 +127,10 @@ function CreateListingPage({ setPage }) {
             />
 
             <label>Category</label>
-            <input
-              type="text"
+            <select
               name="category"
               value={formData.category}
               onChange={updateListingField}
-              placeholder="Books"
               style={{
                 display: "block",
                 width: "100%",
@@ -139,8 +141,16 @@ function CreateListingPage({ setPage }) {
                 boxSizing: "border-box",
                 fontSize: "1rem",
                 fontFamily: "Georgia, serif",
+                background: "#fff",
               }}
-            />
+            >
+              <option value="">Select category</option>
+              {categoryOptions.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
 
             <label>Course Code</label>
             <input
@@ -148,7 +158,7 @@ function CreateListingPage({ setPage }) {
               name="courseCode"
               value={formData.courseCode}
               onChange={updateListingField}
-              placeholder="EECS3311"
+              placeholder="Enter course code"
               style={{
                 display: "block",
                 width: "100%",
@@ -168,7 +178,7 @@ function CreateListingPage({ setPage }) {
               name="imageUrl"
               value={formData.imageUrl}
               onChange={updateListingField}
-              placeholder="https://example.com/textbook.jpg"
+              placeholder="Enter image URL"
               style={{
                 display: "block",
                 width: "100%",
@@ -188,7 +198,7 @@ function CreateListingPage({ setPage }) {
               name="price"
               value={formData.price}
               onChange={updateListingField}
-              placeholder="25"
+              placeholder="Enter price"
               style={{
                 display: "block",
                 width: "100%",
@@ -199,6 +209,26 @@ function CreateListingPage({ setPage }) {
                 boxSizing: "border-box",
                 fontSize: "1rem",
                 fontFamily: "Georgia, serif",
+              }}
+            />
+
+            <label>Status</label>
+            <input
+              type="text"
+              value="Available"
+              readOnly
+              style={{
+                display: "block",
+                width: "100%",
+                padding: "0.8rem",
+                margin: "0.4rem 0 1.2rem 0",
+                borderRadius: "8px",
+                border: "1px solid #ddd",
+                boxSizing: "border-box",
+                fontSize: "1rem",
+                fontFamily: "Georgia, serif",
+                background: "#f7f7f7",
+                color: "#555",
               }}
             />
 

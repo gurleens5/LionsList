@@ -2,6 +2,7 @@ import express from "express";
 import Listing from "../models/Listing.js";
 import { protect } from "../middleware/auth.js";
 import { updateListing, deleteListing } from "../controllers/listingController.js";
+
 const router = express.Router();
 
 const normalizeCategory = (category) => {
@@ -24,15 +25,6 @@ router.get("/", async (req, res) => {
       query.status = status.trim();
     }
 
-    if (keyword && keyword.trim() !== "") {
-      const escaped = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      query.$or = [
-    { title: { $regex: escaped, $options: "i" } },
-    { courseCode: { $regex: escaped, $options: "i" } },
-    { description: { $regex: escaped, $options: "i" } },
-  ];
-}
-
     if (categories) {
       const categoryList = categories
         .split(",")
@@ -44,8 +36,17 @@ router.get("/", async (req, res) => {
     }
 
     if (courseTitle && courseTitle.trim() !== "") {
-      const escaped = courseTitle.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      query.courseCode = { $regex: escaped, $options: "i" };
+      const formattedCourseTitle = courseTitle.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      query.title = { $regex: formattedCourseTitle, $options: "i" };
+    }
+
+    if (keyword && keyword.trim() !== "") {
+      const formattedKeyword = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      query.$or = [
+        { title: { $regex: formattedKeyword, $options: "i" } },
+        { description: { $regex: formattedKeyword, $options: "i" } },
+        { courseCode: { $regex: formattedKeyword, $options: "i" } },
+      ];
     }
 
     const listings = await Listing.find(query).sort({ createdAt: -1 }).limit(50);
@@ -65,6 +66,7 @@ router.post("/", async (req, res) => {
     const courseCode = String(req.body?.courseCode || "").trim();
     const imageUrl = String(req.body?.imageUrl || "").trim();
     const price = Number(req.body?.price);
+    const status = String(req.body?.status || "Available").trim();
     const seller = req.body?.seller || null;
 
     if (!title || !description || !category || !price) {
@@ -82,6 +84,7 @@ router.post("/", async (req, res) => {
       courseCode,
       imageUrl,
       price,
+      status,
       seller,
     });
     res.status(201).json(listing);
@@ -102,15 +105,17 @@ router.get("/my", protect, async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch user listings" });
   }
-});    
+});
 
 // fetch listing by id
 router.get("/:id", async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id).populate("seller", "username");
+
     if (!listing) {
       return res.status(404).json({ message: "Listing not found" });
     }
+
     res.json({
       ...listing.toObject(),
       sellerUsername: listing.seller?.username || "Unknown",

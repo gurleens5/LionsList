@@ -1,23 +1,32 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 
-function Home({ setPage, setHomeSearch }) {
+function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseTitleInput }) {
 
   const [input, setInput] = useState("");
 
-
+  
   const handleSearch = () => {
     const trimmedInput = input.trim();
     if (!trimmedInput)
       return;
 
     setHomeSearch(trimmedInput);
+    setSelectedCategories([]);
+    setCourseTitleInput("");
     setPage("listings");
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter")
       handleSearch();
+  };
+
+  const handleCategoryClick = (categoryName) => {
+    setHomeSearch("");
+    setSelectedCategories([categoryName]);
+    setCourseTitleInput("");
+    setPage("listings", "homepage-category");
   };
 
   const categories = [
@@ -121,9 +130,7 @@ function Home({ setPage, setHomeSearch }) {
               borderRadius: "0 8px 8px 0", padding: "0.9rem 1.8rem",
               fontSize: "1rem", fontWeight: "700", cursor: "pointer", fontFamily: "Georgia, serif",
             }}
-          >
-            Search
-          </button>
+          >Search</button>
         </div>
 
         <div style={{ width: "100%", maxWidth: "1150px", marginTop: "2rem" }}>
@@ -154,8 +161,9 @@ function Home({ setPage, setHomeSearch }) {
             paddingBottom: "0.5rem",
           }}>
             {categories.map((category) => (
-              <div
+              <button
                 key={category.name}
+                onClick={() => handleCategoryClick(category.name)}
                 style={{
                   minWidth: "220px",
                   background: category.background,
@@ -163,6 +171,8 @@ function Home({ setPage, setHomeSearch }) {
                   borderRadius: "14px",
                   padding: "1.2rem",
                   flexShrink: 0,
+                  textAlign: "left",
+                  cursor: "pointer",
                 }}
               >
                 <h3 style={{
@@ -182,7 +192,7 @@ function Home({ setPage, setHomeSearch }) {
                 }}>
                   {category.description}
                 </p>
-              </div>
+              </button>
             ))}
           </div>
         </div>
