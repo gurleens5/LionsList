@@ -15,7 +15,7 @@ export const updateListing = async (req, res) => {
       return res.status(403).json({ message: "Not authorized to edit this listing" });
     }
 
-    const { title, description, category, courseCode, imageUrl, price } = req.body;
+    const { title, description, category, courseCode, imageUrl, price, status } = req.body;
 
     if (title !== undefined) listing.title = title;
     if (description !== undefined) listing.description = description;
@@ -23,6 +23,7 @@ export const updateListing = async (req, res) => {
     if (courseCode !== undefined) listing.courseCode = courseCode;
     if (imageUrl !== undefined) listing.imageUrl = imageUrl;
     if (price !== undefined) listing.price = price;
+    if (status !== undefined) listing.status = status;
 
     const updatedListing = await listing.save();
 

@@ -11,6 +11,7 @@ function EditListingPage({ setPage, listingId }) {
     courseCode: "",
     imageUrl: "",
     price: "",
+    status: "Available",
   });
 
   const [error, setError] = useState("");
@@ -49,6 +50,7 @@ function EditListingPage({ setPage, listingId }) {
         courseCode: formData.courseCode.trim(),
         imageUrl: formData.imageUrl.trim(),
         price: Number(formData.price),
+        status: formData.status,
       },
       {
         headers: { Authorization: `Bearer ${token}` }
@@ -77,6 +79,7 @@ function EditListingPage({ setPage, listingId }) {
           courseCode: listing.courseCode || "",
           imageUrl: listing.imageUrl || "",
           price: listing.price || "",
+          status: listing.status || "Available",
         });
 
       } catch (err) {
@@ -225,6 +228,28 @@ function EditListingPage({ setPage, listingId }) {
                 fontFamily: "Georgia, serif",
               }}
             />
+
+            <label>Status</label>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={updateListingField}
+              style={{
+                display: "block",
+                width: "100%",
+                padding: "0.8rem",
+                margin: "0.4rem 0 1.2rem 0",
+                borderRadius: "8px",
+                border: "1px solid #ddd",
+                boxSizing: "border-box",
+                fontSize: "1rem",
+                fontFamily: "Georgia, serif",
+                background: "#fff",
+              }}
+            >
+              <option value="Available">Available</option>
+              <option value="Sold">Sold</option>
+            </select>
 
             {error && (
               <p style={{ color: "#cc0000", marginBottom: "1rem" }}>
