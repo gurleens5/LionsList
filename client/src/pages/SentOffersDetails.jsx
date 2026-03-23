@@ -6,6 +6,10 @@ const SentOffersDetails = ({ setPage, offerId, user }) => {
   const [offer, setOffer] = useState(null);
   const [error, setError] = useState("");
 
+  const [cancelError, setCancelError] = useState("");
+  const [cancelSuccess, setCancelSuccess] = useState("");
+  const [cancellingOffer, setCancellingOffer] = useState(false);
+
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -23,7 +27,31 @@ const SentOffersDetails = ({ setPage, offerId, user }) => {
 
     if (offerId) fetchOffer();
   }, [offerId]);
+
+  const handleCancelOffer = async () => {
+    if (!offerId || !token) {
+      setCancelError("Unable to cancel this offer.");
+      return;
+    }
   
+    try {
+      setCancellingOffer(true);
+      setCancelError("");
+      setCancelSuccess("");
+  
+      const res = await api.patch(`/offers/${offerId}/cancel`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      setOffer((prev) => (prev ? { ...prev, status: res.data.status } : prev ));
+      setCancelSuccess("Offer cancelled successfully.");
+    } catch (err) {
+      console.error("Error cancelling offer:", err);
+      setCancelError(err.response?.data?.message || "Failed to cancel offer.");
+    } finally {
+      setCancellingOffer(false);
+    }
+  };
 
   const listing = offer?.listing;
 
@@ -92,6 +120,29 @@ const SentOffersDetails = ({ setPage, offerId, user }) => {
                 <h2 style={{ marginTop: 0, marginBottom: "1rem", color: "#111" }}>Your Offer</h2>
                 <p><strong>Offer Amount:</strong> ${offer.amount.toFixed(2)}</p>
                 <p><strong>Status:</strong> {offer.status}</p>
+
+                {cancelError && <p style={{ color: "#cc0000", marginTop: "0.75rem" }}>{cancelError}</p>}
+                {cancelSuccess && <p style={{ color: "#28a745", marginTop: "0.75rem" }}>{cancelSuccess}</p>}
+
+                <div style={{ marginTop: "1rem" }}>
+                  <button
+                    onClick={handleCancelOffer}
+                    disabled={cancellingOffer}
+                    style={{
+                      background: "#cc0000",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "8px",
+                      padding: "0.8rem 1.2rem",
+                      fontWeight: "700",
+                      cursor: cancellingOffer ? "not-allowed" : "pointer",
+                      fontFamily: "Georgia, serif",
+                    }}
+                  >
+                    {cancellingOffer ? "Cancelling..." : "Cancel Offer"}
+                  </button>
+                </div>
+
               </div>
             </div>
           )}
