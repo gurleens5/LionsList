@@ -130,7 +130,13 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
           }}
         >
           <button
-            onClick={() => setPage(previousPage || "listings")}
+            onClick={() => {
+              if (previousPage === "my-listings") {
+                setPage("my-listings");
+              } else {
+                setPage("listings", "listing-details");
+              }
+            }}
             style={{ 
               background: "transparent",
               border: "none",
@@ -145,7 +151,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
             ← Back to {previousPage === "my-listings" ? "My Listings" : "Listings"}
           </button>
 
-           {isSeller && (
+          {isSeller && (
             <button
               onClick={() => setPage("edit-listing", listing._id)}
               style={{
@@ -181,7 +187,8 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
 
               <p><strong>Category:</strong> {listing.category}</p>
               {listing.courseCode && (
-              <p><strong>Course Code:</strong> {listing.courseCode}</p>)}
+                <p><strong>Course Code:</strong> {listing.courseCode}</p>
+              )}
               <p><strong>Price:</strong> ${listing.price}</p>
               <p><strong>Status:</strong> {listing.status}</p>
               <p><strong>Seller:</strong> {listing.sellerUsername || "Unknown"}</p>
@@ -241,6 +248,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                 </button>
 
               </div>
+
               {isLoggedIn && !isSeller && showOfferForm && (
                 <form onSubmit={handleOfferSubmit} style={{ marginTop: "1rem" }}>
                   <div style={{ marginBottom: "0.5rem" }}>

@@ -2,24 +2,36 @@ import { useState, useEffect } from "react";
 import api from "../lib/axios";
 import Header from "../components/Header";
 
-// US-07-1: display all listings
-const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSearch = "", setHomeSearch, selectedCategories, 
-  setSelectedCategories, courseTitleInput, setCourseTitleInput, searchQuery, setSearchQuery, searchInput, 
-  setSearchInput, }) => {
+const ListingsPage = ({
+  setPage,
+  setSelectedListingId,
+  setPreviousPage,
+  homeSearch,
+  selectedCategories,
+  setSelectedCategories,
+  courseTitleInput,
+  setCourseTitleInput,
+  searchQuery,
+  setSearchQuery,
+  searchInput,
+  setSearchInput,
+  setHomeSearch
+}) => {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
 
   const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
 
   useEffect(() => {
-  if (homeSearch) {
-    setSearchInput(homeSearch);
-    setSearchQuery(homeSearch);
-    setHomeSearch("");
-  }
-}, [homeSearch]);
+    if (homeSearch && homeSearch.trim() !== "") {
+      setCourseTitleInput(homeSearch);
+      setSearchInput(homeSearch);
+      setSearchQuery(homeSearch);
+      setHomeSearch("");
+    }
+  }, [homeSearch, setCourseTitleInput, setSearchInput, setSearchQuery, setHomeSearch]);
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -62,18 +74,12 @@ const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSear
     }
   };
 
-  const handleSearch = () => {
-    handleResetFilters();
-    setSearchQuery(searchInput);
-  };
-
-  const handleSearchKeyDown = (e) => {
-    if (e.key === "Enter") handleSearch();
-  };
-
   const handleResetFilters = () => {
     setSelectedCategories([]);
     setCourseTitleInput("");
+    setSearchQuery("");
+    setSearchInput("");
+    setHomeSearch("");
   };
 
   const noListingsMatch = !loading && !error && listings.length === 0;
@@ -90,31 +96,6 @@ const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSear
         </h1>
 
         {error && <p style={{ color: "#cc0000" }}>{error}</p>}
-
-        <div style={{ display: "flex", width: "100%", maxWidth: "600px", marginBottom: "1.5rem" }}>
-          <input
-            placeholder="Search for textbooks, notes, lab kits..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={handleSearchKeyDown}
-            style={{
-              flex: 1, padding: "0.9rem 1.5rem", fontSize: "1rem",
-              border: "none", borderRadius: "8px 0 0 8px",
-              background: "#ffffff", color: "#111", outline: "none",
-              fontFamily: "serif",
-            }}
-          />
-          <button
-            onClick={handleSearch}
-            style={{
-              background: "#cc0000", color: "#fff", border: "none",
-              borderRadius: "0 8px 8px 0", padding: "0.9rem 1.8rem",
-              fontSize: "1rem", fontWeight: "700", cursor: "pointer", fontFamily: "Georgia, serif",
-            }}
-          >
-            Search
-          </button>
-        </div>
 
         <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
           <div style={{ width: "250px", background: "#fff", borderRadius: "14px", border: "1px solid #ddd",
@@ -150,7 +131,11 @@ const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSear
                 type="text"
                 placeholder="Enter course title"
                 value={courseTitleInput}
-                onChange={(e) => setCourseTitleInput(e.target.value)}
+                onChange={(e) => {
+                  setCourseTitleInput(e.target.value);
+                  setSearchInput(e.target.value);
+                  setSearchQuery(e.target.value);
+                }}
                 style={{ width: "100%", padding: "0.75rem", borderRadius: "8px", border: "1px solid #ccc",
                          fontFamily: "Georgia, sans-serif", fontSize: "1rem", boxSizing: "border-box" }}
               />
@@ -160,8 +145,7 @@ const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSear
               onClick={handleResetFilters}
               style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
                        padding: "0.75rem 1rem", fontWeight: "700", cursor: "pointer",
-                       fontFamily: "Georgia, serif", width: "100%" }}
-            >
+                       fontFamily: "Georgia, serif", width: "100%" }}>
               Clear Filters
             </button>
           </div>
@@ -214,28 +198,18 @@ const ListingsPage = ({ setPage, setSelectedListingId, setPreviousPage, homeSear
                       </p>
 
                       <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                        <strong>Status:</strong>{" "}
-                        <span
-                          style={{
-                            backgroundColor: listing.status === "Available" ? "#d4edda" : "#eee",
-                            color: listing.status === "Available" ? "#155724" : "#555",
-                            padding: "0.2rem 0.6rem",
-                            borderRadius: "6px",
-                            fontWeight: "700",
-                            fontSize: "0.85rem"
-                          }}
-                        >
-                          {listing.status}
-                        </span>
+                        <strong>Status:</strong> {listing.status}
                       </p>
 
-                      <button onClick={() => { 
-                        setPreviousPage("listings");
-                        setPage("listing-details", listing._id); 
-                      }}
-                              style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
-                                       padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",
-                                       fontFamily: "Georgia, serif", width: "100%", marginTop: "auto" }}>
+                      <button
+                        onClick={() => {
+                          setSelectedListingId(listing._id);
+                          setPreviousPage("listings");
+                          setPage("listing-details", listing._id);
+                        }}
+                        style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
+                                 padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",
+                                 fontFamily: "Georgia, serif", width: "100%", marginTop: "auto" }}>
                         View Details
                       </button>
                     </div>
