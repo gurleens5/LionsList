@@ -124,24 +124,26 @@ const SentOffersDetails = ({ setPage, offerId, user }) => {
                 {cancelError && <p style={{ color: "#cc0000", marginTop: "0.75rem" }}>{cancelError}</p>}
                 {cancelSuccess && <p style={{ color: "#28a745", marginTop: "0.75rem" }}>{cancelSuccess}</p>}
 
-                <div style={{ marginTop: "1rem" }}>
-                  <button
-                    onClick={handleCancelOffer}
-                    disabled={cancellingOffer}
-                    style={{
-                      background: "#cc0000",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: "8px",
-                      padding: "0.8rem 1.2rem",
-                      fontWeight: "700",
-                      cursor: cancellingOffer ? "not-allowed" : "pointer",
-                      fontFamily: "Georgia, serif",
-                    }}
-                  >
-                    {cancellingOffer ? "Cancelling..." : "Cancel Offer"}
-                  </button>
-                </div>
+                {offer.status === "Pending" && (
+                  <div style={{ marginTop: "1rem" }}>
+                    <button
+                      onClick={handleCancelOffer}
+                      disabled={cancellingOffer}
+                      style={{
+                        background: "#cc0000",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "8px",
+                        padding: "0.8rem 1.2rem",
+                        fontWeight: "700",
+                        cursor: cancellingOffer ? "not-allowed" : "pointer",
+                        fontFamily: "Georgia, serif",
+                      }}
+                    >
+                      {cancellingOffer ? "Cancelling..." : "Cancel Offer"}
+                    </button>
+                  </div>
+                )}
 
               </div>
             </div>
