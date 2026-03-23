@@ -1,5 +1,6 @@
 import Listing from "../models/Listing.js";
 import { protect } from "../middleware/auth.js";
+import Offer from "../models/Offer.js";
 
 export const updateListing = async (req, res) => {
   try {
@@ -9,7 +10,7 @@ export const updateListing = async (req, res) => {
       return res.status(404).json({ message: "Listing not found" });
     }
 
-    // ensure only the seller can edit, restricts editing to listing owner
+    // Ensure only the seller can edit, restricts editing to listing owner
     if (listing.seller.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Not authorized to edit this listing" });
     }
@@ -46,10 +47,15 @@ export const deleteListing = async (req, res) => {
       return res.status(404).json({ message: "Listing not found" });
     }
 
-    // ensure only the seller can delete, restricts deletion to listing owner
+    // Ensure only the seller can delete, restricts deletion to listing owner
     if (listing.seller.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Not authorized to delete this listing" });
     }
+
+    await Offer.updateMany(
+        { listing: listing._id, status: "Pending" },
+        { $set: { status: "Rejected" }}
+    );
 
     // Deletes listing from DB.
     // Listing deletion automatically removes it from browse and "My Listings"
