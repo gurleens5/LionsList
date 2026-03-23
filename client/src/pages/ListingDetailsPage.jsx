@@ -109,6 +109,20 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
   const handleDelete = async () => {
     const confirmed = window.confirm("Are you sure you want to delete this listing?");
     if (!confirmed) return;
+    
+    try {
+    const token = localStorage.getItem("token");
+
+    await api.delete(`/listings/${listingId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    setPage("listings");
+
+    } catch (err) {
+      console.error("Delete failed: ", err);
+      alert("Failed to delete listing.");
+    }
   };
 
   return (
