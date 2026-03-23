@@ -25,6 +25,15 @@ router.get("/", async (req, res) => {
       query.status = status.trim();
     }
 
+    if (keyword && keyword.trim() !== "") {
+  const escaped = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  query.$or = [
+    { title: { $regex: escaped, $options: "i" } },
+    { description: { $regex: escaped, $options: "i" } },
+    { courseCode: { $regex: escaped, $options: "i" } },
+  ];
+}
+
     if (categories) {
       const categoryList = categories
         .split(",")

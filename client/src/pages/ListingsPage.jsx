@@ -6,7 +6,7 @@ const ListingsPage = ({
   setPage,
   setSelectedListingId,
   setPreviousPage,
-  homeSearch,
+  homeSearch = "",
   selectedCategories,
   setSelectedCategories,
   courseTitleInput,
@@ -20,13 +20,12 @@ const ListingsPage = ({
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  
 
   const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
 
   useEffect(() => {
     if (homeSearch && homeSearch.trim() !== "") {
-      setCourseTitleInput(homeSearch);
       setSearchInput(homeSearch);
       setSearchQuery(homeSearch);
       setHomeSearch("");
@@ -74,11 +73,21 @@ const ListingsPage = ({
     }
   };
 
+  const handleSearch = () => {
+    const query = searchInput;
+    setSelectedCategories([]);
+    setCourseTitleInput("");
+    setHomeSearch("");
+    setSearchQuery(query);
+  };
+
+  const handleSearchKeyDown = (e) => {
+    if (e.key === "Enter") handleSearch();
+  };
+
   const handleResetFilters = () => {
     setSelectedCategories([]);
     setCourseTitleInput("");
-    setSearchQuery("");
-    setSearchInput("");
     setHomeSearch("");
   };
 
@@ -96,6 +105,34 @@ const ListingsPage = ({
         </h1>
 
         {error && <p style={{ color: "#cc0000" }}>{error}</p>}
+
+        <div style={{ display: "flex", width: "100%", maxWidth: "600px", marginBottom: "1.5rem" }}>
+          <input
+            placeholder="Search for textbooks, notes, lab kits..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyDown={handleSearchKeyDown}
+            style={{
+              flex: 1, padding: "0.9rem 1.5rem", fontSize: "1rem",
+              border: "none", borderRadius: "8px 0 0 8px",
+              background: "#ffffff", color: "#111", outline: "none",
+              fontFamily: "serif",
+            }}
+          />
+
+          <button
+            onClick={handleSearch}
+            style={{
+              background: "#cc0000", color: "#fff", border: "none",
+              borderRadius: "0 8px 8px 0", padding: "0.9rem 1.8rem",
+              fontSize: "1rem", fontWeight: "700", cursor: "pointer", fontFamily: "Georgia, serif",
+            }}
+          >
+            Search
+          </button>
+         </div>
+
+
 
         <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
           <div style={{ width: "250px", background: "#fff", borderRadius: "14px", border: "1px solid #ddd",
@@ -133,8 +170,6 @@ const ListingsPage = ({
                 value={courseTitleInput}
                 onChange={(e) => {
                   setCourseTitleInput(e.target.value);
-                  setSearchInput(e.target.value);
-                  setSearchQuery(e.target.value);
                 }}
                 style={{ width: "100%", padding: "0.75rem", borderRadius: "8px", border: "1px solid #ccc",
                          fontFamily: "Georgia, sans-serif", fontSize: "1rem", boxSizing: "border-box" }}
