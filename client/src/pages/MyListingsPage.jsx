@@ -153,11 +153,7 @@ const MyListingsPage = ({ setPage, setSelectedListingId, setPreviousPage }) => {
                     </p>
 
                     <button
-                      onClick={() => {
-                        setPreviousPage("my-listings");
-                        setSelectedListingId(listing._id);
-                        setPage("listing-details");
-                      }}
+                      onClick={() => {setPage("listing-details", listing._id)}}
                       style={{
                         background: "#cc0000",
                         color: "#fff",
