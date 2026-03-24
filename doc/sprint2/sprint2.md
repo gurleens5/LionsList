@@ -32,7 +32,7 @@ Expand marketplace functionality by allowing users to:
 
 | User Story | Points |
 |-----------|--------|
-| #5 Filter Listings by Category | 5 |
+| #5 Filter Listings by Category | 3 |
 | #6 Search Listings by Keywords | 3 |
 | #9 View Own Listings as a Seller | 3 |
 | #10 Edit Listing | 3 |
