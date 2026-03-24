@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 
-function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseTitleInput }) {
+function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseCodeInput }) {
 
   const [input, setInput] = useState("");
 
@@ -13,7 +13,7 @@ function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseTitleInp
 
     setHomeSearch(trimmedInput);
     setSelectedCategories([]);
-    setCourseTitleInput("");
+    setCourseCodeInput("");
     setPage("listings");
   };
 
@@ -25,13 +25,13 @@ function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseTitleInp
   const handleCategoryClick = (categoryName) => {
     setHomeSearch("");
     setSelectedCategories([categoryName]);
-    setCourseTitleInput("");
+    setCourseCodeInput("");
     setPage("listings", "homepage-category");
   };
 
   const categories = [
     {
-      name: "Textbooks",
+      name: "Textbook",
       description: "Find textbooks for your courses and semester needs.",
       background: "#eef5ff",
       border: "#cfe0ff",
@@ -112,7 +112,7 @@ function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseTitleInp
         </h2>
         <div style={{ display: "flex", width: "100%", maxWidth: "600px" }}>
           <input
-            placeholder="Search for textbooks, notes, lab kits..."
+            placeholder="Search for textbook, notes, lab kits..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -130,7 +130,9 @@ function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseTitleInp
               borderRadius: "0 8px 8px 0", padding: "0.9rem 1.8rem",
               fontSize: "1rem", fontWeight: "700", cursor: "pointer", fontFamily: "Georgia, serif",
             }}
-          >Search</button>
+          >
+            Search
+          </button>
         </div>
 
         <div style={{ width: "100%", maxWidth: "1150px", marginTop: "2rem" }}>

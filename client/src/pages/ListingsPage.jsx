@@ -9,8 +9,8 @@ const ListingsPage = ({
   homeSearch = "",
   selectedCategories,
   setSelectedCategories,
-  courseTitleInput,
-  setCourseTitleInput,
+  courseCodeInput,
+  setCourseCodeInput,
   searchQuery,
   setSearchQuery,
   searchInput,
@@ -20,9 +20,8 @@ const ListingsPage = ({
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
 
-  const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
+  const categoryOptions = ["Textbook", "Notes", "Lab Kit", "Stationery", "Study Guide"];
 
   useEffect(() => {
     if (homeSearch && homeSearch.trim() !== "") {
@@ -30,7 +29,7 @@ const ListingsPage = ({
       setSearchQuery(homeSearch);
       setHomeSearch("");
     }
-  }, [homeSearch, setCourseTitleInput, setSearchInput, setSearchQuery, setHomeSearch]);
+  }, [homeSearch, setCourseCodeInput, setSearchInput, setSearchQuery, setHomeSearch]);
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -43,8 +42,8 @@ const ListingsPage = ({
           params.categories = selectedCategories.join(",");
         }
 
-        if (courseTitleInput.trim() !== "") {
-          params.courseTitle = courseTitleInput.trim();
+        if (courseCodeInput.trim() !== "") {
+          params.courseCode = courseCodeInput.trim();
         }
 
         if (searchQuery.trim() !== "") {
@@ -63,7 +62,7 @@ const ListingsPage = ({
     };
 
     fetchListings();
-  }, [selectedCategories, courseTitleInput, searchQuery]);
+  }, [selectedCategories, courseCodeInput, searchQuery]);
 
   const handleCategoryChange = (category) => {
     if (selectedCategories.includes(category)) {
@@ -76,7 +75,7 @@ const ListingsPage = ({
   const handleSearch = () => {
     const query = searchInput;
     setSelectedCategories([]);
-    setCourseTitleInput("");
+    setCourseCodeInput("");
     setHomeSearch("");
     setSearchQuery(query);
   };
@@ -87,7 +86,7 @@ const ListingsPage = ({
 
   const handleResetFilters = () => {
     setSelectedCategories([]);
-    setCourseTitleInput("");
+    setCourseCodeInput("");
     setHomeSearch("");
   };
 
@@ -108,7 +107,7 @@ const ListingsPage = ({
 
         <div style={{ display: "flex", width: "100%", maxWidth: "600px", marginBottom: "1.5rem" }}>
           <input
-            placeholder="Search for textbooks, notes, lab kits..."
+            placeholder="Search for textbook, notes, lab kits..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={handleSearchKeyDown}
@@ -130,7 +129,7 @@ const ListingsPage = ({
           >
             Search
           </button>
-         </div>
+        </div>
 
 
 
@@ -161,15 +160,15 @@ const ListingsPage = ({
 
             <div style={{ marginBottom: "1.5rem" }}>
               <h3 style={{ marginTop: 0, marginBottom: "0.75rem", fontSize: "1.1rem", color: "#111" }}>
-                Course Title
+                Course Code
               </h3>
 
               <input
                 type="text"
-                placeholder="Enter course title"
-                value={courseTitleInput}
+                placeholder="Enter course code"
+                value={courseCodeInput}
                 onChange={(e) => {
-                  setCourseTitleInput(e.target.value);
+                  setCourseCodeInput(e.target.value);
                 }}
                 style={{ width: "100%", padding: "0.75rem", borderRadius: "8px", border: "1px solid #ccc",
                          fontFamily: "Georgia, sans-serif", fontSize: "1rem", boxSizing: "border-box" }}

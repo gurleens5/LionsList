@@ -16,13 +16,21 @@ function EditListingPage({ setPage, listingId }) {
 
   const [error, setError] = useState("");
 
-  const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
+  const categoryOptions = ["Textbook", "Notes", "Lab Kit", "Stationery", "Study Guide"];
 
   const updateListingField = (e) => {
     const { name, value } = e.target;
 
     if (name === "price") {
       if (value === "" || /^\d*\.?\d{0,2}$/.test(value)) {
+        setFormData({ ...formData, [name]: value });
+        setError("");
+      }
+      return;
+    }
+
+    if (name === "courseCode") {
+      if (value === "" || /^[A-Za-z]{0,5}\s?\d{0,4}$/.test(value)) {
         setFormData({ ...formData, [name]: value });
         setError("");
       }
@@ -36,10 +44,15 @@ function EditListingPage({ setPage, listingId }) {
   const submitEditForm = async (e) => {
     e.preventDefault();
 
-    const { title, description, category, price } = formData;
+    const { title, description, category, price, courseCode } = formData;
 
     if (!title.trim() || !description.trim() || !category.trim() || !price) {
       setError("Please fill all required fields.");
+      return;
+    }
+
+    if (courseCode.trim() !== "" && !/^[A-Za-z]{2,5}\s?\d{4}$/.test(courseCode.trim())) {
+      setError("Please enter a valid course code like EECS 3101.");
       return;
     }
 
@@ -64,7 +77,7 @@ function EditListingPage({ setPage, listingId }) {
           title: formData.title.trim(),
           description: formData.description.trim(),
           category: formData.category.trim(),
-          courseCode: formData.courseCode.trim(),
+          courseCode: formData.courseCode.trim().toUpperCase(),
           imageUrl: formData.imageUrl.trim(),
           price: Number(formData.price),
           status: formData.status,

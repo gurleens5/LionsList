@@ -19,7 +19,7 @@ function App() {
     const [error, setError] = useState('');
     const [homeSearch, setHomeSearch] = useState("");
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const [courseTitleInput, setCourseTitleInput] = useState("");
+    const [courseCodeInput, setCourseCodeInput] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [searchInput, setSearchInput] = useState("");
 
@@ -51,7 +51,7 @@ function App() {
   const handleSetPage = (newPage, idOrFrom) => {
     if (newPage === "listings" && idOrFrom !== "listing-details" && idOrFrom !== "homepage-category") {
       setSelectedCategories([]);
-      setCourseTitleInput("");
+      setCourseCodeInput("");
       setSearchQuery("");
       setSearchInput("");
     }
@@ -68,12 +68,12 @@ function App() {
           setPage={handleSetPage}
           setHomeSearch={setHomeSearch}
           setSelectedCategories={setSelectedCategories}
-          setCourseTitleInput={setCourseTitleInput}
+          setCourseCodeInput={setCourseCodeInput}
         />
       )}
 
-      {page === "signin" && <SignIn setPage={handleSetPage} setUser={setUser}/>}
-      {page === "signup" && <SignUp setPage={handleSetPage} setUser={setUser}/>}
+      {page === "signin" && <SignIn setPage={handleSetPage} setUser={setUser} />}
+      {page === "signup" && <SignUp setPage={handleSetPage} setUser={setUser} />}
       {page === "create-listing" && (
         user ? (
           <CreateListingPage setPage={handleSetPage} />
@@ -90,8 +90,8 @@ function App() {
           homeSearch={homeSearch}
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
-          courseTitleInput={courseTitleInput}
-          setCourseTitleInput={setCourseTitleInput}
+          courseCodeInput={courseCodeInput}
+          setCourseCodeInput={setCourseCodeInput}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           searchInput={searchInput}
