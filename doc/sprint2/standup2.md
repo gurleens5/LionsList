@@ -19,7 +19,7 @@ _All team members participated in the meeting._
 
 ---
 
-## Standup Updates
+## Standup Notes
 
 ### Isha Chaudhry
 **What did you work on since the last standup?**  
