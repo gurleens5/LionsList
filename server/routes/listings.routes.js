@@ -63,9 +63,7 @@ router.get("/", async (req, res) => {
     if (keyword && keyword.trim() !== "") {
       const formattedKeyword = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       query.$or = [
-        { title: { $regex: formattedKeyword, $options: "i" } },
-        { description: { $regex: formattedKeyword, $options: "i" } },
-        { courseCode: { $regex: formattedKeyword, $options: "i" } },
+        { title: { $regex: formattedKeyword, $options: "i" } }
       ];
     }
 
