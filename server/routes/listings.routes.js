@@ -7,7 +7,7 @@ const router = express.Router();
 
 const normalizeCategory = (category) => {
   const value = String(category || "").trim().toLowerCase();
-  if (value === "textbook" || value === "textbooks") return "Textbooks";
+  if (value === "textbook" || value === "textbooks") return "Textbook";
   if (value === "note" || value === "notes") return "Notes";
   if (value === "lab kit" || value === "labkit") return "Lab Kit";
   if (value === "stationery") return "Stationery";
@@ -15,38 +15,49 @@ const normalizeCategory = (category) => {
   return String(category || "").trim();
 };
 
+const buildCourseCodeRegex = (courseCode) => {
+  const normalized = String(courseCode || "")
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, "");
+
+  const match = normalized.match(/^([A-Z]{2,5})(\d{4})$/);
+
+  if (!match) return null;
+
+  const [, letters, digits] = match;
+  return new RegExp(`^${letters}\\s*${digits}$`, "i");
+};
+
 // get all listings or filtered listings
 router.get("/", async (req, res) => {
   try {
-    const { categories, courseTitle, status, keyword } = req.query;
+    const { categories, courseCode, status, keyword } = req.query;
     const query = {};
 
     if (status && status.trim() !== "") {
       query.status = status.trim();
     }
 
-    if (keyword && keyword.trim() !== "") {
-  const escaped = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  query.$or = [
-    { title: { $regex: escaped, $options: "i" } },
-    { description: { $regex: escaped, $options: "i" } },
-    { courseCode: { $regex: escaped, $options: "i" } },
-  ];
-}
-
     if (categories) {
       const categoryList = categories
         .split(",")
         .map((item) => normalizeCategory(item))
         .filter(Boolean);
+
       if (categoryList.length > 0) {
         query.category = { $in: categoryList };
       }
     }
 
-    if (courseTitle && courseTitle.trim() !== "") {
-      const formattedCourseTitle = courseTitle.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      query.title = { $regex: formattedCourseTitle, $options: "i" };
+    if (courseCode && courseCode.trim() !== "") {
+      const courseCodeRegex = buildCourseCodeRegex(courseCode);
+
+      if (courseCodeRegex) {
+        query.courseCode = { $regex: courseCodeRegex };
+      } else {
+        return res.status(400).json({ message: "Invalid course code format." });
+      }
     }
 
     if (keyword && keyword.trim() !== "") {
