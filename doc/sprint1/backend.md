@@ -19,18 +19,18 @@ Register
 - Request Body:
 ``` JSON
 {
-	“username”: “name”,
-	“email”: “name@yorku.ca”,
-	“password”: “111123132312”
+	"username": "name",
+	"email": "name@yorku.ca",
+	"password": "111123132312"
 }
 ```
 - Success Response:
 ``` JSON
 {
-	“_id”: “”
-	“username”: “name”,
-	“email”: “name@yorku.ca”,
-	“token”: “JWT_TOKEN”
+	"_id": "",
+	"username": "name",
+	"email": "name@yorku.ca",
+	"token": "JWT_TOKEN"
 }
 ```
 - - HTTP Response: 201 Created
@@ -52,7 +52,7 @@ Login
 - Success Response:
 ``` JSON
 {
-	"_id": ""
+	"_id": "",
 	"username": "name",
 	"email": "name@yorku.ca",
 	"token": "JWT_TOKEN"
