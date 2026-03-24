@@ -140,6 +140,8 @@ __GetAllListings__
 ]
 ```
 - Error Response:
+  - HTTP Response: 400 Bad Request
+    - Invalid Course Code Format
   - HTTP Response: 500 Server Error
     - Failed to fetch listings
 
