@@ -32,7 +32,7 @@ Expand marketplace functionality by allowing users to:
 
 | User Story | Points |
 |-----------|--------|
-| #5 Filter Listings by Category | 3 |
+| #5 Filter Listings by Category | 5 |
 | #6 Search Listings by Keywords | 3 |
 | #9 View Own Listings as a Seller | 3 |
 | #10 Edit Listing | 3 |
@@ -41,7 +41,7 @@ Expand marketplace functionality by allowing users to:
 | #13 Cancel Pending Offer | 2 |
 | #16 View Sent Offers | 3 |
 
-**Total Points:** 24  
+**Total Points:** 26  
 
 ---
 
