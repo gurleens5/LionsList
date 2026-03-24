@@ -41,7 +41,7 @@ Expand marketplace functionality by allowing users to:
 | #13 Cancel Pending Offer | 2 |
 | #16 View Sent Offers | 3 |
 
-**Total Points:** 26  
+**Total Points:** 24  
 
 ---
 
