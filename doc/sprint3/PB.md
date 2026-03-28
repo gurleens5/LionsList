@@ -83,5 +83,4 @@ As a user, I want to view all completed transactions I am involved in to track m
 - Page displays all sold listings where the logged-in user is either the buyer or the seller
 - Only transactions from accepted offers are shown
 - Each transaction displays listing title, offer amount, user role (Buyer or Seller), and transaction date
-- Clicking a transaction redirects to the associated listing details page
 - Page displays a message when no transactions exist
