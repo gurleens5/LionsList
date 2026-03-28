@@ -7,6 +7,12 @@ const router = express.Router();
 // GET all transactions for logged-in user
 router.get("/my", protect, async (req, res) => {
   try {
+    const transactions = await Transaction.find({
+        $or: [
+            { buyer: req.user._id },
+            { seller: req.user._id }
+        ]
+    });
     
     res.json([]);
   } catch (error) {
