@@ -48,6 +48,50 @@ const TransactionsPage = ({ setPage }) => {
         {!loading && transactions.length === 0 && (
           <p style={{ color: "#444" }}>No transactions yet.</p>
         )}
+
+        {!loading && transactions.length > 0 && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}>
+                {transactions.map((tx) => (
+                    <div
+                        key={tx._id}
+                        style={{
+                        width: "320px",
+                        minHeight: "250px",
+                        background: "#fff",
+                        borderRadius: "14px",
+                        border: "1px solid #ddd",
+                        padding: "1.25rem",
+                        display: "flex",
+                        flexDirection: "column"
+                    }}
+                >
+                    <h3 style={{ marginTop: 0, marginBottom: "0.75rem", color: "#111", fontSize: "1.4rem" }}>
+                    {tx.listing?.title || "Listing"}
+                    </h3>
+
+                    <p style={{ margin: "0.3rem 0" }}>
+                    <strong>Price:</strong> ${tx.listing?.price}
+                    </p>
+
+                    <p style={{ margin: "0.3rem 0" }}>
+                    <strong>Buyer:</strong> {tx.buyer?.username}
+                    </p>
+
+                    <p style={{ margin: "0.3rem 0" }}>
+                    <strong>Seller:</strong> {tx.seller?.username}
+                    </p>
+
+                    <p style={{ margin: "0.3rem 0" }}>
+                    <strong>Date:</strong> {new Date(tx.createdAt).toLocaleString()}
+                    </p>
+
+                    <p style={{ marginTop: "auto", fontWeight: "700", color: "#155724" }}>
+                    Completed
+                    </p>
+                </div>
+                ))}
+            </div>
+        )}
       </div>
     </div>
   );
