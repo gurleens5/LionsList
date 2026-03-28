@@ -30,7 +30,7 @@ function Header({ setPage }) {
         <div onClick={() => token ? setPage("create-listing") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Sell</div>
         <div onClick={() => token ? setPage("sent-offers") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Sent Offers</div>
         <div onClick={() => token ? setPage("my-listings") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>My Listings</div>
-        <div onClick={() => token ? setPage("transactions") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Transactions</div>
+        <div onClick={() => token ? setPage("history") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>History</div>
 
         <FaUserCircle style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }} />
 
@@ -59,7 +59,7 @@ function Header({ setPage }) {
           <div onClick={() => token ? go("create-listing") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Sell</div>
           <div onClick={() => token ? go("sent-offers") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Sent Offers</div>
           <div onClick={() => token ? go("my-listings") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>My Listings</div>
-          <div onClick={() => token ? go("transactions") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Transactions</div>
+          <div onClick={() => token ? go("history") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>History</div>
 
           {!token ? (
             <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>

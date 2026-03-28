@@ -39,7 +39,7 @@ const TransactionsPage = ({ setPage, user }) => {
 
       <div style={{ padding: "2rem" }}>
         <h1 style={{ marginBottom: "1.5rem", fontSize: "2.2rem", fontWeight: "800", color: "#111" }}>
-          Transactions
+          History
         </h1>
 
         {error && <p style={{ color: "#cc0000" }}>{error}</p>}
