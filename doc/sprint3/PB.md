@@ -73,3 +73,15 @@ As a user, I want to view my message conversations so that I can communicate wit
 - Messages display sender, content, and last timestamp
 - Only participants in the conversation can view the messages
 - New messages appear in the correct conversation thread
+
+---
+
+## User Story #22
+As a user, I want to view all completed transactions I am involved in to track my buying and selling history and interact with completed deals.
+
+- Only logged-in users can access the “Transactions” page
+- Page displays all sold listings where the logged-in user is either the buyer or the seller
+- Only transactions from accepted offers are shown
+- Each transaction displays listing title, offer amount, user role (Buyer or Seller), and transaction date
+- Clicking a transaction redirects to the associated listing details page
+- Page displays a message when no transactions exist
