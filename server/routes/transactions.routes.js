@@ -12,7 +12,11 @@ router.get("/my", protect, async (req, res) => {
             { buyer: req.user._id },
             { seller: req.user._id }
         ]
-    });
+    })
+    .populate("listing")
+    .populate("buyer", "username")
+    .populate("seller", "username")
+    .sort({ createdAt: -1 });
     
     res.json([]);
   } catch (error) {
