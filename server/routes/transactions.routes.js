@@ -14,6 +14,7 @@ router.get("/my", protect, async (req, res) => {
       ]
     })
       .populate("listing")
+      .populate("offer")
       .populate("buyer", "username")
       .populate("seller", "username")
       .sort({ createdAt: -1 });
