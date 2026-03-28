@@ -180,6 +180,15 @@ router.patch("/:offerId/accept", protect, async (req, res) => {
 
     offer.status = "Accepted";
 
+    const listing = await Listing.findById(offer.listing);
+
+    if (!listing) {
+    return res.status(404).json({ message: "Listing not found" });
+    }
+
+    listing.status = "Sold";
+    await listing.save();
+
     const updatedOffer = await offer.save();
 
     res.json(updatedOffer);
