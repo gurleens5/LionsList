@@ -79,6 +79,7 @@ As a user, I want to view my message conversations so that I can communicate wit
 ## User Story #22
 As a user, I want to view all completed transactions I am involved in to track my buying and selling history and interact with completed deals.
 
+**Criteria of Satisfaction**
 - Only logged-in users can access the “Transactions” page
 - Page displays all sold listings where the logged-in user is either the buyer or the seller
 - Only transactions from accepted offers are shown
