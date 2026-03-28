@@ -129,6 +129,30 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
     }
   };
 
+  const handleAcceptOffer = async (offerId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await api.patch(`/offers/${offerId}/accept`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      // refresh listing
+      const listingRes = await api.get(`/listings/${listingId}`);
+      setListing(listingRes.data);
+
+      // refresh offers
+      const offersRes = await api.get(`/offers/listing/${listingId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setOffers(offersRes.data);
+
+    } catch (err) {
+      console.error("Accept failed:", err);
+      alert(err.response?.data?.message || "Failed to accept offer");
+    }
+  };
+
   return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
       <Header setPage={setPage} />
@@ -378,6 +402,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
 
                       {offer.status === "Pending" && listing?.status !== "Sold" && (
                         <button
+                          onClick={() => handleAcceptOffer(offer._id)}
                           style={{
                             marginTop: "0.5rem",
                             background: "#cc0000",
