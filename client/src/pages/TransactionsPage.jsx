@@ -46,58 +46,99 @@ const TransactionsPage = ({ setPage, user }) => {
         {loading && <p>Loading transactions...</p>}
 
         {!loading && !error && transactions.length === 0 && (
-            <p style={{ color: "#cc0000", fontWeight: "700", fontSize: "1.1rem" }}>
-                You have no completed transactions yet.
-            </p>
+          <p style={{ color: "#cc0000", fontWeight: "700", fontSize: "1.1rem" }}>
+            You have no completed transactions yet.
+          </p>
         )}
 
         {!loading && transactions.length > 0 && (
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}>
             {transactions.map((tx) => {
               const isBuyer = user && tx.buyer?._id === user._id;
-              const role = isBuyer ? "Buyer" : "Seller";
+              const actionText = isBuyer ? "Purchased" : "Sold";
 
               return (
                 <div
                   key={tx._id}
                   style={{
                     width: "320px",
-                    minHeight: "250px",
+                    minHeight: "470px",
                     background: "#fff",
                     borderRadius: "14px",
+                    overflow: "hidden",
                     border: "1px solid #ddd",
-                    padding: "1.25rem",
                     display: "flex",
                     flexDirection: "column"
                   }}
                 >
-                  <h3 style={{ marginTop: 0, marginBottom: "0.75rem", color: "#111", fontSize: "1.4rem" }}>
-                    {tx.listing?.title || "Listing"}
-                  </h3>
+                  {/* Image (same as MyListingsPage) */}
+                  <div
+                    style={{
+                      height: "180px",
+                      background: "#d9d9d9",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#666",
+                      fontWeight: "600"
+                    }}
+                  >
+                    {tx.listing?.imageUrl ? (
+                      <img
+                        src={tx.listing.imageUrl}
+                        alt={tx.listing.title}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                    ) : (
+                      "No Image"
+                    )}
+                  </div>
 
-                  <p style={{ margin: "0.3rem 0", fontWeight: "700" }}>
-                    Role: {role}
-                  </p>
+                  {/* Content */}
+                  <div style={{ padding: "1.25rem", display: "flex", flexDirection: "column", flex: 1 }}>
+                    <h3
+                      style={{
+                        marginTop: 0,
+                        marginBottom: "0.75rem",
+                        color: "#111",
+                        fontSize: "1.4rem",
+                        minHeight: "68px"
+                      }}
+                    >
+                      {tx.listing?.title || "Listing"}
+                    </h3>
 
-                  <p style={{ margin: "0.3rem 0" }}>
-                    <strong>Price:</strong> ${tx.listing?.price}
-                  </p>
+                    <p style={{ margin: "0.3rem 0" }}>
+                      <strong>Listing Price:</strong> ${tx.listing?.price}
+                    </p>
 
-                  <p style={{ margin: "0.3rem 0" }}>
-                    <strong>Buyer:</strong> {tx.buyer?.username}
-                  </p>
+                    <p style={{ margin: "0.3rem 0" }}>
+                      <strong>Offer Price:</strong> ${tx.offer?.amount?.toFixed(2)}
+                    </p>
 
-                  <p style={{ margin: "0.3rem 0" }}>
-                    <strong>Seller:</strong> {tx.seller?.username}
-                  </p>
+                    <p style={{ margin: "0.3rem 0" }}>
+                      <strong>Buyer:</strong> {tx.buyer?.username}
+                    </p>
 
-                  <p style={{ margin: "0.3rem 0" }}>
-                    <strong>Date:</strong> {new Date(tx.createdAt).toLocaleString()}
-                  </p>
+                    <p style={{ margin: "0.3rem 0" }}>
+                      <strong>Seller:</strong> {tx.seller?.username}
+                    </p>
 
-                  <p style={{ marginTop: "auto", fontWeight: "700", color: "#155724" }}>
-                    Completed
-                  </p>
+                    <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                      <strong>Date:</strong> {new Date(tx.createdAt).toLocaleString()}
+                    </p>
+
+                    {/* Purchased / Sold indicator */}
+                    <p
+                      style={{
+                        marginTop: "auto",
+                        fontWeight: "700",
+                        color: "#155724"
+                      }}
+                    >
+                      {actionText}
+                    </p>
+                  </div>
                 </div>
               );
             })}
