@@ -139,7 +139,7 @@ function App() {
         />
       )}
 
-      {page === "transactions" && (
+      {page === "history" && (
         user ? (
           <TransactionsPage
             setPage={setPage}
