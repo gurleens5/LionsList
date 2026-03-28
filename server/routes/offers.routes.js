@@ -165,6 +165,16 @@ router.patch("/:offerId/accept", protect, async (req, res) => {
 
     const offer = await Offer.findById(req.params.offerId);
 
+    // prevent further actions on offer after it is accepted
+    const existingAccepted = await Offer.findOne({
+        listing: offer.listing,
+        status: "Accepted"
+    });
+
+    if (existingAccepted) {
+        return res.status(400).json({ message: "An offer has already been accepted for this listing" });
+    }
+
     if (!offer) {
       return res.status(404).json({ message: "Offer not found" });
     }
@@ -191,7 +201,7 @@ router.patch("/:offerId/accept", protect, async (req, res) => {
     listing.status = "Sold";
     await listing.save();
 
-    // reject other offers under listing when accepted one
+    // reject other offers under listing after accepting an offer
     await Offer.updateMany(
         {
             listing: offer.listing,
@@ -203,6 +213,16 @@ router.patch("/:offerId/accept", protect, async (req, res) => {
         }
     );
 
+    // ensure each listing only has one Transaction linked to it
+    const existingTransaction = await Transaction.findOne({
+        listing: offer.listing
+    });
+
+    if (existingTransaction) {
+        return res.status(400).json({ message: "Transaction already exists for this listing" });
+    }
+
+    // create Transaction record after accepting an offer
     await Transaction.create({
         listing: offer.listing,
         buyer: offer.buyer,

@@ -376,7 +376,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                       <p><strong>Offer Amount:</strong> ${offer.amount.toFixed(2)}</p>
                       <p><strong>Status:</strong> {offer.status}</p>
 
-                      {offer.status === "Pending" && (
+                      {offer.status === "Pending" && listing?.status !== "Sold" && (
                         <button
                           style={{
                             marginTop: "0.5rem",
