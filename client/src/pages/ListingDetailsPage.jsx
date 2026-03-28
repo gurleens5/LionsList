@@ -376,21 +376,23 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                       <p><strong>Offer Amount:</strong> ${offer.amount.toFixed(2)}</p>
                       <p><strong>Status:</strong> {offer.status}</p>
 
-                      <button
-                        style={{
-                          marginTop: "0.5rem",
-                          background: "#cc0000",
-                          color: "#fff",
-                          border: "none",
-                          padding: "0.4rem 0.8rem",
-                          borderRadius: "6px",
-                          cursor: "pointer",
-                          fontWeight: "700",
-                          fontFamily: "Georgia, serif"
-                        }}
-                      >
-                        Accept
-                      </button>
+                      {offer.status === "Pending" && (
+                        <button
+                          style={{
+                            marginTop: "0.5rem",
+                            background: "#cc0000",
+                            color: "#fff",
+                            border: "none",
+                            padding: "0.4rem 0.8rem",
+                            borderRadius: "6px",
+                            cursor: "pointer",
+                            fontWeight: "700",
+                            fontFamily: "Georgia, serif"
+                          }}
+                        >
+                          Accept
+                        </button>
+                      )}
                     </div>
                   ))}
                 </div>
