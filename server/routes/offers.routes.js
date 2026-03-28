@@ -168,18 +168,19 @@ router.patch("/:offerId/accept", protect, async (req, res) => {
       return res.status(404).json({ message: "Offer not found" });
     }
 
-    // Only seller can accept
+    // only seller can accept
     if (!offer.seller || offer.seller.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Not authorized to accept this offer" });
     }
 
-    // Only pending offers can be accepted
+    // only pending offers can be accepted
     if (offer.status !== "Pending") {
       return res.status(400).json({ message: "Only pending offers can be accepted" });
     }
 
     offer.status = "Accepted";
 
+    // update linked listing status to Sold after accepting an offer
     const listing = await Listing.findById(offer.listing);
 
     if (!listing) {
@@ -188,6 +189,18 @@ router.patch("/:offerId/accept", protect, async (req, res) => {
 
     listing.status = "Sold";
     await listing.save();
+
+    // reject other offers under listing when accepted one
+    await Offer.updateMany(
+        {
+            listing: offer.listing,
+            _id: { $ne: offer._id }, // exclude accepted offer
+            status: "Pending"
+        },
+        {
+            $set: { status: "Rejected" }
+        }
+    );
 
     const updatedOffer = await offer.save();
 
