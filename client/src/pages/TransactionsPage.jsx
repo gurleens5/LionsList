@@ -130,23 +130,30 @@ const TransactionsPage = ({ setPage, user }) => {
                     </h3>
 
                     <p style={{ margin: "0.3rem 0" }}>
-                      <strong>Listing Price:</strong> ${tx.listing?.price}
-                    </p>
-
-                    <p style={{ margin: "0.3rem 0" }}>
-                      <strong>Offer Price:</strong> ${tx.offer?.amount?.toFixed(2)}
-                    </p>
-
-                    <p style={{ margin: "0.3rem 0" }}>
-                      <strong>Buyer:</strong> {tx.buyer?.username}
-                    </p>
-
-                    <p style={{ margin: "0.3rem 0" }}>
-                      <strong>Seller:</strong> {tx.seller?.username}
-                    </p>
-
-                    <p style={{ margin: "0.3rem 0 1rem 0" }}>
                       <strong>Date:</strong> {new Date(tx.createdAt).toLocaleString()}
+                    </p>
+
+                    <p style={{ margin: "0.3rem 0" }}>
+                      <strong>
+                        {isBuyer ? "Seller" : "Buyer"}:
+                      </strong>{" "}
+                      {isBuyer ? tx.seller?.username : tx.buyer?.username}
+                    </p>
+
+                    <div style={{ height: "8px" }} />
+
+                    <p style={{ margin: "0.3rem 0" }}>
+                      <strong>
+                        {isBuyer ? "Listed Price" : "Your Price"}:
+                      </strong>{" "}
+                      ${tx.listing?.price}
+                    </p>
+
+                    <p style={{ margin: "0.3rem 0" }}>
+                      <strong>
+                        {isBuyer ? "Your Offer" : "Offer Price"}:
+                      </strong>{" "}
+                      ${tx.offer?.amount?.toFixed(2)}
                     </p>
                   </div>
                 </div>
