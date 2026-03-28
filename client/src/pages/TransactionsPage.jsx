@@ -45,8 +45,10 @@ const TransactionsPage = ({ setPage, user }) => {
         {error && <p style={{ color: "#cc0000" }}>{error}</p>}
         {loading && <p>Loading transactions...</p>}
 
-        {!loading && transactions.length === 0 && (
-          <p style={{ color: "#444" }}>No transactions yet.</p>
+        {!loading && !error && transactions.length === 0 && (
+            <p style={{ color: "#cc0000", fontWeight: "700", fontSize: "1.1rem" }}>
+                You have no completed transactions yet.
+            </p>
         )}
 
         {!loading && transactions.length > 0 && (
