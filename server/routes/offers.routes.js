@@ -1,6 +1,7 @@
 import express from "express";
 import Offer from "../models/Offer.js";
 import Listing from "../models/Listing.js";
+import Transaction from "../models/Transaction.js";
 import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -201,6 +202,13 @@ router.patch("/:offerId/accept", protect, async (req, res) => {
             $set: { status: "Rejected" }
         }
     );
+
+    await Transaction.create({
+        listing: offer.listing,
+        buyer: offer.buyer,
+        seller: offer.seller,
+        offer: offer._id,
+    });
 
     const updatedOffer = await offer.save();
 
