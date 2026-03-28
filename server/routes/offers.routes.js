@@ -155,4 +155,43 @@ router.patch("/:offerId/cancel", protect, async (req, res) => {
     }
 });
 
+//seller accepts a pending offer
+router.patch("/:offerId/accept", protect, async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "User not authorized" });
+    }
+
+    const offer = await Offer.findById(req.params.offerId);
+
+    if (!offer) {
+      return res.status(404).json({ message: "Offer not found" });
+    }
+
+    // Only seller can accept
+    if (!offer.seller || offer.seller.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized to accept this offer" });
+    }
+
+    // Only pending offers can be accepted
+    if (offer.status !== "Pending") {
+      return res.status(400).json({ message: "Only pending offers can be accepted" });
+    }
+
+    offer.status = "Accepted";
+
+    const updatedOffer = await offer.save();
+
+    res.json(updatedOffer);
+
+  } catch (error) {
+    if (error && error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid offer ID" });
+    }
+
+    console.error(error);
+    res.status(500).json({ message: "Failed to accept offer" });
+  }
+});
+
 export default router;  
