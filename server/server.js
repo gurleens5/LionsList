@@ -6,6 +6,7 @@ import { connectDB } from "./config/db.js";
 import cors from "cors";
 import offersRoutes from "./routes/offers.routes.js";
 import dns from "node:dns"
+import transactionRoutes from "./routes/transactions.routes.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/api/listings", listingsRoutes);
 app.use("/api", authRoutes);
 app.use("/api/offers", offersRoutes);
+app.use("/api/transactions", transactionRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true });
