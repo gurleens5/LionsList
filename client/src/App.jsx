@@ -10,6 +10,7 @@ import SentOffers from "./pages/SentOffers";
 import api from "./lib/axios";
 import EditListingPage from "./pages/EditListingPage";
 import SentOffersDetails from "./pages/SentOffersDetails";
+import TransactionsPage from "./pages/TransactionsPage";
 
 function App() {
     const [page, setPage] = useState("home");
@@ -136,6 +137,17 @@ function App() {
           offerId={selectedListingId}
           user={user}
         />
+      )}
+
+      {page === "transactions" && (
+        user ? (
+          <TransactionsPage
+            setPage={setPage}
+            user={user}
+          />
+        ) : (
+          setPage("signin")
+        )
       )}
 
     </div>
