@@ -55,7 +55,11 @@ const TransactionsPage = ({ setPage, user }) => {
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}>
             {transactions.map((tx) => {
               const isBuyer = user && tx.buyer?._id === user._id;
-              const actionText = isBuyer ? "Purchased" : "Sold";
+
+              const label = isBuyer ? "Purchased" : "Sold";
+
+              const bgColor = isBuyer ? "#f8d7da" : "#d4edda";
+              const textColor = isBuyer ? "#721c24" : "#155724";
 
               return (
                 <div
@@ -71,7 +75,7 @@ const TransactionsPage = ({ setPage, user }) => {
                     flexDirection: "column"
                   }}
                 >
-                  {/* Image (same as MyListingsPage) */}
+                  {/* Image + badge */}
                   <div
                     style={{
                       height: "180px",
@@ -80,7 +84,8 @@ const TransactionsPage = ({ setPage, user }) => {
                       alignItems: "center",
                       justifyContent: "center",
                       color: "#666",
-                      fontWeight: "600"
+                      fontWeight: "600",
+                      position: "relative"
                     }}
                   >
                     {tx.listing?.imageUrl ? (
@@ -92,9 +97,25 @@ const TransactionsPage = ({ setPage, user }) => {
                     ) : (
                       "No Image"
                     )}
+
+                    {/* Status badge (same as SentOffers style) */}
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "10px",
+                        right: "10px",
+                        backgroundColor: bgColor,
+                        color: textColor,
+                        padding: "0.2rem 0.6rem",
+                        borderRadius: "6px",
+                        fontWeight: "700",
+                        fontSize: "0.85rem"
+                      }}
+                    >
+                      {label}
+                    </span>
                   </div>
 
-                  {/* Content */}
                   <div style={{ padding: "1.25rem", display: "flex", flexDirection: "column", flex: 1 }}>
                     <h3
                       style={{
@@ -126,17 +147,6 @@ const TransactionsPage = ({ setPage, user }) => {
 
                     <p style={{ margin: "0.3rem 0 1rem 0" }}>
                       <strong>Date:</strong> {new Date(tx.createdAt).toLocaleString()}
-                    </p>
-
-                    {/* Purchased / Sold indicator */}
-                    <p
-                      style={{
-                        marginTop: "auto",
-                        fontWeight: "700",
-                        color: "#155724"
-                      }}
-                    >
-                      {actionText}
                     </p>
                   </div>
                 </div>
