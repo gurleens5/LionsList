@@ -57,9 +57,10 @@ const TransactionsPage = ({ setPage, user }) => {
               const isBuyer = user && tx.buyer?._id === user._id;
 
               const label = isBuyer ? "Purchased" : "Sold";
+              const formattedDate = new Date(tx.createdAt).toLocaleString();
 
-              const bgColor = isBuyer ? "#f8d7da" : "#d4edda";
-              const textColor = isBuyer ? "#721c24" : "#155724";
+              const bgColor = isBuyer ? "#dbeafe" : "#fff4e5";   
+              const textColor = isBuyer ? "#1e3a8a" : "#9a3412"; 
 
               return (
                 <div
@@ -112,7 +113,7 @@ const TransactionsPage = ({ setPage, user }) => {
                         fontSize: "0.85rem"
                       }}
                     >
-                      {label}
+                      {label} {formattedDate}
                     </span>
                   </div>
 
@@ -128,10 +129,6 @@ const TransactionsPage = ({ setPage, user }) => {
                     >
                       {tx.listing?.title || "Listing"}
                     </h3>
-
-                    <p style={{ margin: "0.3rem 0" }}>
-                      <strong>Date:</strong> {new Date(tx.createdAt).toLocaleString()}
-                    </p>
 
                     <p style={{ margin: "0.3rem 0" }}>
                       <strong>
