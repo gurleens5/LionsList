@@ -71,11 +71,25 @@ router.get("/listing/:listingId", protect, async (req, res) => {
             return res.status(404).json({ message: "Listing not found" });
         }
 
-        if (!listing.seller || listing.seller.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ message: "Not authorized to view offers for this listing" });
-        }
+        const isSeller =
+            listing.seller && listing.seller.toString() === req.user._id.toString();
 
-        const offers = await Offer.find({ listing: listing._id }).populate("buyer", "username").sort({ createdAt: -1 });
+        let offers;
+
+        if (isSeller) {
+            // seller sees all offers
+            offers = await Offer.find({ listing: listing._id })
+                .populate("buyer", "username")
+                .sort({ createdAt: -1 });
+        } else {
+            // buyer only sees their own offers for listing
+            offers = await Offer.find({
+                listing: listing._id,
+                buyer: req.user._id
+            })
+                .populate("buyer", "username")
+                .sort({ createdAt: -1 });
+        }
 
         res.json(offers);
     } catch (error) {
