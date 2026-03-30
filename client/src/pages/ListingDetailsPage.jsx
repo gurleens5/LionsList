@@ -109,19 +109,19 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
   const handleDelete = async () => {
     const confirmed = window.confirm("Are you sure you want to delete this listing?");
     if (!confirmed) return;
-    
+
     try {
-    const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
-    await api.delete(`/listings/${listingId}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+      await api.delete(`/listings/${listingId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-    if (previousPage === "my-listings") {
-      setPage("my-listings");
-    } else {
-      setPage("listings");
-    }
+      if (previousPage === "my-listings") {
+        setPage("my-listings");
+      } else {
+        setPage("listings");
+      }
 
     } catch (err) {
       console.error("Delete failed: ", err);
@@ -153,6 +153,21 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
     }
   };
 
+  const handleRejectOffer = async (offerId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await api.patch(`/offers/${offerId}/reject`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+    } catch (err) {
+      console.error("Reject failed:", err);
+      alert(err.response?.data?.message || "Failed to reject offer");
+    }
+  };
+
+
   return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
       <Header setPage={setPage} />
@@ -160,15 +175,15 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
       <div style={{ height: "70px" }} />
 
       <div style={{ padding: "2rem", display: "flex", justifyContent: "center" }}>
-        <div 
-          style={{ 
+        <div
+          style={{
             position: "relative",
             background: "#fff",
             borderRadius: "14px",
             padding: "2rem",
             width: "100%",
             maxWidth: "750px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.08)" 
+            boxShadow: "0 4px 12px rgba(0,0,0,0.08)"
           }}
         >
           <button
@@ -179,7 +194,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                 setPage("listings", "listing-details");
               }
             }}
-            style={{ 
+            style={{
               background: "transparent",
               border: "none",
               color: "#cc0000",
@@ -233,26 +248,26 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
               )}
               <p><strong>Price:</strong> ${listing.price}</p>
               <p>
-              <strong>Status:</strong>{" "}
-              <span
-              style={{
-                backgroundColor:
-                  listing.status === "Available" ? "#d4edda" : "#f8d7da",
-                color:
-                  listing.status === "Available" ? "#155724" : "#721c24",
-                padding: "0.2rem 0.6rem",
-                borderRadius: "6px",
-                fontWeight: "700",
-                fontSize: "0.85rem"
-              }}
-            >
-              {listing.status}
-            </span>
-            </p>
+                <strong>Status:</strong>{" "}
+                <span
+                  style={{
+                    backgroundColor:
+                      listing.status === "Available" ? "#d4edda" : "#f8d7da",
+                    color:
+                      listing.status === "Available" ? "#155724" : "#721c24",
+                    padding: "0.2rem 0.6rem",
+                    borderRadius: "6px",
+                    fontWeight: "700",
+                    fontSize: "0.85rem"
+                  }}
+                >
+                  {listing.status}
+                </span>
+              </p>
               <p><strong>Seller:</strong> {listing.sellerUsername || "Unknown"}</p>
 
-              <div 
-                style={{ 
+              <div
+                style={{
                   marginTop: "2rem",
                   display: "flex",
                   alignItems: "center",
@@ -369,8 +384,8 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
               )}
 
               {isSeller && (
-                <div 
-                  style={{ 
+                <div
+                  style={{
                     marginTop: "2rem",
                     paddingTop: "1.5rem",
                     borderTop: "1px solid #ddd"
@@ -387,9 +402,9 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                   )}
 
                   {offers.map((offer) => (
-                    <div 
+                    <div
                       key={offer._id}
-                      style={{ 
+                      style={{
                         background: "#f8f8f8",
                         borderRadius: "10px",
                         padding: "1rem",
@@ -401,31 +416,50 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                       <p><strong>Status:</strong> {offer.status}</p>
 
                       {offer.status === "Pending" && listing?.status !== "Sold" && (
-                        <button
-                          onClick={() => handleAcceptOffer(offer._id)}
-                          style={{
-                            marginTop: "0.5rem",
-                            background: "#cc0000",
-                            color: "#fff",
-                            border: "none",
-                            padding: "0.4rem 0.8rem",
-                            borderRadius: "6px",
-                            cursor: "pointer",
-                            fontWeight: "700",
-                            fontFamily: "Georgia, serif"
-                          }}
-                        >
-                          Accept
-                        </button>
+                        <>
+                          <button
+                            onClick={() => handleAcceptOffer(offer._id)}
+                            style={{
+                              marginTop: "0.5rem",
+                              background: "#cc0000",
+                              color: "#fff",
+                              border: "none",
+                              padding: "0.4rem 0.8rem",
+                              borderRadius: "6px",
+                              cursor: "pointer",
+                              fontWeight: "700",
+                              fontFamily: "Georgia, serif"
+                            }}
+                          >
+                            Accept
+                          </button>
+                          <button
+                            onClick={() => handleRejectOffer(offer._id)}
+                            style={{
+                              marginTop: "0.5rem",
+                              marginLeft: "0.5rem",
+                              background: "#000000",
+                              color: "#fff",
+                              border: "none",
+                              padding: "0.4rem 0.8rem",
+                              borderRadius: "6px",
+                              cursor: "pointer",
+                              fontWeight: "700",
+                              fontFamily: "Georgia, serif"
+                            }}
+                          >
+                            Reject
+                          </button>
+                        </>
                       )}
                     </div>
                   ))}
                 </div>
               )}
             </div>
-          )}  
+          )}
         </div>
-      </div>  
+      </div>
     </div>
   );
 };
