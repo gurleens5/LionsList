@@ -37,6 +37,11 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
 
   const isSeller = user && sellerId && String(user._id) === String(sellerId);
 
+  const myOffer = offers.find(
+    (offer) =>
+      String(offer.buyer?._id) === String(user?._id) &&
+      offer.status === "Pending"
+  );
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -51,7 +56,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
       }
     };
 
-    if (listingId && isSeller && token) {
+    if (listingId && token) {
       fetchOffers();
     }
   }, [listingId, isSeller, token]);
@@ -282,7 +287,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                   flexWrap: "wrap",
                 }}
               >
-                {isLoggedIn && !isSeller && (
+                {isLoggedIn && !isSeller && !myOffer && (
                   <button
                     type="button"
                     onClick={() => {
@@ -330,7 +335,64 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
 
               </div>
 
-              {isLoggedIn && !isSeller && showOfferForm && (
+              {isLoggedIn && !isSeller && myOffer && (
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    padding: "1rem",
+                    background: "#f8f8f8",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <p>
+                    <strong>Your Offer:</strong> ${myOffer.amount.toFixed(2)}
+                  </p>
+                  <p>
+                    <strong>Status:</strong> {myOffer.status}
+                  </p>
+
+                  {myOffer.status === "Pending" && listing?.status !== "Sold" && (
+                    <button
+                      onClick={async () => {
+                        try {
+                          await api.patch(`/offers/${myOffer._id}/cancel`, {}, {
+                            headers: { Authorization: `Bearer ${token}` },
+                          });
+
+                          setOfferSuccess("Offer cancelled successfully.");
+                          setOfferError("");
+
+                          // refresh offers
+                          const res = await api.get(`/offers/listing/${listingId}`, {
+                            headers: { Authorization: `Bearer ${token}` },
+                          });
+                          setOffers(res.data);
+
+                        } catch (err) {
+                          console.error("Cancel offer failed:", err);
+                          alert("Failed to cancel offer");
+                        }
+                      }}
+                      style={{
+                        marginTop: "0.5rem",
+                        background: "#cc0000",
+                        color: "#fff",
+                        border: "none",
+                        padding: "0.5rem 1rem",
+                        borderRadius: "8px",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        fontFamily: "Georgia, serif",
+                        boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                      }}
+                    >
+                      Cancel Offer
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {isLoggedIn && !isSeller && !myOffer && showOfferForm && (
                 <form onSubmit={handleOfferSubmit} style={{ marginTop: "1rem" }}>
                   <div style={{ marginBottom: "0.5rem" }}>
                     <label htmlFor="offerAmount">
