@@ -161,6 +161,12 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
         headers: { Authorization: `Bearer ${token}` }
       });
 
+      // refresh offers
+      const offersRes = await api.get(`/offers/listing/${listingId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setOffers(offersRes.data);
+
     } catch (err) {
       console.error("Reject failed:", err);
       alert(err.response?.data?.message || "Failed to reject offer");
