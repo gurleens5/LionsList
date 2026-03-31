@@ -13,6 +13,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
   const [offerError, setOfferError] = useState("");
   const [offerSuccess, setOfferSuccess] = useState("");
   const [submittingOffer, setSubmittingOffer] = useState(false);
+  const [offersLoading, setOffersLoading] = useState(true);
 
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
@@ -53,6 +54,9 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
       } catch (err) {
         console.error("Error fetching offers:", err);
         setOffersError("Failed to load offers for this listing.");
+      }
+      finally {
+        setOffersLoading(false);
       }
     };
 
@@ -103,6 +107,10 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
       setOfferSuccess("Offer submitted successfully.");
       setOfferAmount("");
       setShowOfferForm(false);
+      const res = await api.get(`/offers/listing/${listingId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setOffers(res.data);
     } catch (err) {
       console.error("Error submitting offer:", err);
       setOfferError(err.response?.data?.message || "Failed to submit offer.");
@@ -287,7 +295,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                   flexWrap: "wrap",
                 }}
               >
-                {isLoggedIn && !isSeller && !myOffer && (
+                {isLoggedIn && !isSeller && !myOffer && !offersLoading && (
                   <button
                     type="button"
                     onClick={() => {
