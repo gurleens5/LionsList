@@ -11,6 +11,7 @@ import api from "./lib/axios";
 import EditListingPage from "./pages/EditListingPage";
 import SentOffersDetails from "./pages/SentOffersDetails";
 import TransactionsPage from "./pages/TransactionsPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
     const [page, setPage] = useState("home");
@@ -147,6 +148,17 @@ function App() {
           />
         ) : (
           setPage("signin")
+        )
+      )}
+
+      {page === "profile" && (
+        user ? (
+          <ProfilePage
+            setPage={handleSetPage}
+            user={user}
+          />
+        ) : (
+          handleSetPage("signin")
         )
       )}
 
