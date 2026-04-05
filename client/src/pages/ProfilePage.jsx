@@ -64,6 +64,7 @@ function ProfilePage({ setPage, user }) {
             }}
           >
             User Profile
+            
           </h1>
 
           {loading ? (
