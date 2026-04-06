@@ -1,5 +1,6 @@
 import express from "express";
 import Transaction from "../models/Transaction.js";
+import User from "../models/User.js";
 import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -28,12 +29,17 @@ router.post("/buyer", protect, async (req, res) => {
     tx.buyerRating = rating;
     await tx.save();
 
-    const buyer = tx.buyer;
-    const currentRating = buyer.buyerRating || 0;
-    const currentCount = buyer.buyerRatingCount || 0;
+    const buyer = await User.findById(tx.buyer._id);
+    const currentRating = Number(buyer.buyerRating) || 0;
+    const currentCount = Number(buyer.buyerRatingsCount) || 0;
 
-    buyer.buyerRating = ((currentRating * currentCount) + rating) / (currentCount + 1);
-    buyer.buyerRatingCount = currentCount + 1;
+    const newCount = currentCount + 1;
+    const newAverage = ((currentRating * currentCount) + rating) / newCount;
+
+    // Cap the average to 5 to avoid validation errors
+    buyer.buyerRating = Math.min(newAverage, 5);
+    buyer.buyerRatingsCount = newCount;
+
     await buyer.save();
 
     res.json({ message: "Buyer rated successfully", transaction: tx, buyer });
