@@ -44,13 +44,19 @@ const userSchema = new mongoose.Schema(
             min: 0,
             max: 5
         },
+        sellerRatingsCount: {
+            type: Number,
+            default: 0,
+            min: 0
+        },
         buyerRating: {
             type: Number,
             default: 0,
             min: 0,
             max: 5
         },
-        ratingsCount: {
+        
+        buyerRatingsCount: {
             type: Number,
             default: 0,
             min: 0
