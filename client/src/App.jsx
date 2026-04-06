@@ -24,6 +24,7 @@ function App() {
     const [courseCodeInput, setCourseCodeInput] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [searchInput, setSearchInput] = useState("");
+    const [selectedProfileUserID, setSelectedProfileUserID] = useState(null);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -59,6 +60,9 @@ function App() {
     }
     if (newPage === "sent-offers-details" || newPage === "listing-details" || newPage === "edit-listing") {
       setSelectedListingId(idOrFrom);
+    }
+    if (newPage === "profile") {
+      setSelectedProfileUserID(idOrFrom || null);
     }
     setPage(newPage);
   };
@@ -156,6 +160,7 @@ function App() {
           <ProfilePage
             setPage={handleSetPage}
             user={user}
+            profileUserId={selectedProfileUserID}
           />
         ) : (
           handleSetPage("signin")

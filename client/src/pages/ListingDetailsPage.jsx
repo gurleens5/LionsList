@@ -283,7 +283,24 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                   {listing.status}
                 </span>
               </p>
-              <p><strong>Seller:</strong> {listing.sellerUsername || "Unknown"}</p>
+              <p>
+                <strong>Seller:</strong> {" "}{/* {listing.sellerUsername || "Unknown"} */}
+                {sellerId ? (
+                  <span
+                    onClick={() => setPage("profile", sellerId)}
+                    style={{ 
+                      color: "#cc0000",
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {listing.sellerUsername || "Unknown"}
+                  </span>
+                ) : (
+                  listing.sellerUsername || "Unknown"
+                )}
+              </p>
 
               <div
                 style={{
