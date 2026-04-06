@@ -2,21 +2,24 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import api from "../lib/axios";
 
-function ProfilePage({ setPage, user }) {
+function ProfilePage({ setPage, user, profileUserId }) {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
-      if (!user?._id) {
+      const userIdToFetch = profileUserId || user?._id; 
+
+      if (!userIdToFetch) {
         setError("No user found");
         setLoading(false);
         return;
       }
 
       try {
-        const res = await api.get(`/users/${user._id}`);
+        setLoading(true);
+        const res = await api.get(`/users/${userIdToFetch}`);
         setProfileData(res.data);
         setError("");
       } catch (err) {
@@ -27,7 +30,7 @@ function ProfilePage({ setPage, user }) {
     };
 
     fetchProfile();
-  }, [user]);
+  }, [user, profileUserId]);
 
   const displayUsername = profileData?.username || "username";
   const displayRating =
