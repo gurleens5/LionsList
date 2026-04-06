@@ -56,7 +56,8 @@ const TransactionsPage = ({ setPage, user }) => {
             {transactions.map((tx) => {
               const isBuyer = user && tx.buyer?._id === user._id;
               const isSeller = user && tx.seller?._id === user._id;
-
+              
+              // Rating options only show up when offers are accepted
               const canRateBuyer = isSeller && tx.offer?.status === "Accepted";
               const canRateSeller = isBuyer && tx.offer?.status === "Accepted";
 
