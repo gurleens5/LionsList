@@ -1,11 +1,13 @@
 import express from "express";
 import Listing from "../models/Listing.js";
 import { protect } from "../middleware/auth.js";
+import { updateListing, deleteListing } from "../controllers/listingController.js";
+
 const router = express.Router();
 
 const normalizeCategory = (category) => {
   const value = String(category || "").trim().toLowerCase();
-  if (value === "textbook" || value === "textbooks") return "Textbooks";
+  if (value === "textbook" || value === "textbooks") return "Textbook";
   if (value === "note" || value === "notes") return "Notes";
   if (value === "lab kit" || value === "labkit") return "Lab Kit";
   if (value === "stationery") return "Stationery";
@@ -13,19 +15,28 @@ const normalizeCategory = (category) => {
   return String(category || "").trim();
 };
 
+const buildCourseCodeRegex = (courseCode) => {
+  const normalized = String(courseCode || "")
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, "");
+
+  const match = normalized.match(/^([A-Z]{2,5})(\d{4})$/);
+
+  if (!match) return null;
+
+  const [, letters, digits] = match;
+  return new RegExp(`^${letters}\\s*${digits}$`, "i");
+};
+
 // get all listings or filtered listings
 router.get("/", async (req, res) => {
   try {
-    const { categories, courseTitle, status, keyword } = req.query;
+    const { categories, courseCode, status, keyword } = req.query;
     const query = {};
 
     if (status && status.trim() !== "") {
       query.status = status.trim();
-    }
-
-    if (keyword && keyword.trim() !== "") {
-      const escapedKeyword = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      query.title = { $regex: escapedKeyword, $options: "i" };
     }
 
     if (categories) {
@@ -33,14 +44,27 @@ router.get("/", async (req, res) => {
         .split(",")
         .map((item) => normalizeCategory(item))
         .filter(Boolean);
+
       if (categoryList.length > 0) {
         query.category = { $in: categoryList };
       }
     }
 
-    if (courseTitle && courseTitle.trim() !== "") {
-      const formattedCourseTitle = courseTitle.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      query.title = { $regex: formattedCourseTitle, $options: "i" };
+    if (courseCode && courseCode.trim() !== "") {
+      const courseCodeRegex = buildCourseCodeRegex(courseCode);
+
+      if (courseCodeRegex) {
+        query.courseCode = { $regex: courseCodeRegex };
+      } else {
+        return res.status(400).json({ message: "Invalid course code format." });
+      }
+    }
+
+    if (keyword && keyword.trim() !== "") {
+      const formattedKeyword = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      query.$or = [
+        { title: { $regex: formattedKeyword, $options: "i" } }
+      ];
     }
 
     const listings = await Listing.find(query).sort({ createdAt: -1 }).limit(50);
@@ -60,6 +84,7 @@ router.post("/", async (req, res) => {
     const courseCode = String(req.body?.courseCode || "").trim();
     const imageUrl = String(req.body?.imageUrl || "").trim();
     const price = Number(req.body?.price);
+    const status = String(req.body?.status || "Available").trim();
     const seller = req.body?.seller || null;
 
     if (!title || !description || !category || !price) {
@@ -77,6 +102,7 @@ router.post("/", async (req, res) => {
       courseCode,
       imageUrl,
       price,
+      status,
       seller,
     });
     res.status(201).json(listing);
@@ -97,15 +123,17 @@ router.get("/my", protect, async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch user listings" });
   }
-});    
+});
 
 // fetch listing by id
 router.get("/:id", async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id).populate("seller", "username");
+
     if (!listing) {
       return res.status(404).json({ message: "Listing not found" });
     }
+
     res.json({
       ...listing.toObject(),
       sellerUsername: listing.seller?.username || "Unknown",
@@ -117,5 +145,8 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch listing" });
   }
 });
+
+router.put("/:id", protect, updateListing);
+router.delete("/:id", protect, deleteListing);
 
 export default router;

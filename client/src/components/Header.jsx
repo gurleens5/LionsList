@@ -30,8 +30,13 @@ function Header({ setPage }) {
         <div onClick={() => token ? setPage("create-listing") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Sell</div>
         <div onClick={() => token ? setPage("sent-offers") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Sent Offers</div>
         <div onClick={() => token ? setPage("my-listings") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>My Listings</div>
+        <div onClick={() => token ? setPage("history") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>History</div>
+        <div onClick={() => token ? setPage("messages") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>Messages</div>
 
-        <FaUserCircle style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }} />
+        <FaUserCircle
+          onClick={() => token ? setPage("profile") : setPage("signin")}
+          style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }}
+        />
 
         {!token ? (
           <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", background: "#cc0000", borderRadius: "20px", padding: "0.4rem 1.2rem" }}>
@@ -58,6 +63,8 @@ function Header({ setPage }) {
           <div onClick={() => token ? go("create-listing") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Sell</div>
           <div onClick={() => token ? go("sent-offers") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Sent Offers</div>
           <div onClick={() => token ? go("my-listings") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>My Listings</div>
+          <div onClick={() => token ? go("history") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>History</div>
+          <div onClick={() => token ? go("messages") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Messages</div>
 
           {!token ? (
             <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>

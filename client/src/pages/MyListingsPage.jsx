@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../lib/axios";
 import Header from "../components/Header";
 
-const MyListingsPage = ({ setPage, setSelectedListingId }) => {
+const MyListingsPage = ({ setPage, setSelectedListingId, setPreviousPage }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -75,7 +75,6 @@ const MyListingsPage = ({ setPage, setSelectedListingId }) => {
                     flexDirection: "column"
                   }}
                 >
-                  {/* Image section */}
                   <div
                     style={{
                       height: "180px",
@@ -98,7 +97,6 @@ const MyListingsPage = ({ setPage, setSelectedListingId }) => {
                     )}
                   </div>
 
-                  {/* Content */}
                   <div style={{ padding: "1.25rem", display: "flex", flexDirection: "column", flex: 1 }}>
                     <h3
                       style={{
@@ -127,21 +125,24 @@ const MyListingsPage = ({ setPage, setSelectedListingId }) => {
                       <strong>Category:</strong> {listing.category}
                     </p>
 
-                    <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                      <strong>Course Code:</strong> {listing.courseCode}
-                    </p>
+                    {listing.courseCode && (
+                      <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                        <strong>Course Code:</strong> {listing.courseCode}
+                      </p>
+                    )}
 
                     <p style={{ margin: "0.3rem 0" }}>
                       <strong>Price:</strong> ${listing.price}
                     </p>
 
-                    {/* Status (your enhancement preserved) */}
                     <p style={{ margin: "0.3rem 0 1rem 0" }}>
                       <strong>Status:</strong>{" "}
                       <span
                         style={{
-                          backgroundColor: listing.status === "Available" ? "#d4edda" : "#eee",
-                          color: listing.status === "Available" ? "#155724" : "#555",
+                          backgroundColor:
+                            listing.status === "Available" ? "#d4edda" : "#f8d7da",
+                          color:
+                            listing.status === "Available" ? "#155724" : "#721c24",
                           padding: "0.2rem 0.6rem",
                           borderRadius: "6px",
                           fontWeight: "700",
@@ -154,8 +155,8 @@ const MyListingsPage = ({ setPage, setSelectedListingId }) => {
 
                     <button
                       onClick={() => {
-                        setSelectedListingId(listing._id);
-                        setPage("listing-details");
+                        setPreviousPage("my-listings");
+                        setPage("listing-details", listing._id);
                       }}
                       style={{
                         background: "#cc0000",

@@ -1,8 +1,9 @@
 import Header from "../components/Header";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../lib/axios";
 
-function CreateListingPage({ setPage }) {
+function EditListingPage({ setPage, listingId }) {
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -40,7 +41,7 @@ function CreateListingPage({ setPage }) {
     setError("");
   };
 
-  const submitListingForm = async (e) => {
+  const submitEditForm = async (e) => {
     e.preventDefault();
 
     const { title, description, category, price, courseCode } = formData;
@@ -55,7 +56,7 @@ function CreateListingPage({ setPage }) {
       return;
     }
 
-    if (!/^\d+(\.\d{1,2})?$/.test(price.trim())) {
+    if (!/^\d+(\.\d{1,2})?$/.test(String(price).trim())) {
       setError("Price can have at most 2 decimal places.");
       return;
     }
@@ -70,28 +71,58 @@ function CreateListingPage({ setPage }) {
 
       const token = localStorage.getItem("token");
 
-      const userRes = await api.get("/me", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.put(
+        `/listings/${listingId}`,
+        {
+          title: formData.title.trim(),
+          description: formData.description.trim(),
+          category: formData.category.trim(),
+          courseCode: formData.courseCode.trim().toUpperCase(),
+          imageUrl: formData.imageUrl.trim(),
+          price: Number(formData.price),
+          status: formData.status,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
 
-      const userId = userRes.data?._id;
+    // Refetches the current listing which refreshes the listing
+      setPage("listing-details", listingId);
 
-      await api.post("/listings", {
-        title: formData.title.trim(),
-        description: formData.description.trim(),
-        category: formData.category.trim(),
-        courseCode: formData.courseCode.trim().toUpperCase(),
-        imageUrl: formData.imageUrl.trim(),
-        price: Number(formData.price),
-        status: "Available",
-        seller: userId
-      });
-
-      setPage("listings");
     } catch (err) {
-      setError(err.response?.data?.message || err.message || "Failed to create listing.");
+      setError(err.response?.data?.message || "Failed to update listing.");
     }
   };
+
+  // Fetch existing listing data
+  useEffect(() => {
+    const fetchListing = async () => {
+      try {
+        const res = await api.get(`/listings/${listingId}`);
+        const listing = res.data;
+
+        setFormData({
+          title: listing.title || "",
+          description: listing.description || "",
+          category: listing.category || "",
+          courseCode: listing.courseCode || "",
+          imageUrl: listing.imageUrl || "",
+          price: listing.price !== undefined ? String(listing.price) : "",
+          status: listing.status || "Available",
+        });
+
+      } catch (err) {
+        console.error("Error fetching listing:", err);
+        setError("Failed to load listing.");
+      }
+    };
+
+    if (listingId) {
+      fetchListing();
+    }
+
+  }, [listingId]);
 
   return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
@@ -107,12 +138,12 @@ function CreateListingPage({ setPage }) {
             maxWidth: "520px",
           }}
         >
-          <h2 style={{ margin: "0 0 0.3rem 0" }}>Create Listing</h2>
+          <h2 style={{ margin: "0 0 0.3rem 0" }}>Edit Listing</h2>
           <p style={{ color: "#888", margin: "0 0 2rem 0" }}>
-            Add your item details to post it on the marketplace
+            Click "Save Changes" when done
           </p>
 
-          <form onSubmit={submitListingForm}>
+          <form onSubmit={submitEditForm}>
             <label>Title</label>
             <input
               type="text"
@@ -242,10 +273,10 @@ function CreateListingPage({ setPage }) {
             />
 
             <label>Status</label>
-            <input
-              type="text"
-              value="Available"
-              readOnly
+            <select
+              name="status"
+              value={formData.status}
+              onChange={updateListingField}
               style={{
                 display: "block",
                 width: "100%",
@@ -256,10 +287,12 @@ function CreateListingPage({ setPage }) {
                 boxSizing: "border-box",
                 fontSize: "1rem",
                 fontFamily: "Georgia, serif",
-                background: "#f7f7f7",
-                color: "#555",
+                background: "#fff",
               }}
-            />
+            >
+              <option value="Available">Available</option>
+              <option value="Sold">Sold</option>
+            </select>
 
             {error && (
               <p style={{ color: "#cc0000", marginBottom: "1rem" }}>
@@ -282,7 +315,7 @@ function CreateListingPage({ setPage }) {
                 fontFamily: "Georgia, serif",
               }}
             >
-              Create Listing
+              Save Changes
             </button>
           </form>
         </div>
@@ -291,4 +324,4 @@ function CreateListingPage({ setPage }) {
   );
 }
 
-export default CreateListingPage;
+export default EditListingPage;

@@ -16,6 +16,7 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      enum: ["Textbook", "Notes", "Lab Kit", "Stationery", "Study Guide"],
     },
     price: {
       type: Number,
@@ -26,6 +27,7 @@ const listingSchema = new mongoose.Schema(
       type: String,
       default: "Available",
       trim: true,
+      enum: ["Available", "Sold"],
     },
     courseCode: {
       type: String,

@@ -2,17 +2,34 @@ import { useState, useEffect } from "react";
 import api from "../lib/axios";
 import Header from "../components/Header";
 
-// US-07-1: display all listings
-const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
+const ListingsPage = ({
+  setPage,
+  setSelectedListingId,
+  setPreviousPage,
+  homeSearch = "",
+  selectedCategories,
+  setSelectedCategories,
+  courseCodeInput,
+  setCourseCodeInput,
+  searchQuery,
+  setSearchQuery,
+  searchInput,
+  setSearchInput,
+  setHomeSearch
+}) => {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [courseTitleInput, setCourseTitleInput] = useState("");
-  const [searchInput, setSearchInput] = useState(homeSearch);
-  const [searchQuery, setSearchQuery] = useState(homeSearch);
 
-  const categoryOptions = ["Textbooks", "Notes", "Lab Kit", "Stationery", "Study Guide"];
+  const categoryOptions = ["Textbook", "Notes", "Lab Kit", "Stationery", "Study Guide"];
+
+  useEffect(() => {
+    if (homeSearch && homeSearch.trim() !== "") {
+      setSearchInput(homeSearch);
+      setSearchQuery(homeSearch);
+      setHomeSearch("");
+    }
+  }, [homeSearch, setCourseCodeInput, setSearchInput, setSearchQuery, setHomeSearch]);
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -25,8 +42,8 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
           params.categories = selectedCategories.join(",");
         }
 
-        if (courseTitleInput.trim() !== "") {
-          params.courseTitle = courseTitleInput.trim();
+        if (courseCodeInput.trim() !== "") {
+          params.courseCode = courseCodeInput.trim();
         }
 
         if (searchQuery.trim() !== "") {
@@ -45,7 +62,7 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
     };
 
     fetchListings();
-  }, [selectedCategories, courseTitleInput, searchQuery]);
+  }, [selectedCategories, courseCodeInput, searchQuery]);
 
   const handleCategoryChange = (category) => {
     if (selectedCategories.includes(category)) {
@@ -56,7 +73,11 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
   };
 
   const handleSearch = () => {
-    setSearchQuery(searchInput);
+    const query = searchInput;
+    setSelectedCategories([]);
+    setCourseCodeInput("");
+    setHomeSearch("");
+    setSearchQuery(query);
   };
 
   const handleSearchKeyDown = (e) => {
@@ -65,7 +86,8 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
 
   const handleResetFilters = () => {
     setSelectedCategories([]);
-    setCourseTitleInput("");
+    setCourseCodeInput("");
+    setHomeSearch("");
   };
 
   const noListingsMatch = !loading && !error && listings.length === 0;
@@ -85,7 +107,7 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
 
         <div style={{ display: "flex", width: "100%", maxWidth: "600px", marginBottom: "1.5rem" }}>
           <input
-            placeholder="Search for textbooks, notes, lab kits..."
+            placeholder="Search for textbook, notes, lab kits..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={handleSearchKeyDown}
@@ -96,6 +118,7 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
               fontFamily: "serif",
             }}
           />
+
           <button
             onClick={handleSearch}
             style={{
@@ -107,6 +130,8 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
             Search
           </button>
         </div>
+
+
 
         <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
           <div style={{ width: "250px", background: "#fff", borderRadius: "14px", border: "1px solid #ddd",
@@ -135,14 +160,16 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
 
             <div style={{ marginBottom: "1.5rem" }}>
               <h3 style={{ marginTop: 0, marginBottom: "0.75rem", fontSize: "1.1rem", color: "#111" }}>
-                Course Title
+                Course Code
               </h3>
 
               <input
                 type="text"
-                placeholder="Enter course title"
-                value={courseTitleInput}
-                onChange={(e) => setCourseTitleInput(e.target.value)}
+                placeholder="Enter course code"
+                value={courseCodeInput}
+                onChange={(e) => {
+                  setCourseCodeInput(e.target.value);
+                }}
                 style={{ width: "100%", padding: "0.75rem", borderRadius: "8px", border: "1px solid #ccc",
                          fontFamily: "Georgia, sans-serif", fontSize: "1rem", boxSizing: "border-box" }}
               />
@@ -152,8 +179,7 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
               onClick={handleResetFilters}
               style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
                        padding: "0.75rem 1rem", fontWeight: "700", cursor: "pointer",
-                       fontFamily: "Georgia, serif", width: "100%" }}
-            >
+                       fontFamily: "Georgia, serif", width: "100%" }}>
               Clear Filters
             </button>
           </div>
@@ -195,9 +221,11 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
                         <strong>Category:</strong> {listing.category}
                       </p>
 
-                      <p style={{ margin: "0.3rem 0 1rem 0" }}>
-                        <strong>Course Code:</strong> {listing.courseCode}
-                      </p>
+                      {listing.courseCode && (
+                        <p style={{ margin: "0.3rem 0 1rem 0" }}>
+                          <strong>Course Code:</strong> {listing.courseCode}
+                        </p>
+                      )}
 
                       <p style={{ margin: "0.3rem 0" }}>
                         <strong>Price:</strong> ${listing.price}
@@ -207,8 +235,10 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
                         <strong>Status:</strong>{" "}
                         <span
                           style={{
-                            backgroundColor: listing.status === "Available" ? "#d4edda" : "#eee",
-                            color: listing.status === "Available" ? "#155724" : "#555",
+                            backgroundColor:
+                              listing.status === "Available" ? "#d4edda" : "#f8d7da",
+                            color:
+                              listing.status === "Available" ? "#155724" : "#721c24",
                             padding: "0.2rem 0.6rem",
                             borderRadius: "6px",
                             fontWeight: "700",
@@ -219,10 +249,15 @@ const ListingsPage = ({ setPage, setSelectedListingId, homeSearch = "" }) => {
                         </span>
                       </p>
 
-                      <button onClick={() => { setSelectedListingId(listing._id); setPage("listing-details"); }}
-                              style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
-                                       padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",
-                                       fontFamily: "Georgia, serif", width: "100%", marginTop: "auto" }}>
+                      <button
+                        onClick={() => {
+                          setSelectedListingId(listing._id);
+                          setPreviousPage("listings");
+                          setPage("listing-details", listing._id);
+                        }}
+                        style={{ background: "#cc0000", color: "#fff", border: "none", borderRadius: "8px",
+                                 padding: "0.8rem 1.2rem", fontWeight: "700", cursor: "pointer",
+                                 fontFamily: "Georgia, serif", width: "100%", marginTop: "auto" }}>
                         View Details
                       </button>
                     </div>

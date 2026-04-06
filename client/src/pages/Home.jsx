@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 
-function Home({ setPage, setHomeSearch }) {
+function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseCodeInput }) {
 
   const [input, setInput] = useState("");
 
-
+  
   const handleSearch = () => {
     const trimmedInput = input.trim();
     if (!trimmedInput)
       return;
 
     setHomeSearch(trimmedInput);
+    setSelectedCategories([]);
+    setCourseCodeInput("");
     setPage("listings");
   };
 
@@ -20,14 +22,52 @@ function Home({ setPage, setHomeSearch }) {
       handleSearch();
   };
 
+  const handleCategoryClick = (categoryName) => {
+    setHomeSearch("");
+    setSelectedCategories([categoryName]);
+    setCourseCodeInput("");
+    setPage("listings", "homepage-category");
+  };
+
+  const categories = [
+    {
+      name: "Textbook",
+      description: "Find textbooks for your courses and semester needs.",
+      background: "#eef5ff",
+      border: "#cfe0ff",
+    },
+    {
+      name: "Notes",
+      description: "Browse study notes, summaries, and review materials.",
+      background: "#f7f0ff",
+      border: "#e0ccff",
+    },
+    {
+      name: "Lab Kit",
+      description: "Find lab kits and materials needed for your course labs.",
+      background: "#eefaf0",
+      border: "#cfe8d3",
+    },
+    {
+      name: "Stationery",
+      description: "Browse notebooks, binders, pens, and school supplies.",
+      background: "#fff7eb",
+      border: "#ffd9a8",
+    },
+    {
+      name: "Study Guide",
+      description: "Find study guides and exam preparation resources.",
+      background: "#fff0f0",
+      border: "#ffd0d0",
+    },
+  ];
+
   return (
     <div style={{ fontFamily: "Georgia, sans-serif" }}>
       <Header setPage={setPage} />
 
-      {/* Space under fixed header */}
       <div style={{ height: "50px" }} />
 
-      {/* Hero Section */}
       <section style={{
         minHeight: "80vh",
         overflow: "hidden",
@@ -60,7 +100,6 @@ function Home({ setPage, setHomeSearch }) {
         </div>
       </section>
 
-      {/* Explore Section */}
       <div style={{
         background: "#e6e4e4", padding: "4rem 2rem",
         display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem",
@@ -73,7 +112,7 @@ function Home({ setPage, setHomeSearch }) {
         </h2>
         <div style={{ display: "flex", width: "100%", maxWidth: "600px" }}>
           <input
-            placeholder="Search for textbooks, notes, lab kits..."
+            placeholder="Search for textbook, notes, lab kits..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -91,7 +130,73 @@ function Home({ setPage, setHomeSearch }) {
               borderRadius: "0 8px 8px 0", padding: "0.9rem 1.8rem",
               fontSize: "1rem", fontWeight: "700", cursor: "pointer", fontFamily: "Georgia, serif",
             }}
-          >Search</button>
+          >
+            Search
+          </button>
+        </div>
+
+        <div style={{ width: "100%", maxWidth: "1150px", marginTop: "2rem" }}>
+          <h2 style={{
+            color: "#000000",
+            fontSize: "2rem",
+            fontWeight: "800",
+            fontFamily: "Georgia, sans-serif",
+            margin: "0 0 0.6rem 0",
+            textAlign: "center",
+          }}>
+            Browse by Category
+          </h2>
+
+          <p style={{
+            margin: "0 0 1.75rem 0",
+            color: "#555",
+            textAlign: "center",
+            fontSize: "1rem",
+          }}>
+            Explore listings by category
+          </p>
+
+          <div style={{
+            display: "flex",
+            gap: "1rem",
+            overflowX: "auto",
+            paddingBottom: "0.5rem",
+          }}>
+            {categories.map((category) => (
+              <button
+                key={category.name}
+                onClick={() => handleCategoryClick(category.name)}
+                style={{
+                  minWidth: "220px",
+                  background: category.background,
+                  border: `1px solid ${category.border}`,
+                  borderRadius: "14px",
+                  padding: "1.2rem",
+                  flexShrink: 0,
+                  textAlign: "left",
+                  cursor: "pointer",
+                }}
+              >
+                <h3 style={{
+                  margin: "0 0 0.6rem 0",
+                  fontSize: "1.2rem",
+                  fontWeight: "700",
+                  color: "#222",
+                }}>
+                  {category.name}
+                </h3>
+
+                <p style={{
+                  margin: 0,
+                  color: "#555",
+                  lineHeight: "1.5",
+                  fontSize: "0.95rem",
+                }}>
+                  {category.description}
+                </p>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
