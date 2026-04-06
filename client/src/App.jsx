@@ -12,6 +12,7 @@ import EditListingPage from "./pages/EditListingPage";
 import SentOffersDetails from "./pages/SentOffersDetails";
 import TransactionsPage from "./pages/TransactionsPage";
 import ProfilePage from "./pages/ProfilePage";
+import MessagesPage from "./pages/MessagesPage";
 
 function App() {
     const [page, setPage] = useState("home");
@@ -165,6 +166,10 @@ function App() {
         ) : (
           handleSetPage("signin")
         )
+      )}
+      
+      {page === "messages" && (
+        <MessagesPage setPage={handleSetPage} />
       )}
 
     </div>
