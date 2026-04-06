@@ -72,21 +72,39 @@ const TransactionsPage = ({ setPage, user }) => {
     }
   };
 
-  const handleSubmitSellerRatingUI = () => {
+  const handleSubmitSellerRating = async () => {
     if (!sellerRatingValue || !sellerRatingTarget) return;
 
-    setTransactions((prev) =>
-      prev.map((tx) =>
-        tx._id === sellerRatingTarget._id
-          ? { ...tx, sellerRating: sellerRatingValue }
-          : tx
-      )
-    );
+    try {
+      const token = localStorage.getItem("token");
 
-    setSellerRatingTarget(null);
-    setSellerRatingValue(0);
+      await api.post(
+        "/transactions/rate/seller",
+        {
+          transactionId: sellerRatingTarget._id,
+          rating: sellerRatingValue,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-    alert("Seller rated successfully!");
+      setTransactions((prev) =>
+        prev.map((tx) =>
+          tx._id === sellerRatingTarget._id
+            ? { ...tx, sellerRating: sellerRatingValue }
+            : tx
+        )
+      );
+
+      setSellerRatingTarget(null);
+      setSellerRatingValue(0);
+
+      alert("Seller rated successfully!");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to submit seller rating");
+    }
   };
 
   return (
@@ -529,7 +547,7 @@ const TransactionsPage = ({ setPage, user }) => {
             </div>
 
             <button
-              onClick={handleSubmitSellerRatingUI}
+              onClick={handleSubmitSellerRating}
               style={{
                 padding: "0.6rem 1.2rem",
                 background: "#cc0000",
