@@ -33,6 +33,33 @@ const TransactionsPage = ({ setPage, user }) => {
     fetchTransactions();
   }, []);
 
+  const handleSubmitBuyerRating = async () => {
+    if (!ratingValue) return;
+
+    try {
+      const token = localStorage.getItem("token");
+
+      // Send rating to backend
+      const res = await api.post("/transactions/rate/buyer",
+        {
+          transactionId: ratingTarget._id,
+          rating: ratingValue,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setRatingTarget(null);
+      setRatingValue(0);
+
+      alert("Buyer rated successfully!");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to submit rating");
+    }
+  };
+  
   return (
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
       <Header setPage={setPage} />
@@ -269,6 +296,7 @@ const TransactionsPage = ({ setPage, user }) => {
             </div>
 
             <button
+            onClick={handleSubmitBuyerRating}
               style={{
                 padding: "0.6rem 1.2rem",
                 background: "#cc0000",
