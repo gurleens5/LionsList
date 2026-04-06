@@ -1,5 +1,6 @@
 import express from "express";
 import Transaction from "../models/Transaction.js";
+import User from "../models/User.js";
 import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -8,10 +9,7 @@ const router = express.Router();
 router.get("/my", protect, async (req, res) => {
   try {
     const transactions = await Transaction.find({
-      $or: [
-        { buyer: req.user._id },
-        { seller: req.user._id }
-      ]
+      $or: [{ buyer: req.user._id }, { seller: req.user._id }],
     })
       .populate("listing")
       .populate("offer")
