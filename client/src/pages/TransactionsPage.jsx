@@ -6,6 +6,8 @@ const TransactionsPage = ({ setPage, user }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [ratingTarget, setRatingTarget] = useState(null);
+  const [ratingValue, setRatingValue] = useState(0);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -174,6 +176,7 @@ const TransactionsPage = ({ setPage, user }) => {
                     {canRateBuyer && (
                       <div style={{ marginTop: "auto", paddingTop: "1.2rem" }}>
                         <button
+                          onClick={() => setRatingTarget(tx)}
                           style={{
                             background: "#cc0000",
                             color: "#fff",
@@ -198,6 +201,106 @@ const TransactionsPage = ({ setPage, user }) => {
           </div>
         )}
       </div>
+        {ratingTarget && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              padding: "2rem",
+              borderRadius: "12px",
+              width: "320px",
+              textAlign: "center"
+            }}
+          >
+            <h3>Rate Buyer</h3>
+            
+            <p style={{ fontWeight: "600" }}>
+              Listing: {ratingTarget.listing?.title || "Unknown"}
+            </p>
+            
+            {ratingTarget.listing?.imageUrl && (
+              <img
+                src={ratingTarget.listing.imageUrl}
+                alt={ratingTarget.listing.title}
+                style={{
+                  width: "100%",
+                  height: "120px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                  marginBottom: "1rem"
+                }}
+              />
+            )}
+
+            {/* Buyer Info */}
+            <p style={{ marginBottom: "1rem" }}>
+              Buyer: {ratingTarget.buyer?.username || "Unknown"}
+            </p>
+
+            <p style={{ marginBottom: "1rem" }}>
+              How was your transaction?
+            </p>
+
+            <div style={{ fontSize: "1.8rem", marginBottom: "1rem" }}>
+              {[1,2,3,4,5].map((star) => (
+                <span
+                  key={star}
+                  onClick={() => setRatingValue(star)}
+                  style={{
+                    cursor: "pointer",
+                    color: star <= ratingValue ? "#f59e0b" : "#ccc"
+                  }}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+
+            <button
+              style={{
+                padding: "0.6rem 1.2rem",
+                background: "#cc0000",
+                color: "#fff",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer"
+              }}
+            >
+              Submit Rating
+            </button>
+
+            <div style={{ marginTop: "10px" }}>
+              <button
+                onClick={() => {
+                  setRatingTarget(null);
+                  setRatingValue(0);
+                }}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "#555",
+                  cursor: "pointer"
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 };
