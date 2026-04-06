@@ -18,22 +18,25 @@ router.post("/buyer", protect, async (req, res) => {
   try {
     const tx = await Transaction.findById(transactionId).populate("buyer seller");
 
-    if (!tx) {
-      return res.status(404).json({ message: "Transaction not found" });
-    }
+    if (!tx) return res.status(404).json({ message: "Transaction not found" });
 
-    if (String(tx.seller._id) !== String(req.user._id)) {
+    if (String(tx.seller._id) !== String(req.user._id))
       return res.status(403).json({ message: "Cannot rate buyer" });
-    }
 
-    if (tx.buyerRating) {
-      return res.status(400).json({ message: "Already rated buyer" });
-    }
+    if (tx.buyerRating) return res.status(400).json({ message: "Already rated buyer" });
 
     tx.buyerRating = rating;
     await tx.save();
 
-    res.json({ message: "Buyer rated successfully", transaction: tx });
+    const buyer = tx.buyer;
+    const currentRating = buyer.buyerRating || 0;
+    const currentCount = buyer.buyerRatingCount || 0;
+
+    buyer.buyerRating = ((currentRating * currentCount) + rating) / (currentCount + 1);
+    buyer.buyerRatingCount = currentCount + 1;
+    await buyer.save();
+
+    res.json({ message: "Buyer rated successfully", transaction: tx, buyer });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to submit buyer rating" });
