@@ -38,7 +38,13 @@ const userSchema = new mongoose.Schema(
             required: true,
             minlength: [8, "Password must be atleast 8 characters"]
         },
-        rating: {
+        sellerRating: {
+            type: Number,
+            default: 0,
+            min: 0,
+            max: 5
+        },
+        buyerRating: {
             type: Number,
             default: 0,
             min: 0,
