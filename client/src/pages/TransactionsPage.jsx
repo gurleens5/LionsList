@@ -43,7 +43,7 @@ const TransactionsPage = ({ setPage, user }) => {
     try {
       const token = localStorage.getItem("token");
 
-      await api.post(
+      const res = await api.post(
         "/transactions/rate/buyer",
         {
           transactionId: ratingTarget._id,
@@ -54,10 +54,12 @@ const TransactionsPage = ({ setPage, user }) => {
         }
       );
 
+      const updatedTransaction = res.data.transaction;
+
       setTransactions((prev) =>
         prev.map((tx) =>
-          tx._id === ratingTarget._id
-            ? { ...tx, buyerRating: ratingValue }
+          tx._id === updatedTransaction._id
+            ? { ...tx, buyerRating: updatedTransaction.buyerRating }
             : tx
         )
       );
@@ -78,7 +80,7 @@ const TransactionsPage = ({ setPage, user }) => {
     try {
       const token = localStorage.getItem("token");
 
-      await api.post(
+      const res = await api.post(
         "/transactions/rate/seller",
         {
           transactionId: sellerRatingTarget._id,
@@ -89,10 +91,12 @@ const TransactionsPage = ({ setPage, user }) => {
         }
       );
 
+      const updatedTransaction = res.data.transaction;
+
       setTransactions((prev) =>
         prev.map((tx) =>
-          tx._id === sellerRatingTarget._id
-            ? { ...tx, sellerRating: sellerRatingValue }
+          tx._id === updatedTransaction._id
+            ? { ...tx, sellerRating: updatedTransaction.sellerRating }
             : tx
         )
       );
