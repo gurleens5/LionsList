@@ -14,6 +14,10 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
   const [offerSuccess, setOfferSuccess] = useState("");
   const [submittingOffer, setSubmittingOffer] = useState(false);
   const [offersLoading, setOffersLoading] = useState(true);
+  const [messageForm, setMessageForm] = useState(false);
+  const [messageText, setMessageText] = useState("");
+  const [messageError, setMessageError] = useState("");
+  const [messageSuccess, setMessageSuccess] = useState("");
 
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
@@ -195,6 +199,40 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
     } catch (err) {
       console.error("Reject failed:", err);
       alert(err.response?.data?.message || "Failed to reject offer");
+    }
+  };
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+
+    setMessageError("");
+    setMessageSuccess("");
+
+    if (!messageText.trim()) {
+      setMessageError("Message cannot be empty.");
+      return;
+    }
+    
+    try {
+      await api.post(
+        "/messages/send",
+        {
+          recipientId: sellerId,
+          listingId: listing._id,
+          content: messageText
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      setMessageSuccess("Message sent successfully.");
+      setMessageText("");
+      setMessageForm(false);
+
+    } catch (err) {
+      console.error(err);
+      setMessageError(err.response?.data?.message || "Failed to send message");
     }
   };
 
