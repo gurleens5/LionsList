@@ -227,6 +227,10 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
             ← Back to {previousPage === "my-listings" ? "My Listings" : "Listings"}
           </button>
 
+          <small style={{ color: "#666", marginLeft: "360px" }}>
+              Created: {new Date(listing.createdAt).toLocaleString()}
+          </small>
+
           {isSeller && (
             <button
               onClick={() => setPage("edit-listing", listing._id)}
@@ -336,9 +340,23 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                   </button>
                 )}
 
-                <small style={{ color: "#666" }}>
-                  Created: {new Date(listing.createdAt).toLocaleString()}
-                </small>
+                {isLoggedIn && !isSeller && !myOffer && !offersLoading && (
+                  <button
+                    style={{
+                      background: "#000",
+                      color: "#fff",
+                      border: "none",
+                      padding: "0.5rem 1rem",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontFamily: "Georgia, serif",
+                      marginLeft: "10px"
+                    }}
+                  >
+                    Message Seller
+                  </button>
+                )}
 
                 {isSeller && (
                   <button
