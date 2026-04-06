@@ -1,5 +1,6 @@
 import express from "express";
 import Transaction from "../models/Transaction.js";
+import User from "../models/User.js";
 import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -83,7 +84,7 @@ router.post("/rate/seller", protect, async (req, res) => {
         message: "Offer listing does not match transaction listing.",
       });
     }
-    
+
     const existingRatedTransaction = await Transaction.findOne({
       offer: transaction.offer._id,
       sellerRating: { $gt: 0 },
@@ -97,10 +98,35 @@ router.post("/rate/seller", protect, async (req, res) => {
 
     transaction.sellerRating = numericRating;
     await transaction.save();
+    
+    const seller = await User.findById(transaction.seller._id);
+
+    if (!seller) {
+      return res.status(404).json({
+        message: "Seller not found.",
+      });
+    }
+
+    const currentAverage = seller.sellerRating || 0;
+    const currentCount = seller.sellerRatingsCount || 0;
+
+    const newCount = currentCount + 1;
+    const newAverage =
+      (currentAverage * currentCount + numericRating) / newCount;
+
+    seller.sellerRating = Number(newAverage.toFixed(2));
+    seller.sellerRatingsCount = newCount;
+
+    await seller.save();
 
     res.status(200).json({
       message: "Seller rated successfully.",
       transaction,
+      seller: {
+        _id: seller._id,
+        sellerRating: seller.sellerRating,
+        sellerRatingsCount: seller.sellerRatingsCount,
+      },
       linkedEntities: {
         buyerId: transaction.buyer._id,
         sellerId: transaction.seller._id,
