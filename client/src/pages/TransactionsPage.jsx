@@ -55,6 +55,9 @@ const TransactionsPage = ({ setPage, user }) => {
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}>
             {transactions.map((tx) => {
               const isBuyer = user && tx.buyer?._id === user._id;
+              const isSeller = user && tx.seller?._id === user._id;
+
+              const canRateBuyer = isSeller && tx.offer?.status === "Accepted";
               const canRateSeller = isBuyer && tx.offer?.status === "Accepted";
 
               const label = isBuyer ? "Purchased" : "Sold";
@@ -163,6 +166,27 @@ const TransactionsPage = ({ setPage, user }) => {
                           }}
                         >
                           Rate Seller
+                        </button>
+                      </div>
+                    )}
+
+                    {canRateBuyer && (
+                      <div style={{ marginTop: "auto", paddingTop: "1.2rem" }}>
+                        <button
+                          style={{
+                            background: "#cc0000",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "8px",
+                            padding: "0.8rem 1.2rem",
+                            fontWeight: "700",
+                            cursor: "pointer",
+                            fontFamily: "Georgia, serif",
+                            width: "100%",
+                            marginTop: "auto"
+                          }}
+                        >
+                          Rate Buyer
                         </button>
                       </div>
                     )}
