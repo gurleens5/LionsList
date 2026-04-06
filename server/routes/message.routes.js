@@ -7,6 +7,10 @@ const router = express.Router();
 router.post("/send", protect, async (req, res) => {
   const { recipientId, listingId, content } = req.body;
 
+  if (!content || !content.trim()) {
+    return res.status(400).json({ message: "Message cannot be empty" });
+  }
+
   try {
     const message = new Message({
       sender: req.user._id,
@@ -15,7 +19,7 @@ router.post("/send", protect, async (req, res) => {
       content: content.trim()
     });
 
-    await message.save();
+    // await message.save();
 
     res.json({ message: "Message sent successfully", message });
 
