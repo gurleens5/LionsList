@@ -22,6 +22,12 @@ const transactionSchema = new mongoose.Schema(
       ref: "Offer",
       required: true,
     },
+    buyerRating: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5
+    }
   },
   { timestamps: true }
 );

@@ -89,7 +89,7 @@ const TransactionsPage = ({ setPage, user }) => {
               const isSeller = user && tx.seller?._id === user._id;
               
               // Rating options only show up when offers are accepted
-              const canRateBuyer = isSeller && tx.offer?.status === "Accepted";
+              const canRateBuyer = isSeller && tx.offer?.status === "Accepted" && !tx.buyerRating;
               const canRateSeller = isBuyer && tx.offer?.status === "Accepted";
 
               const label = isBuyer ? "Purchased" : "Sold";
@@ -202,7 +202,7 @@ const TransactionsPage = ({ setPage, user }) => {
                       </div>
                     )}
 
-                    {canRateBuyer && (
+                    { canRateBuyer && !tx.buyerRating ? (
                       <div style={{ marginTop: "auto", paddingTop: "1.2rem" }}>
                         <button
                           onClick={() => setRatingTarget(tx)}
@@ -222,7 +222,29 @@ const TransactionsPage = ({ setPage, user }) => {
                           Rate Buyer
                         </button>
                       </div>
-                    )}
+                    ) : tx.buyerRating ? (
+                      <div style={{
+                        marginTop: "auto",
+                        paddingTop: "1.2rem",
+                        fontSize: "1.2rem",
+                        color:"#f59e0b",
+                        textAlign: "center"
+                        }}>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span
+                          key={star}
+                          style={{
+                            color: star <= tx.buyerRating ? "#f59e0b" : "#ccc" 
+                            }}
+                            >
+                            ★
+                          </span>
+                        ))}
+                        <span style={{ marginLeft: "0.5rem", fontSize: "0.9rem", color: "#555" }}>
+                          {tx.buyerRating.toFixed(1)}
+                        </span>
+                      </div>
+                    ) : null }
                   </div>
                 </div>
               );
