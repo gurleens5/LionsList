@@ -34,7 +34,10 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
     }
   }, [listingId]);
 
-  const sellerId = listing?.seller && typeof listing.seller === "object" ? listing.seller._id : listing?.seller;
+  const sellerId =
+    listing?.seller && typeof listing.seller === "object"
+      ? listing.seller._id
+      : listing?.seller;
 
   const isSeller = user && sellerId && String(user._id) === String(sellerId);
 
@@ -43,11 +46,12 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
       String(offer.buyer?._id) === String(user?._id) &&
       offer.status === "Pending"
   );
+
   useEffect(() => {
     const fetchOffers = async () => {
       try {
         const res = await api.get(`/offers/listing/${listingId}`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         setOffers(res.data);
         setOffersError("");
@@ -127,7 +131,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
       const token = localStorage.getItem("token");
 
       await api.delete(`/listings/${listingId}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (previousPage === "my-listings") {
@@ -146,9 +150,13 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
     try {
       const token = localStorage.getItem("token");
 
-      await api.patch(`/offers/${offerId}/accept`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.patch(
+        `/offers/${offerId}/accept`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       // refresh listing
       const listingRes = await api.get(`/listings/${listingId}`);
@@ -156,7 +164,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
 
       // refresh offers
       const offersRes = await api.get(`/offers/listing/${listingId}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setOffers(offersRes.data);
 
@@ -170,13 +178,17 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
     try {
       const token = localStorage.getItem("token");
 
-      await api.patch(`/offers/${offerId}/reject`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.patch(
+        `/offers/${offerId}/reject`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       // refresh offers
       const offersRes = await api.get(`/offers/listing/${listingId}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setOffers(offersRes.data);
 
@@ -202,7 +214,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
             padding: "2rem",
             width: "100%",
             maxWidth: "750px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.08)"
+            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
           }}
         >
           <button
@@ -227,9 +239,11 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
             ← Back to {previousPage === "my-listings" ? "My Listings" : "Listings"}
           </button>
 
-          <small style={{ color: "#666", marginLeft: "360px" }}>
+          {listing && (
+            <small style={{ color: "#666", marginLeft: "360px" }}>
               Created: {new Date(listing.createdAt).toLocaleString()}
-          </small>
+            </small>
+          )}
 
           {isSeller && (
             <button
@@ -245,7 +259,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                 cursor: "pointer",
                 fontWeight: "600",
                 fontFamily: "Georgia, serif",
-                padding: 0
+                padding: 0,
               }}
             >
               Edit
@@ -265,11 +279,20 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                 <strong>Description:</strong> {listing.description}
               </p>
 
-              <p><strong>Category:</strong> {listing.category}</p>
+              <p>
+                <strong>Category:</strong> {listing.category}
+              </p>
+
               {listing.courseCode && (
-                <p><strong>Course Code:</strong> {listing.courseCode}</p>
+                <p>
+                  <strong>Course Code:</strong> {listing.courseCode}
+                </p>
               )}
-              <p><strong>Price:</strong> ${listing.price}</p>
+
+              <p>
+                <strong>Price:</strong> ${listing.price}
+              </p>
+
               <p>
                 <strong>Status:</strong>{" "}
                 <span
@@ -281,18 +304,18 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                     padding: "0.2rem 0.6rem",
                     borderRadius: "6px",
                     fontWeight: "700",
-                    fontSize: "0.85rem"
+                    fontSize: "0.85rem",
                   }}
                 >
                   {listing.status}
                 </span>
               </p>
               <p>
-                <strong>Seller:</strong> {" "}{/* {listing.sellerUsername || "Unknown"} */}
+                <strong>Seller:</strong>{" "}
                 {sellerId ? (
                   <span
                     onClick={() => setPage("profile", sellerId)}
-                    style={{ 
+                    style={{
                       color: "#cc0000",
                       cursor: "pointer",
                       textDecoration: "underline",
@@ -351,7 +374,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                       cursor: "pointer",
                       fontWeight: "700",
                       fontFamily: "Georgia, serif",
-                      marginLeft: "10px"
+                      marginLeft: "10px",
                     }}
                   >
                     Message Seller
@@ -369,7 +392,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                       fontWeight: "700",
                       textDecoration: "underline",
                       fontFamily: "Georgia, serif",
-                      marginLeft: "10px"
+                      marginLeft: "10px",
                     }}
                   >
                     Delete
@@ -398,9 +421,13 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                     <button
                       onClick={async () => {
                         try {
-                          await api.patch(`/offers/${myOffer._id}/cancel`, {}, {
-                            headers: { Authorization: `Bearer ${token}` },
-                          });
+                          await api.patch(
+                            `/offers/${myOffer._id}/cancel`,
+                            {},
+                            {
+                              headers: { Authorization: `Bearer ${token}` },
+                            }
+                          );
 
                           setOfferSuccess("Offer cancelled successfully.");
                           setOfferError("");
@@ -499,7 +526,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                   style={{
                     marginTop: "2rem",
                     paddingTop: "1.5rem",
-                    borderTop: "1px solid #ddd"
+                    borderTop: "1px solid #ddd",
                   }}
                 >
                   <h2 style={{ marginTop: 0, marginBottom: "1rem", color: "#111" }}>
@@ -522,9 +549,15 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                         marginBottom: "1rem",
                       }}
                     >
-                      <p><strong>Buyer:</strong> {offer.buyer?.username || "Unknown"}</p>
-                      <p><strong>Offer Amount:</strong> ${offer.amount.toFixed(2)}</p>
-                      <p><strong>Status:</strong> {offer.status}</p>
+                      <p>
+                        <strong>Buyer:</strong> {offer.buyer?.username || "Unknown"}
+                      </p>
+                      <p>
+                        <strong>Offer Amount:</strong> ${offer.amount.toFixed(2)}
+                      </p>
+                      <p>
+                        <strong>Status:</strong> {offer.status}
+                      </p>
 
                       {offer.status === "Pending" && listing?.status !== "Sold" && (
                         <>
@@ -539,7 +572,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                               borderRadius: "6px",
                               cursor: "pointer",
                               fontWeight: "700",
-                              fontFamily: "Georgia, serif"
+                              fontFamily: "Georgia, serif",
                             }}
                           >
                             Accept
@@ -556,7 +589,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                               borderRadius: "6px",
                               cursor: "pointer",
                               fontWeight: "700",
-                              fontFamily: "Georgia, serif"
+                              fontFamily: "Georgia, serif",
                             }}
                           >
                             Reject
