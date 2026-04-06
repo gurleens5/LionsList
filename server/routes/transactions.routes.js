@@ -66,12 +66,6 @@ router.post("/rate/seller", protect, async (req, res) => {
       });
     }
 
-    if (transaction.sellerRating && transaction.sellerRating > 0) {
-      return res.status(400).json({
-        message: "Seller has already been rated for this transaction.",
-      });
-    }
-    
     if (String(transaction.offer.buyer) !== String(transaction.buyer._id)) {
       return res.status(400).json({
         message: "Offer buyer does not match transaction buyer.",
@@ -87,6 +81,17 @@ router.post("/rate/seller", protect, async (req, res) => {
     if (String(transaction.offer.listing) !== String(transaction.listing._id)) {
       return res.status(400).json({
         message: "Offer listing does not match transaction listing.",
+      });
+    }
+    
+    const existingRatedTransaction = await Transaction.findOne({
+      offer: transaction.offer._id,
+      sellerRating: { $gt: 0 },
+    });
+
+    if (existingRatedTransaction) {
+      return res.status(400).json({
+        message: "Seller has already been rated for this offer.",
       });
     }
 
