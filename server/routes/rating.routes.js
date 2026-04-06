@@ -26,6 +26,10 @@ router.post("/buyer", protect, async (req, res) => {
       return res.status(403).json({ message: "Cannot rate buyer" });
     }
 
+    if (tx.buyerRating) {
+      return res.status(400).json({ message: "Already rated buyer" });
+    }
+
     res.json({ message: "Buyer rated successfully", transaction: tx });
   } catch (error) {
     console.error(error);
