@@ -19,7 +19,7 @@ router.post("/send", protect, async (req, res) => {
       content: content.trim()
     });
 
-    // await message.save();
+    await message.save();
 
     res.json({ message: "Message sent successfully", message });
 
