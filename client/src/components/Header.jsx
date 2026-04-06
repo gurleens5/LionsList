@@ -32,7 +32,10 @@ function Header({ setPage }) {
         <div onClick={() => token ? setPage("my-listings") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>My Listings</div>
         <div onClick={() => token ? setPage("history") : setPage("signin")} style={{ color: "#fff", fontWeight: 500, cursor: "pointer" }}>History</div>
 
-        <FaUserCircle style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }} />
+        <FaUserCircle
+          onClick={() => token ? setPage("profile") : setPage("signin")}
+          style={{ color: "#fff", fontSize: "24px", cursor: "pointer" }}
+        />
 
         {!token ? (
           <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", background: "#cc0000", borderRadius: "20px", padding: "0.4rem 1.2rem" }}>
