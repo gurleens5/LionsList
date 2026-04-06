@@ -27,7 +27,7 @@ app.use("/api/offers", offersRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/transactions/rate", ratingRoutes);
-app.use("api/messages", messageRoutes);
+app.use("/api/messages", messageRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true });
