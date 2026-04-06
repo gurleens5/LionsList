@@ -55,6 +55,7 @@ const TransactionsPage = ({ setPage, user }) => {
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "flex-start" }}>
             {transactions.map((tx) => {
               const isBuyer = user && tx.buyer?._id === user._id;
+              const canRateSeller = isBuyer && tx.offer?.status === "Accepted";
 
               const label = isBuyer ? "Purchased" : "Sold";
               const formattedDate = new Date(tx.createdAt).toLocaleString();
@@ -145,24 +146,26 @@ const TransactionsPage = ({ setPage, user }) => {
                       ${tx.offer?.amount?.toFixed(2)}
                     </p>
 
-                    <div style={{ marginTop: "auto", paddingTop: "1.2rem" }}>
-                      <button
-                        style={{
-                          width: "100%",
-                          padding: "0.8rem 1rem",
-                          background: "#7f1d1d",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "10px",
-                          fontSize: "1rem",
-                          fontWeight: "700",
-                          cursor: "pointer",
-                          fontFamily: "Georgia, sans-serif"
-                        }}
-                      >
-                        Rate Seller
-                      </button>
-                    </div>
+                    {canRateSeller && (
+                      <div style={{ marginTop: "auto", paddingTop: "1.2rem" }}>
+                        <button
+                          style={{
+                            width: "100%",
+                            padding: "0.8rem 1rem",
+                            background: "#7f1d1d",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "10px",
+                            fontSize: "1rem",
+                            fontWeight: "700",
+                            cursor: "pointer",
+                            fontFamily: "Georgia, sans-serif"
+                          }}
+                        >
+                          Rate Seller
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
