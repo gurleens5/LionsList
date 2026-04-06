@@ -59,8 +59,8 @@ const TransactionsPage = ({ setPage, user }) => {
               const label = isBuyer ? "Purchased" : "Sold";
               const formattedDate = new Date(tx.createdAt).toLocaleString();
 
-              const bgColor = isBuyer ? "#dbeafe" : "#fff4e5";   
-              const textColor = isBuyer ? "#1e3a8a" : "#9a3412"; 
+              const bgColor = isBuyer ? "#dbeafe" : "#fff4e5";
+              const textColor = isBuyer ? "#1e3a8a" : "#9a3412";
 
               return (
                 <div
@@ -76,7 +76,6 @@ const TransactionsPage = ({ setPage, user }) => {
                     flexDirection: "column"
                   }}
                 >
-                  {/* Image + badge */}
                   <div
                     style={{
                       height: "180px",
@@ -99,7 +98,6 @@ const TransactionsPage = ({ setPage, user }) => {
                       "No Image"
                     )}
 
-                    {/* Status badge (same as SentOffers style) */}
                     <span
                       style={{
                         position: "absolute",
@@ -131,27 +129,40 @@ const TransactionsPage = ({ setPage, user }) => {
                     </h3>
 
                     <p style={{ margin: "0.3rem 0" }}>
-                      <strong>
-                        {isBuyer ? "Seller" : "Buyer"}:
-                      </strong>{" "}
+                      <strong>{isBuyer ? "Seller" : "Buyer"}:</strong>{" "}
                       {isBuyer ? tx.seller?.username : tx.buyer?.username}
                     </p>
 
                     <div style={{ height: "8px" }} />
 
                     <p style={{ margin: "0.3rem 0" }}>
-                      <strong>
-                        {isBuyer ? "Listed Price" : "Your Price"}:
-                      </strong>{" "}
+                      <strong>{isBuyer ? "Listed Price" : "Your Price"}:</strong>{" "}
                       ${tx.listing?.price}
                     </p>
 
                     <p style={{ margin: "0.3rem 0" }}>
-                      <strong>
-                        {isBuyer ? "Your Offer" : "Offer Price"}:
-                      </strong>{" "}
+                      <strong>{isBuyer ? "Your Offer" : "Offer Price"}:</strong>{" "}
                       ${tx.offer?.amount?.toFixed(2)}
                     </p>
+
+                    <div style={{ marginTop: "auto", paddingTop: "1.2rem" }}>
+                      <button
+                        style={{
+                          width: "100%",
+                          padding: "0.8rem 1rem",
+                          background: "#7f1d1d",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: "10px",
+                          fontSize: "1rem",
+                          fontWeight: "700",
+                          cursor: "pointer",
+                          fontFamily: "Georgia, sans-serif"
+                        }}
+                      >
+                        Rate Seller
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
