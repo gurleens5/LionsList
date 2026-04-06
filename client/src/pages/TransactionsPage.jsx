@@ -50,6 +50,8 @@ const TransactionsPage = ({ setPage, user }) => {
         }
       );
 
+      setTransactions((prev) => prev.map((tx) => tx._id === ratingTarget._id ? { ...tx, buyerRating: ratingValue } : tx));
+
       setRatingTarget(null);
       setRatingValue(0);
 
