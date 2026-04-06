@@ -17,7 +17,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
   const [messageForm, setMessageForm] = useState(false);
   const [messageText, setMessageText] = useState("");
   const [messageError, setMessageError] = useState("");
-  const [messageSuccess, setMessageSuccess] = useState("");
+  const [sendingMessage, setSendingMessage] = useState(false);
 
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
@@ -277,7 +277,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
             ← Back to {previousPage === "my-listings" ? "My Listings" : "Listings"}
           </button>
 
-          {listing && (
+          {listing && !isSeller && (
             <small style={{ color: "#666", marginLeft: "360px" }}>
               Created: {new Date(listing.createdAt).toLocaleString()}
             </small>
@@ -401,8 +401,123 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                   </button>
                 )}
 
+                {listing && isSeller && (
+                  <small style={{ color: "#666"}}>
+                    Created: {new Date(listing.createdAt).toLocaleString()}
+                  </small>
+                )}
+
+                  {messageForm && (
+                <div
+                    style={{
+                      position: "fixed",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      background: "rgba(0,0,0,0.5)",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      zIndex: 1000
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: "#fff",
+                        padding: "2rem",
+                        borderRadius: "12px",
+                        width: "400px",
+                        maxWidth: "90%",
+                        boxShadow: "0 6px 20px rgba(0,0,0,0.2)"
+                      }}
+                    >
+                      <div style={{ marginBottom: "1rem" }}>
+                        <p style={{ margin: 0, fontWeight: "700", fontSize: "1.1rem" }}>
+                          {listing.title}
+                        </p>
+
+                        <p style={{ margin: 0, color: "#666", fontSize: "0.9rem" }}>
+                          Seller: 
+                          <span
+                            onClick={() => setPage("profile", sellerId)}
+                            style={{
+                              marginLeft: "4px",
+                              color: "#cc0000",
+                              cursor: "pointer",
+                              textDecoration: "underline"
+                            }}
+                          >
+                            {listing.sellerUsername || "Unknown"}
+                          </span>
+                        </p>
+                      </div>
+
+                      <form onSubmit={handleSendMessage}>
+
+                        <textarea
+                          value={messageText}
+                          onChange={(e) => setMessageText(e.target.value)}
+                          placeholder="Write your message..."
+                          rows="4"
+                          style={{
+                            width: "100%",
+                            padding: "0.6rem",
+                            borderRadius: "8px",
+                            border: "1px solid #ccc",
+                            fontFamily: "Georgia, serif",
+                            marginTop: "0.5rem"
+                          }}
+                        />
+
+                        {messageError && (
+                          <p style={{ color: "#cc0000", marginTop: "0.5rem" }}>
+                            {messageError}
+                          </p>
+                        )}
+
+                        <div style={{ marginTop: "1rem", display: "flex", gap: "10px" }}>
+
+                          <button
+                            type="submit"
+                            disabled={sendingMessage}
+                            style={{
+                              background: "#cc0000",
+                              color: "#fff",
+                              border: "none",
+                              padding: "0.5rem 1rem",
+                              borderRadius: "8px",
+                              cursor: "pointer",
+                              fontWeight: "700"
+                            }}
+                          >
+                            {sendingMessage ? "Sending..." : "Send"}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => setMessageForm(false)}
+                            style={{
+                              background: "#ccc",
+                              border: "none",
+                              padding: "0.5rem 1rem",
+                              borderRadius: "8px",
+                              cursor: "pointer"
+                            }}
+                          >
+                            Cancel
+                          </button>
+
+                        </div>
+
+                      </form>
+                    </div>
+                  </div>
+                )}
+
                 {isLoggedIn && !isSeller && !myOffer && !offersLoading && (
                   <button
+                    onClick={() => setMessageForm((prev) => !prev)}
                     style={{
                       background: "#000",
                       color: "#fff",
