@@ -206,33 +206,37 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
     e.preventDefault();
 
     setMessageError("");
-    setMessageSuccess("");
 
-    if (!messageText.trim()) {
+    const trimmed = messageText.trim();
+
+    if (!trimmed) {
       setMessageError("Message cannot be empty.");
       return;
     }
-    
+
     try {
+      setSendingMessage(true);
+
       await api.post(
         "/messages/send",
         {
           recipientId: sellerId,
           listingId: listing._id,
-          content: messageText
+          content: trimmed
         },
         {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
 
-      setMessageSuccess("Message sent successfully.");
       setMessageText("");
       setMessageForm(false);
 
     } catch (err) {
       console.error(err);
-      setMessageError(err.response?.data?.message || "Failed to send message");
+      setMessageError(err.response?.data?.message || "Failed to send message.");
+    } finally {
+      setSendingMessage(false);
     }
   };
 
