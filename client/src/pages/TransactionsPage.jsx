@@ -86,7 +86,7 @@ const TransactionsPage = ({ setPage, user }) => {
     setSellerRatingTarget(null);
     setSellerRatingValue(0);
 
-    alert("Seller rating UI submitted!");
+    alert("Seller rated successfully!");
   };
 
   return (
