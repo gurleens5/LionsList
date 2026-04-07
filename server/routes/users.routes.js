@@ -12,7 +12,8 @@ router.get("/:id", async (req, res) => {
             return res.status(400).json({ message: "Invalid user ID" });
         }
 
-        const user = await User.findById(id).select("username rating ratingsCount");
+        const user = await User.findById(id).select(
+            "username sellerRating sellerRatingsCount buyerRating buyerRatingsCount");
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });

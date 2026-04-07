@@ -33,9 +33,20 @@ function ProfilePage({ setPage, user, profileUserId }) {
   }, [user, profileUserId]);
 
   const displayUsername = profileData?.username || "username";
-  const displayRating =
-    profileData?.rating !== undefined ? profileData.rating.toFixed(1) : "N/A";
-  const displayRatingsCount = profileData?.ratingsCount ?? 0;
+
+  const displaySellerRating =
+    profileData?.sellerRating !== undefined
+      ? profileData.sellerRating.toFixed(1)
+      : "0.0";
+
+  const displaySellerRatingsCount = profileData?.sellerRatingsCount ?? 0;
+
+  const displayBuyerRating =
+    profileData?.buyerRating !== undefined
+      ? profileData.buyerRating.toFixed(1)
+      : "0.0";
+
+  const displayBuyerRatingsCount = profileData?.buyerRatingsCount ?? 0;
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f7f7f7" }}>
@@ -114,7 +125,7 @@ function ProfilePage({ setPage, user, profileUserId }) {
                       marginBottom: "8px",
                     }}
                   >
-                    Current Rating
+                    Seller Rating
                   </div>
                   <div
                     style={{
@@ -123,7 +134,7 @@ function ProfilePage({ setPage, user, profileUserId }) {
                       color: "#111",
                     }}
                   >
-                    {displayRating}
+                    {displaySellerRating}
                   </div>
                 </div>
 
@@ -142,7 +153,7 @@ function ProfilePage({ setPage, user, profileUserId }) {
                       marginBottom: "8px",
                     }}
                   >
-                    Ratings Count
+                    Seller Ratings Count
                   </div>
                   <div
                     style={{
@@ -151,7 +162,7 @@ function ProfilePage({ setPage, user, profileUserId }) {
                       color: "#111",
                     }}
                   >
-                    {displayRatingsCount}
+                    {displaySellerRatingsCount}
                   </div>
                 </div>
 
@@ -170,7 +181,7 @@ function ProfilePage({ setPage, user, profileUserId }) {
                       marginBottom: "8px",
                     }}
                   >
-                    Completed Transactions
+                    Buyer Rating
                   </div>
                   <div
                     style={{
@@ -179,7 +190,35 @@ function ProfilePage({ setPage, user, profileUserId }) {
                       color: "#111",
                     }}
                   >
-                    0
+                    {displayBuyerRating}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    backgroundColor: "#fafafa",
+                    border: "1px solid #e3e3e3",
+                    borderRadius: "10px",
+                    padding: "18px",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "0.95rem",
+                      color: "#666",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    Buyer Ratings Count
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "1.6rem",
+                      fontWeight: "700",
+                      color: "#111",
+                    }}
+                  >
+                    {displayBuyerRatingsCount}
                   </div>
                 </div>
               </div>
