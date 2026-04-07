@@ -243,9 +243,21 @@ function ProfilePage({ setPage, user, profileUserId }) {
                 </h2>
 
                 {displaySellerRatingsCount === 0 && displayBuyerRatingsCount === 0 ? (
-                  <p style={{ margin: 0, color: "#666" }}>
-                    No ratings yet.
-                  </p>
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      border: "1px solid #e3e3e3",
+                      borderRadius: "8px",
+                      padding: "14px",
+                    }}
+                  >
+                    <p style={{ margin: "0 0 6px 0", fontWeight: "600", color: "#111" }}>
+                      No ratings yet
+                    </p>
+                    <p style={{ margin: 0, color: "#666" }}>
+                      Buyer and seller ratings will appear here after completed transactions are rated.
+                    </p>
+                  </div>
                 ) : (
                   <div style={{ display: "grid", gap: "10px" }}>
                     <div
