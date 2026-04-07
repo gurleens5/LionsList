@@ -1,5 +1,4 @@
 import Listing from "../models/Listing.js";
-import { protect } from "../middleware/auth.js";
 import Offer from "../models/Offer.js";
 
 export const updateListing = async (req, res) => {
