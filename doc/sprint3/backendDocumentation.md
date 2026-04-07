@@ -666,8 +666,8 @@ __SendMessage__
   - HTTP Response: 500 Server Error
     - Failed to send message
 
-__SendMessage__
-- URL: `/message/send`
+__GetMessages__
+- URL: `/message/`
 - HTTP Method: GET
 - Headers:
 ``Authorization: Bearer <JWT_TOKEN>``
