@@ -170,7 +170,7 @@ function App() {
       
       {page === "messages" && (
         user ? (
-          <MessagesPage setPage={handleSetPage} />
+          <MessagesPage setPage={handleSetPage} user={user} />
         ) : (
           handleSetPage("signin")
         )

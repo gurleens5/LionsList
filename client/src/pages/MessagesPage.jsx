@@ -2,10 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import Header from "../components/Header";
 import api from "../lib/axios";
 
-function MessagesPage({ setPage }) {
+function MessagesPage({ setPage, user }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [sendingByListing, setSendingByListing] = useState({});
+  const [replyTextByListing, setReplyTextByListing] = useState({});
+
+  const currentUserId = user?._id || null;
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -47,6 +51,7 @@ function MessagesPage({ setPage }) {
 
       if (!groups[listingId]) {
         groups[listingId] = {
+          listingId,
           listingTitle:
             message.listing && typeof message.listing === "object"
               ? message.listing.title
@@ -60,6 +65,89 @@ function MessagesPage({ setPage }) {
 
     return Object.entries(groups);
   }, [messages]);
+
+  const getRecipientIdForConversation = (conversationMessages) => {
+    if (!conversationMessages.length) return null;
+
+    const sortedMessages = [...conversationMessages].sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    const latestMessage = sortedMessages[0];
+
+    const senderId = 
+      latestMessage.sender && typeof latestMessage.sender === "object"
+        ? latestMessage.sender._id : latestMessage.sender;
+
+    const receiverId =
+      latestMessage.receiver && typeof latestMessage.receiver === "object"
+        ? latestMessage.receiver._id : latestMessage.receiver;
+
+    if (!currentUserId) {
+      return receiverId || senderId || null;
+    }
+
+    if (String(senderId) === String(currentUserId)) {
+      return receiverId || null;
+    }
+
+    return senderId || null;
+  };
+
+  const handleReplyChange = (listingId, value) => {
+    setReplyTextByListing((prev) => ({
+      ...prev,
+      [listingId]: value,
+    }));
+  };
+
+  const handleSendReply = async (listingId, conversationMessages) => {
+    const token = localStorage.getItem("token");
+    const replyText = (replyTextByListing[listingId] || "").trim();
+
+    if (!replyText) {
+      return;
+    }
+
+    const recipientId = getRecipientIdForConversation(conversationMessages);
+
+    if (!recipientId) {
+      alert("Could not determine who to send this message to.");
+      return;
+    }
+
+    try {
+      setSendingByListing((prev) => ({
+        ...prev,
+        [listingId]: true,
+      }));
+
+      await api.post(
+        "/messages/send",
+        {
+          recipientId,
+          listingId,
+          content: replyText,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setReplyTextByListing((prev) => ({
+        ...prev,
+        [listingId]: "",
+      }));
+    } catch (err) {
+      console.error("Error sending reply:", err);
+      alert(err.response?.data?.message || "Failed to send reply.");
+    } finally {
+      setSendingByListing((prev) => ({
+        ...prev,
+        [listingId]: false,
+      }));
+    }
+  };
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f7f7f7" }}>
@@ -164,6 +252,45 @@ function MessagesPage({ setPage }) {
                       </p>
                     </div>
                   ))}
+                </div>
+
+                <div style={{ marginTop: "16px" }}>
+                  <textarea
+                    value={replyTextByListing[listingId] || ""}
+                    onChange={(e) =>
+                      handleReplyChange(listingId, e.target.value)
+                    }
+                    placeholder="Type your reply..."
+                    rows={3}
+                    style={{
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                      border: "1px solid #ccc",
+                      resize: "vertical",
+                      fontFamily: "Georgia, sans-serif",
+                      boxSizing: "border-box",
+                    }}
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => handleSendReply(listingId, group.messages)}
+                    disabled={sendingByListing[listingId]}
+                    style={{
+                      marginTop: "10px",
+                      background: "#cc0000",
+                      color: "#fff",
+                      border: "none",
+                      padding: "0.5rem 1rem",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontFamily: "Georgia, serif",
+                    }}
+                  >
+                    {sendingByListing[listingId] ? "Sending..." : "Send Reply"}
+                  </button>
                 </div>
               </div>
             ))}
