@@ -411,7 +411,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                   </small>
                 )}
 
-                  {messageForm && (
+                {messageForm && (
                 <div
                     style={{
                       position: "fixed",
