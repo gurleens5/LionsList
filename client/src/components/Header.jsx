@@ -65,6 +65,7 @@ function Header({ setPage }) {
           <div onClick={() => token ? go("my-listings") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>My Listings</div>
           <div onClick={() => token ? go("history") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>History</div>
           <div onClick={() => token ? go("messages") : go("signin")} style={{ color: "#fff", fontWeight: 500, fontSize: "1.3rem", cursor: "pointer" }}>Messages</div>
+          <FaUserCircle onClick={() => token ? go("profile") : go("signin")} style={{ color: "#fff", fontSize: "1.8rem", cursor: "pointer" }} />
 
           {!token ? (
             <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
