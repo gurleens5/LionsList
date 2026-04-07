@@ -242,9 +242,45 @@ function ProfilePage({ setPage, user, profileUserId }) {
                   Ratings and Reviews
                 </h2>
 
-                <p style={{ margin: 0, color: "#666" }}>
-                  No ratings yet.
-                </p>
+                {displaySellerRatingsCount === 0 && displayBuyerRatingsCount === 0 ? (
+                  <p style={{ margin: 0, color: "#666" }}>
+                    No ratings yet.
+                  </p>
+                ) : (
+                  <div style={{ display: "grid", gap: "10px" }}>
+                    <div
+                      style={{
+                        backgroundColor: "#fff",
+                        border: "1px solid #e3e3e3",
+                        borderRadius: "8px",
+                        padding: "14px",
+                      }}
+                    >
+                      <div style={{ fontWeight: "600", color: "#111", marginBottom: "4px" }}>
+                        Seller Ratings
+                      </div>
+                      <div style={{ color: "#666" }}>
+                        Average: {displaySellerRating} ({displaySellerRatingsCount} rating{displaySellerRatingsCount === 1 ? "" : "s"})
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        backgroundColor: "#fff",
+                        border: "1px solid #e3e3e3",
+                        borderRadius: "8px",
+                        padding: "14px",
+                      }}
+                    >
+                      <div style={{ fontWeight: "600", color: "#111", marginBottom: "4px" }}>
+                        Buyer Ratings
+                      </div>
+                      <div style={{ color: "#666" }}>
+                        Average: {displayBuyerRating} ({displayBuyerRatingsCount} rating{displayBuyerRatingsCount === 1 ? "" : "s"})
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </>
           )}
