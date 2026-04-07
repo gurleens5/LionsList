@@ -130,15 +130,36 @@ function MessagesPage({ setPage }) {
                 </h2>
 
                 <div>
-                  {group.messages.map((message) => (
+                  {group.messages.map((message, index) => (
                     <div
                       key={message._id}
                       style={{
                         padding: "12px 0",
-                        borderTop: "1px solid #e5e5e5",
+                        borderTop:  index === 0 ? "none" : "1px solid #e5e5e5",
                       }}
                     >
-                      <p style={{ margin: "0 0 6px 0", color: "#222" }}>
+                      <p 
+                        style={{ 
+                          margin: "0 0 6px 0",
+                          fontSize: "0.95rem",
+                          color: "#222",
+                        }}
+                      >
+                        <strong>Sender:</strong>{" "}
+                        {message.sender?.username || "Unknown"}
+                      </p>
+                      <p
+                        style={{
+                          margin: "0 0 6px 0",
+                          fontSize: "0.9rem",
+                          color: "#888"
+                        }}
+                      >
+                        <strong>Sent:</strong>{" "}
+                        {message.createdAt ? new Date(message.createdAt).toLocaleString() : "Unknown time"}
+                      </p>
+                      
+                      <p style={{ margin: 0, color: "#333" }}>
                         {message.msgContent}
                       </p>
                     </div>
