@@ -196,9 +196,30 @@ const groupedMessages = useMemo(() => {
           )}
 
           {!loading && !error && groupedMessages.length === 0 && (
-            <p style={{ color: "#666", margin: 0 }}>
-              Your conversations will appear here.
-            </p>
+            <div
+              style={{
+                marginTop: "12px",
+                padding: "24px",
+                backgroundColor: "#fafafa",
+                border: "1px solid #e3e3e3",
+                borderRadius: "10px",
+                textAlign: "center",
+              }}
+            >
+              <p
+                style={{
+                  margin: "0 0 8px 0",
+                  fontSize: "1.05rem",
+                  fontWeight: "600",
+                  color: "#111",
+                }}
+              >
+                No messages yet
+              </p>
+              <p style={{ margin: 0, color: "#666" }}>
+                Your conversations will appear here once you start messaging.
+              </p>
+            </div>
           )}
 
           {!loading &&
