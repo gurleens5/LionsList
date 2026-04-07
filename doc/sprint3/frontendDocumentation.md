@@ -180,8 +180,8 @@ The frontend for **LionsList** is a **React single-page application (SPA)** that
 
 ## Transaction History
 - Displays all completed transactions where the logged-in user was either the buyer or seller  
-- Each transaction card displays a listing’s:  
-  - Image  
+- Each transaction card displays:  
+  - Listing Image  
   - A badge indicating the user's role: Purchased (buyer) or Sold (seller) with the transaction date  
   - Listing title  
   - The other party’s username  
