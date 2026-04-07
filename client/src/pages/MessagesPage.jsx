@@ -38,33 +38,39 @@ function MessagesPage({ setPage, user }) {
     fetchMessages();
   }, []);
 
-  const groupedMessages = useMemo(() => {
-    const groups = {};
+const groupedMessages = useMemo(() => {
+  const groups = {};
 
-    messages.forEach((message) => {
-      const listingId =
-        message.listing && typeof message.listing === "object"
-          ? message.listing._id
-          : message.listing;
+  messages.forEach((message) => {
+    const listingId =
+      message.listing && typeof message.listing === "object"
+        ? message.listing._id
+        : message.listing;
 
-      if (!listingId) return;
+    if (!listingId) return;
 
-      if (!groups[listingId]) {
-        groups[listingId] = {
-          listingId,
-          listingTitle:
-            message.listing && typeof message.listing === "object"
-              ? message.listing.title
-              : "Unknown Listing",
-          messages: [],
-        };
-      }
+    if (!groups[listingId]) {
+      groups[listingId] = {
+        listingId,
+        listingTitle:
+          message.listing && typeof message.listing === "object"
+            ? message.listing.title
+            : "Unknown Listing",
+        messages: [],
+      };
+    }
 
-      groups[listingId].messages.push(message);
-    });
+    groups[listingId].messages.push(message);
+  });
 
-    return Object.entries(groups);
-  }, [messages]);
+  Object.values(groups).forEach((group) => {
+    group.messages.sort(
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+    );
+  });
+
+  return Object.entries(groups);
+}, [messages]);
 
   const getRecipientIdForConversation = (conversationMessages) => {
     if (!conversationMessages.length) return null;
@@ -122,7 +128,7 @@ function MessagesPage({ setPage, user }) {
         [listingId]: true,
       }));
 
-      await api.post(
+      const res =await api.post(
         "/messages/send",
         {
           recipientId,
@@ -133,6 +139,8 @@ function MessagesPage({ setPage, user }) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+
+      setMessages((prev) => [...prev, res.data.messageData]);
 
       setReplyTextByListing((prev) => ({
         ...prev,
