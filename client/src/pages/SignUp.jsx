@@ -19,14 +19,11 @@ function SignUp({ setPage, setUser }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password !== formData.confirmPassword) return;
         try {
             const res = await api.post("/register", formData);
-            localStorage.setItem("token", res.data.token);
-            console.log(res.data);
-            setUser(res.data);
-            setPage("listings");
+            setPage("verify", res.data.userId); // pass userId
         } catch (err) {
-            //console.log(err);
             setError(err.response?.data?.message || "Registration Failed")
         }
     }

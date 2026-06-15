@@ -13,6 +13,7 @@ import SentOffersDetails from "./pages/SentOffersDetails";
 import TransactionsPage from "./pages/TransactionsPage";
 import ProfilePage from "./pages/ProfilePage";
 import MessagesPage from "./pages/MessagesPage";
+import Verify from "./pages/VerficationPage";
 
 function App() {
     const [page, setPage] = useState("home");
@@ -26,6 +27,7 @@ function App() {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchInput, setSearchInput] = useState("");
     const [selectedProfileUserID, setSelectedProfileUserID] = useState(null);
+    const [verifyUserId, setVerifyUserId] = useState(null);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -65,6 +67,9 @@ function App() {
     if (newPage === "profile") {
       setSelectedProfileUserID(idOrFrom || null);
     }
+    if (newPage === "verify") {
+      setVerifyUserId(idOrFrom);
+    }
     setPage(newPage);
   };
 
@@ -81,6 +86,7 @@ function App() {
 
       {page === "signin" && <SignIn setPage={handleSetPage} setUser={setUser} />}
       {page === "signup" && <SignUp setPage={handleSetPage} setUser={setUser} />}
+      {page === "verify" && <Verify setPage={handleSetPage} setUser={setUser} userId={verifyUserId} />}
       {page === "create-listing" && (
         user ? (
           <CreateListingPage setPage={handleSetPage} />
