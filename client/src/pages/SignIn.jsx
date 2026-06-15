@@ -76,7 +76,7 @@ function SignIn({ setPage, setUser }) {
 
                     <p style={{ textAlign: "center", marginTop: "1.5rem", color: "#666" }}>
                         Don't have an account?{" "}
-                        <span onClick={() => setPage("signup")} style={{ color: "#cc0000", fontWeight: "600", cursor: "pointer" }}>Sign Up</span>
+                        <span onClick={() => setPage("signup")} style={{ color: "#cc0000", fontWeight: "600", cursor: "pointer", whiteSpace: "nowrap"}}>Sign Up</span>
                     </p>
 
                 </div>

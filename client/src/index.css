@@ -4,3 +4,29 @@
   box-sizing: border-box;
   overflow-x: hidden;
 }
+
+.listings-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.listings-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.listings-grid {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .listings-layout {
+    flex-direction: column;
+  }
+  .listings-sidebar {
+    width: 100%;
+  }
+}
+
+

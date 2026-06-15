@@ -106,18 +106,18 @@ function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseCodeInpu
       }}>
         <h2 style={{
           color: "#000000", fontSize: "2rem", fontWeight: "800",
-          fontFamily: "Georgia, sans-serif", margin: 0,
+          fontFamily: "Georgia, sans-serif", margin: 0, textAlign: "center"
         }}>
           Explore the Marketplace
         </h2>
         <div style={{ display: "flex", width: "100%", maxWidth: "600px" }}>
           <input
-            placeholder="Search for textbook, notes, lab kits..."
+            placeholder="Search for textbooks..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             style={{
-              flex: 1, padding: "0.9rem 1.5rem", fontSize: "1rem",
+              flex: 1, padding: "0.9rem 1.0rem", fontSize: "1rem",
               border: "none", borderRadius: "8px 0 0 8px",
               background: "#ffffff", color: "#111", outline: "none",
               fontFamily: "serif",
@@ -167,14 +167,18 @@ function Home({ setPage, setHomeSearch, setSelectedCategories, setCourseCodeInpu
                 key={category.name}
                 onClick={() => handleCategoryClick(category.name)}
                 style={{
-                  minWidth: "220px",
-                  background: category.background,
-                  border: `1px solid ${category.border}`,
-                  borderRadius: "14px",
-                  padding: "1.2rem",
-                  flexShrink: 0,
-                  textAlign: "left",
-                  cursor: "pointer",
+                  minWidth: "160px",
+width: "200px",
+height: "150px",
+overflow: "hidden",
+background: category.background,
+border: `1px solid ${category.border}`,
+borderRadius: "14px",
+padding: "1.2rem",
+flexShrink: 0,
+textAlign: "left",
+cursor: "pointer",
+fontFamily: "Georgia, serif",
                 }}
               >
                 <h3 style={{

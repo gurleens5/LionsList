@@ -128,7 +128,7 @@ function EditListingPage({ setPage, listingId }) {
     <div style={{ minHeight: "100vh", background: "#e6e4e4", fontFamily: "Georgia, sans-serif" }}>
       <Header setPage={setPage} />
 
-      <div style={{ display: "flex", justifyContent: "center", padding: "7rem", paddingTop: "150px" }}>
+      <div style={{ display: "flex", justifyContent: "center", padding: "1rem", paddingTop: "150px" }}>
         <div
           style={{
             background: "#fff",

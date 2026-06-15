@@ -107,12 +107,12 @@ const ListingsPage = ({
 
         <div style={{ display: "flex", width: "100%", maxWidth: "600px", marginBottom: "1.5rem" }}>
           <input
-            placeholder="Search for textbook, notes, lab kits..."
+            placeholder="Search for textbooks..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={handleSearchKeyDown}
             style={{
-              flex: 1, padding: "0.9rem 1.5rem", fontSize: "1rem",
+              flex: 1, padding: "0.9rem 1.0rem", fontSize: "1rem",
               border: "none", borderRadius: "8px 0 0 8px",
               background: "#ffffff", color: "#111", outline: "none",
               fontFamily: "serif",
@@ -132,10 +132,8 @@ const ListingsPage = ({
         </div>
 
 
-
-        <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
-          <div style={{ width: "250px", background: "#fff", borderRadius: "14px", border: "1px solid #ddd",
-                        padding: "1.25rem", flexShrink: 0 }}>
+        <div className="listings-layout">
+          <div className="listings-sidebar" style={{ background: "#fff", borderRadius: "14px", border: "1px solid #ddd", padding: "1.25rem" }}>
             <h2 style={{ marginTop: 0, marginBottom: "1rem", fontSize: "1.4rem", color: "#111" }}>
               Filters
             </h2>
@@ -184,7 +182,7 @@ const ListingsPage = ({
             </button>
           </div>
 
-          <div style={{ flex: 1 }}>
+          <div className="listings-grid">
             {loading && <p>Loading listings...</p>}
 
             {noListingsMatch && (
