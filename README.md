@@ -2,6 +2,19 @@
 
 LionsList is a student-focused web-based marketplace designed exclusively for York University to buy and sell academic materials within the York University Community
 
+🔗 **Live Demo:** [lions-list.vercel.app](https://lions-list.vercel.app)
+
+> Browsing listings is open to everyone. Full functionality (posting, offers, messaging) requires a YorkU email (@my.yorku.ca).
+
+## Built With
+
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+
 ## Motivation
 
 General marketplaces such as Kijiji and Facebook Marketplace do allow people to list textbooks and academic supplies but are not specifically aimed at university students. These platforms do not have the ability to filter by course, nor the verification of the users. Consequently, students frequently come across irrelevant listings, unreliable buyers, scams, and low value offers on these platforms.
@@ -56,23 +69,3 @@ npm run dev
 npm run dev
 ```
 3. Application is Running!
-
-## Contribution
-To contribute, please do the following:
-
-Branching:
-- `main` is for stable, release-ready code
-- `dev` is for integration
-- `feature/<name>` for Feature Branches
-
-Rules:
-- No direct commits to `main`
-- All merges require a Pull Request
-- At least one review/approval before merging
-- Small, clear commits with meaningful messages
-
-Commit Message Format (example):
-- `feat: add search filter`
-- `fix: handle empty cart`
-- `docs: update sprint documentation`
-  
