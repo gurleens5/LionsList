@@ -53,6 +53,17 @@ function App() {
         fetchUser();
     }, [page]);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("demo") === "true") {
+        api.post("/demo").then((res) => {
+            localStorage.setItem("token", res.data.token);
+            setUser(res.data);
+            setPage("listings");
+        });
+    }
+  }, []);
+
 
   const handleSetPage = (newPage, idOrFrom) => {
     if (newPage === "listings" && idOrFrom !== "listing-details" && idOrFrom !== "homepage-category") {

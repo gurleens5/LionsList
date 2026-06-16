@@ -530,8 +530,7 @@ const ListingDetailsPage = ({ setPage, listingId, user, previousPage }) => {
                       borderRadius: "8px",
                       cursor: "pointer",
                       fontWeight: "700",
-                      fontFamily: "Georgia, serif",
-                      marginLeft: "10px",
+                      fontFamily: "Georgia, serif"
                     }}
                   >
                     Message Seller
