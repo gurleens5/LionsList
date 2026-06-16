@@ -2,8 +2,7 @@
 
 LionsList is a student-focused web-based marketplace designed exclusively for York University to buy and sell academic materials within the York University Community
 
-🔗 **Live Demo:** [lions-list.vercel.app](https://lions-list.vercel.app)
-
+🔗 **[Live Demo](https://lions-list.vercel.app?demo=true)**
 > Browsing listings is open to everyone. Full functionality (posting, offers, messaging) requires a YorkU email (@my.yorku.ca).
 
 ## Built With
