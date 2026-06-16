@@ -59,7 +59,7 @@ function App() {
         api.post("/demo").then((res) => {
             localStorage.setItem("token", res.data.token);
             setUser(res.data);
-            setPage("listings");
+            setPage("home");
         });
     }
   }, []);
